@@ -1,12 +1,17 @@
-const ProfileInitState = {}
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {ProfileType} from "../../a1-login/l3-dal/authAPI";
 
-export const profileReducer = (state = ProfileInitState, action: ProfileActionsType) => {
-    switch (action.type) {
-        default:
-            return state
-    }
-};
+const slice = createSlice({
+    name: 'profile',
+    initialState: {
+        profile: null as null | ProfileType
+    },
+    reducers: {
+        setProfile: (state, action: PayloadAction<{profile: ProfileType}>) => {
+            state.profile = action.payload.profile
+        }
+    },
+})
 
-//actions
-type ProfileStateType = any
-type ProfileActionsType = any
+export const profileReducer = slice.reducer
+export const {setProfile} = slice.actions

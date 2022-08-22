@@ -1,5 +1,9 @@
 import React, {FC} from 'react';
 import {useFormik} from "formik";
+import {useDispatch, useSelector} from "react-redux";
+import {login} from "../l2-bll/authReducer";
+import {RootStateType} from "../../../../c1-main/m2-bll/store";
+import {Navigate} from "react-router-dom";
 
 type FormikErrorType = {
     email?: string
@@ -8,6 +12,8 @@ type FormikErrorType = {
 }
 
 export const Login: FC = () => {
+    const isLoggedIn = useSelector<RootStateType, boolean>(state => state.login.isLoggedIn)
+    const dispatch = useDispatch<any>()
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -26,12 +32,14 @@ export const Login: FC = () => {
             }
             return errors;
         },
-        onSubmit: values => {
-            alert(JSON.stringify(values));
+        onSubmit: (values) => {
+            dispatch(login(values));
             formik.resetForm({})
         },
     })
-
+    if (isLoggedIn) {
+        return <Navigate to={'/profile'}/>
+    }
 
     return (
         <div>
