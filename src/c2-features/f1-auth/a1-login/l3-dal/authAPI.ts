@@ -27,6 +27,10 @@ export type ProfileType = {
     __v: number
     _id: string
 }
+type LogoutType = {
+    info: string
+    error?: string
+}
 
 export const authAPI = {
     login: (params: LoginParamsType) => {
@@ -35,4 +39,7 @@ export const authAPI = {
     authMe: () => {
         return instance.post<ProfileType>('auth/me', {})
     },
+    logout: () => {
+        return instance.delete<LogoutType>('auth/me', {})
+    }
 }

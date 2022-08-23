@@ -7,7 +7,7 @@ const slice = createSlice({
         profile: null as null | ProfileType
     },
     reducers: {
-        setProfile: (state, action: PayloadAction<{profile: ProfileType}>) => {
+        setProfile: (state, action: PayloadAction<{profile: ProfileType | null}>) => {
             state.profile = action.payload.profile
         }
     },

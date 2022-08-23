@@ -25,6 +25,18 @@ export const getAuthData = createAsyncThunk(
         }
     }
 )
+export const logout = createAsyncThunk(
+    'auth/logout',
+    async (param: undefined, thunkAPI) => {
+        try {
+            await authAPI.logout()
+            thunkAPI.dispatch(setProfile({profile: null}))
+            return {login: false}
+        } catch {
+            return thunkAPI.rejectWithValue({login: true})
+        }
+    }
+)
 
 const slice = createSlice({
     name: 'auth',
@@ -37,6 +49,9 @@ const slice = createSlice({
             state.isLoggedIn = action.payload.login
         })
         builder.addCase(getAuthData.fulfilled, (state, action) => {
+            state.isLoggedIn = action.payload.login
+        })
+        builder.addCase(logout.fulfilled, (state, action) => {
             state.isLoggedIn = action.payload.login
         })
     }
