@@ -12,6 +12,10 @@ export type LoginParamsType = {
     password: string
     rememberMe: boolean
 }
+export type RegisterParamsType = {
+    email: string
+    password: string
+}
 export type ProfileType = {
     avatar: string | null
     created: string
@@ -22,6 +26,18 @@ export type ProfileType = {
     rememberMe: boolean
     token: string
     tokenDeathTime: number
+    updated: string
+    verified: boolean
+    __v: number
+    _id: string
+}
+export type AddedUserType = {
+    created: string
+    email: string
+    isAdmin: boolean
+    name: string
+    publicCardPacksCount: 0
+    rememberMe: boolean
     updated: string
     verified: boolean
     __v: number
@@ -41,5 +57,8 @@ export const authAPI = {
     },
     logout: () => {
         return instance.delete<LogoutType>('auth/me', {})
-    }
+    },
+    register: (params: RegisterParamsType) => {
+        return instance.post<AddedUserType>('/auth/register', {...params})
+    },
 }

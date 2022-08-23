@@ -1,5 +1,5 @@
-import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {authAPI, LoginParamsType} from "../l3-dal/authAPI";
+import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {authAPI, LoginParamsType, RegisterParamsType} from "../l3-dal/authAPI";
 import {setProfile} from "../../a3-profile/p2-bll/profileReducer";
 
 export const login = createAsyncThunk(
@@ -37,13 +37,29 @@ export const logout = createAsyncThunk(
         }
     }
 )
+export const register = createAsyncThunk(
+    'auth/register',
+    async (params: RegisterParamsType, thunkAPI) => {
+        try {
+            await authAPI.register(params)
+            return {isRegistered: true}
+        } catch {
+            return thunkAPI.rejectWithValue({isRegistered: false})
+        }
+    }
+)
 
 const slice = createSlice({
     name: 'auth',
     initialState: {
-        isLoggedIn: false
+        isLoggedIn: false,
+        isRegistered: false,
     },
-    reducers: {},
+    reducers: {
+        setRegister: (state, action: PayloadAction<boolean>) => {
+            state.isRegistered = action.payload
+        }
+    },
     extraReducers: (builder) => {
         builder.addCase(login.fulfilled, (state, action) => {
             state.isLoggedIn = action.payload.login
@@ -54,7 +70,11 @@ const slice = createSlice({
         builder.addCase(logout.fulfilled, (state, action) => {
             state.isLoggedIn = action.payload.login
         })
+        builder.addCase(register.fulfilled, (state, action) => {
+            state.isRegistered = action.payload.isRegistered
+        })
     }
 })
 
 export const authReducer = slice.reducer
+export const {setRegister} = slice.actions

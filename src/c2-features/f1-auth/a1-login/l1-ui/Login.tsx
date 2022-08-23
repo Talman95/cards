@@ -3,7 +3,8 @@ import {useFormik} from "formik";
 import {useDispatch, useSelector} from "react-redux";
 import {login} from "../l2-bll/authReducer";
 import {RootStateType} from "../../../../c1-main/m2-bll/store";
-import {Navigate} from "react-router-dom";
+import {Navigate, useNavigate} from "react-router-dom";
+import {PATH} from "../../../../c1-main/m1-ui/main/routes/MyRoutes";
 
 type FormikErrorType = {
     email?: string
@@ -12,8 +13,12 @@ type FormikErrorType = {
 }
 
 export const Login: FC = () => {
-    const isLoggedIn = useSelector<RootStateType, boolean>(state => state.login.isLoggedIn)
+    const isLoggedIn = useSelector<RootStateType, boolean>(state => state.auth.isLoggedIn)
     const dispatch = useDispatch<any>()
+    const navigate = useNavigate()
+    const navigateToRegister = () => navigate(PATH.REGISTER)
+    const navigateToForgot = () => navigate(PATH.FORGOT_PASSWORD)
+
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -33,7 +38,7 @@ export const Login: FC = () => {
             return errors;
         },
         onSubmit: (values) => {
-            dispatch(login(values));
+            dispatch(login(values))
             formik.resetForm({})
         },
     })
@@ -61,9 +66,18 @@ export const Login: FC = () => {
                         <span>Remeber me?</span>
                     </div>
                     <button type={"submit"}>Sign In</button>
+                    <p>
+                        <span style={{textDecoration: 'underline', cursor: 'pointer'}} onClick={navigateToForgot}>
+                            Forgot password?
+                        </span>
+                    </p>
                     <div>
                         <p>Already have an account</p>
-                        <p>Sign Up</p>
+                        <p>
+                            <span style={{textDecoration: 'underline', cursor: 'pointer'}} onClick={navigateToRegister}>
+                                Sign Up
+                            </span>
+                        </p>
                     </div>
                 </form>
             </div>
