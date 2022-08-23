@@ -13,6 +13,18 @@ export const login = createAsyncThunk(
             return thunkAPI.rejectWithValue({login: false})
         }
     })
+export const getAuthData = createAsyncThunk(
+    'auth/authMe',
+    async (param: undefined, thunkAPI) => {
+        try {
+            const res = await authAPI.authMe()
+            thunkAPI.dispatch(setProfile({profile: res.data}))
+            return {login: true}
+        } catch {
+            return thunkAPI.rejectWithValue({login: false})
+        }
+    }
+)
 
 const slice = createSlice({
     name: 'auth',
@@ -22,6 +34,9 @@ const slice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder.addCase(login.fulfilled, (state, action) => {
+            state.isLoggedIn = action.payload.login
+        })
+        builder.addCase(getAuthData.fulfilled, (state, action) => {
             state.isLoggedIn = action.payload.login
         })
     }

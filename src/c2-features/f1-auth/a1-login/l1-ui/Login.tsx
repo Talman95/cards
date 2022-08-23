@@ -60,7 +60,7 @@ export const Login: FC = () => {
                         <input type={"checkbox"} {...formik.getFieldProps("rememberMe")}/>
                         <span>Remeber me?</span>
                     </div>
-                    <button type={"submit"} >Sign In</button>
+                    <button type={"submit"}>Sign In</button>
                     <div>
                         <p>Already have an account</p>
                         <p>Sign Up</p>
