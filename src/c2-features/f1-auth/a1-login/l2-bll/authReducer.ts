@@ -48,17 +48,31 @@ export const register = createAsyncThunk(
         }
     }
 )
+export const sendPassword = createAsyncThunk(
+    'auth/sendPassword',
+    async (email: string, thunkAPI) => {
+        try {
+            await authAPI.sendPassword(email)
+            return {isSend: true}
+        } catch {
+            return thunkAPI.rejectWithValue(null)
+        }
+    })
 
 const slice = createSlice({
     name: 'auth',
     initialState: {
         isLoggedIn: false,
         isRegistered: false,
+        isSent: false,
     },
     reducers: {
         setRegister: (state, action: PayloadAction<boolean>) => {
             state.isRegistered = action.payload
-        }
+        },
+        setSend: (state, action: PayloadAction<boolean>) => {
+            state.isSent = action.payload
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(login.fulfilled, (state, action) => {
@@ -73,8 +87,11 @@ const slice = createSlice({
         builder.addCase(register.fulfilled, (state, action) => {
             state.isRegistered = action.payload.isRegistered
         })
+        builder.addCase(sendPassword.fulfilled, (state, action) => {
+            state.isSent = action.payload.isSend
+        })
     }
 })
 
 export const authReducer = slice.reducer
-export const {setRegister} = slice.actions
+export const {setRegister, setSend} = slice.actions

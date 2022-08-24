@@ -1,14 +1,12 @@
 import {combineReducers} from "redux";
 import {authReducer} from "../../c2-features/f1-auth/a1-login/l2-bll/authReducer";
 import {profileReducer} from "../../c2-features/f1-auth/a3-profile/p2-bll/profileReducer";
-import {forgotReducer} from "../../c2-features/f1-auth/a4-forgot/f2-bll/forgotReducer";
 import {setPassReducer} from "../../c2-features/f1-auth/a5-setPass/s2-bll/setPassReducer";
 import {configureStore} from "@reduxjs/toolkit";
 
 const rootReducers = combineReducers({
     auth: authReducer,
     profile: profileReducer,
-    forgot: forgotReducer,
     setPass: setPassReducer,
 })
 
