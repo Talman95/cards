@@ -42,6 +42,7 @@ export const Login: FC = () => {
             formik.resetForm({})
         },
     })
+
     if (isLoggedIn) {
         return <Navigate to={'/profile'}/>
     }

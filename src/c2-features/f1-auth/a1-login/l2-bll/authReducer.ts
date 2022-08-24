@@ -58,6 +58,16 @@ export const sendPassword = createAsyncThunk(
             return thunkAPI.rejectWithValue(null)
         }
     })
+export const setNewPassword = createAsyncThunk(
+    'auth/setNewPassword',
+    async (param: { password: string, token: string | undefined }, thunkAPI) => {
+        try {
+            await authAPI.setNewPassword(param.password, param.token)
+            return {isChangedPassword: true}
+        } catch {
+            return thunkAPI.rejectWithValue(null)
+        }
+    })
 
 const slice = createSlice({
     name: 'auth',
@@ -65,6 +75,7 @@ const slice = createSlice({
         isLoggedIn: false,
         isRegistered: false,
         isSent: false,
+        isChangedPassword: false,
     },
     reducers: {
         setRegister: (state, action: PayloadAction<boolean>) => {
@@ -72,6 +83,9 @@ const slice = createSlice({
         },
         setSend: (state, action: PayloadAction<boolean>) => {
             state.isSent = action.payload
+        },
+        setStatusPassword: (state, action: PayloadAction<boolean>) => {
+            state.isChangedPassword = action.payload
         },
     },
     extraReducers: (builder) => {
@@ -90,8 +104,11 @@ const slice = createSlice({
         builder.addCase(sendPassword.fulfilled, (state, action) => {
             state.isSent = action.payload.isSend
         })
+        builder.addCase(setNewPassword.fulfilled, (state, action) => {
+            state.isChangedPassword = action.payload.isChangedPassword
+        })
     }
 })
 
 export const authReducer = slice.reducer
-export const {setRegister, setSend} = slice.actions
+export const {setRegister, setSend, setStatusPassword} = slice.actions

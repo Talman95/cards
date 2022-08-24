@@ -63,7 +63,7 @@ export const authAPI = {
     },
     sendPassword: (email: string) => {
         return instance.post('auth/forgot', {
-            email: email,
+            email,
             from: "test-front-admin <ai73a@yandex.by>",
             message: `<div style="background-color: chartreuse; padding: 15px">
                       password recovery link: 
@@ -71,6 +71,12 @@ export const authAPI = {
                       follow the link
                       </a>
                       </div>`,
+        })
+    },
+    setNewPassword: (password: string, resetPasswordToken: string | undefined = '') => {
+        return instance.post('auth/set-new-password', {
+            password,
+            resetPasswordToken,
         })
     },
 }
