@@ -1,7 +1,7 @@
 import React, {FC, useEffect} from 'react';
 import {Navigate, useNavigate} from "react-router-dom";
 import {PATH} from "../../../../c1-main/m1-ui/main/routes/MyRoutes";
-import {useFormik} from "formik";
+import {FormikHelpers, useFormik} from "formik";
 import {useDispatch, useSelector} from "react-redux";
 import {RootStateType} from "../../../../c1-main/m2-bll/store";
 import {register, setRegister} from "../../a1-login/l2-bll/authReducer";
@@ -10,6 +10,11 @@ type FormikErrorType = {
     email?: string
     password?: string
     confirmedPass?: string
+}
+type FormikValuesType = {
+    email: string
+    password: string
+    confirmedPass: string
 }
 
 export const Register: FC = () => {
@@ -46,9 +51,13 @@ export const Register: FC = () => {
             }
             return errors;
         },
-        onSubmit: (values) => {
-            dispatch(register({email: values.email, password: values.password}))
-            formik.resetForm({})
+        onSubmit: async (values, formikHelpers: FormikHelpers<FormikValuesType>) => {
+            const action = await dispatch(register({email: values.email, password: values.password}))
+            if (register.rejected.match(action)) {
+                if (action.payload?.error) {
+                    formikHelpers.setFieldError('confirmedPass', action.payload.error)
+                }
+            }
         },
     })
 

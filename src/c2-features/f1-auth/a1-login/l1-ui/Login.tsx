@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {useFormik} from "formik";
+import {FormikHelpers, useFormik} from "formik";
 import {useDispatch, useSelector} from "react-redux";
 import {login} from "../l2-bll/authReducer";
 import {RootStateType} from "../../../../c1-main/m2-bll/store";
@@ -10,6 +10,11 @@ type FormikErrorType = {
     email?: string
     password?: string
     rememberMe?: boolean
+}
+type FormikValuesType = {
+    email: string
+    password: string
+    rememberMe: boolean
 }
 
 export const Login: FC = () => {
@@ -37,9 +42,13 @@ export const Login: FC = () => {
             }
             return errors;
         },
-        onSubmit: (values) => {
-            dispatch(login(values))
-            formik.resetForm({})
+        onSubmit: async (values, formikHelpers: FormikHelpers<FormikValuesType>) => {
+            const action = await dispatch(login(values))
+            if (login.rejected.match(action)) {
+                if (action.payload?.error) {
+                    formikHelpers.setFieldError('password', action.payload.error)
+                }
+            }
         },
     })
 

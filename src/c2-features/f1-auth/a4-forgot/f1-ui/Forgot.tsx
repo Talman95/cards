@@ -1,12 +1,15 @@
 import React, {FC, useEffect} from 'react';
 import {Navigate, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {useFormik} from "formik";
+import {FormikHelpers, useFormik} from "formik";
 import {sendPassword, setSend} from "../../a1-login/l2-bll/authReducer";
 import {RootStateType} from "../../../../c1-main/m2-bll/store";
 
 type ForgotErrorsType = {
     email?: string
+}
+type FormikValuesType = {
+    email: string
 }
 
 export const Forgot: FC = () => {
@@ -35,8 +38,13 @@ export const Forgot: FC = () => {
             }
             return errors
         },
-        onSubmit: (values) => {
-            dispatch(sendPassword(values.email))
+        onSubmit: async (values, formikHelpers: FormikHelpers<FormikValuesType>) => {
+            const action = await dispatch(sendPassword(values.email))
+            if (sendPassword.rejected.match(action)) {
+                if (action.payload?.error) {
+                    formikHelpers.setFieldError('email', action.payload.error)
+                }
+            }
         },
     })
 

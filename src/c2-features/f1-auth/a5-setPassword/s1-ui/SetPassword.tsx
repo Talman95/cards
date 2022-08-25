@@ -1,12 +1,15 @@
 import React, {FC, useEffect} from 'react';
-import {useParams, Navigate} from "react-router-dom";
-import {useFormik} from "formik";
+import {Navigate, useParams} from "react-router-dom";
+import {FormikHelpers, useFormik} from "formik";
 import {useDispatch, useSelector} from "react-redux";
 import {setNewPassword, setStatusPassword} from "../../a1-login/l2-bll/authReducer";
 import {RootStateType} from "../../../../c1-main/m2-bll/store";
 
 type FormikErrorType = {
     password?: string
+}
+type FormikValuesType = {
+    password: string
 }
 
 export const SetPassword: FC = () => {
@@ -30,8 +33,13 @@ export const SetPassword: FC = () => {
                 errors.password = 'Required';
             }
         },
-        onSubmit: values => {
-            dispatch(setNewPassword({password: values.password, token: token}))
+        onSubmit: async (values, formikHelpers: FormikHelpers<FormikValuesType>) => {
+            const action = await dispatch(setNewPassword({password: values.password, token: token}))
+            if (setNewPassword.rejected.match(action)) {
+                if (action.payload?.error) {
+                    formikHelpers.setFieldError('password', action.payload.error)
+                }
+            }
         }
     })
 

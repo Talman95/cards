@@ -1,16 +1,24 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {authAPI, LoginParamsType, RegisterParamsType} from "../l3-dal/authAPI";
 import {setProfile} from "../../a3-profile/p2-bll/profileReducer";
+import axios, {AxiosError} from "axios";
 
-export const login = createAsyncThunk(
-    'auth/login',
+export const login = createAsyncThunk<{ login: boolean }, LoginParamsType, {
+    rejectValue: { error: string }
+}>('auth/login',
     async (params: LoginParamsType, thunkAPI) => {
         try {
             const res = await authAPI.login(params)
             thunkAPI.dispatch(setProfile({profile: res.data}))
             return {login: true}
-        } catch {
-            return thunkAPI.rejectWithValue({login: false})
+        } catch (e) {
+            const err = e as Error | AxiosError<{ error: string }>
+            if (axios.isAxiosError(err)) {
+                const error = err.response?.data ? err.response.data.error : err.message
+                return thunkAPI.rejectWithValue({error: error})
+            } else {
+                return thunkAPI.rejectWithValue({error: `Native error ${err.message}`})
+            }
         }
     })
 export const getAuthData = createAsyncThunk(
@@ -37,35 +45,56 @@ export const logout = createAsyncThunk(
         }
     }
 )
-export const register = createAsyncThunk(
-    'auth/register',
+export const register = createAsyncThunk<{ isRegistered: boolean }, RegisterParamsType, {
+    rejectValue: { error: string }
+}>('auth/register',
     async (params: RegisterParamsType, thunkAPI) => {
         try {
             await authAPI.register(params)
             return {isRegistered: true}
-        } catch {
-            return thunkAPI.rejectWithValue({isRegistered: false})
+        } catch (e) {
+            const err = e as Error | AxiosError<{ error: string }>
+            if (axios.isAxiosError(err)) {
+                const error = err.response?.data ? err.response.data.error : err.message
+                return thunkAPI.rejectWithValue({error: error})
+            } else {
+                return thunkAPI.rejectWithValue({error: `Native error ${err.message}`})
+            }
         }
     }
 )
-export const sendPassword = createAsyncThunk(
-    'auth/sendPassword',
-    async (email: string, thunkAPI) => {
+export const sendPassword = createAsyncThunk<{ isSend: boolean }, string, {
+    rejectValue: { error: string }
+}>('auth/sendPassword',
+    async (email, thunkAPI) => {
         try {
             await authAPI.sendPassword(email)
             return {isSend: true}
-        } catch {
-            return thunkAPI.rejectWithValue(null)
+        } catch (e) {
+            const err = e as Error | AxiosError<{ error: string }>
+            if (axios.isAxiosError(err)) {
+                const error = err.response?.data ? err.response.data.error : err.message
+                return thunkAPI.rejectWithValue({error: error})
+            } else {
+                return thunkAPI.rejectWithValue({error: `Native error ${err.message}`})
+            }
         }
     })
-export const setNewPassword = createAsyncThunk(
-    'auth/setNewPassword',
+export const setNewPassword = createAsyncThunk<{ isChangedPassword: true }, { password: string, token: string | undefined }, {
+    rejectValue: { error: string }
+}>('auth/setNewPassword',
     async (param: { password: string, token: string | undefined }, thunkAPI) => {
         try {
             await authAPI.setNewPassword(param.password, param.token)
             return {isChangedPassword: true}
-        } catch {
-            return thunkAPI.rejectWithValue(null)
+        } catch (e) {
+            const err = e as Error | AxiosError<{ error: string }>
+            if (axios.isAxiosError(err)) {
+                const error = err.response?.data ? err.response.data.error : err.message
+                return thunkAPI.rejectWithValue({error: error})
+            } else {
+                return thunkAPI.rejectWithValue({error: `Native error ${err.message}`})
+            }
         }
     })
 
