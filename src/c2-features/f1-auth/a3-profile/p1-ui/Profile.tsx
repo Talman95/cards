@@ -1,13 +1,11 @@
 import React, {FC} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {RootStateType} from "../../../../c1-main/m2-bll/store";
-import {ProfileType} from "../../a1-login/l3-dal/authAPI";
 import {Navigate} from "react-router-dom";
 import {logout} from "../../a1-login/l2-bll/authReducer";
+import {useAppDispatch, useAppSelector} from "../../../../c0-common/c1-hooks/hooks";
 
 export const Profile: FC = () => {
-    const profile = useSelector<RootStateType, ProfileType | null>(state => state.profile.profile)
-    const dispatch = useDispatch<any>()
+    const profile = useAppSelector(state => state.profile.profile)
+    const dispatch = useAppDispatch()
     const logoutHandler = () => dispatch(logout())
 
     if (!profile) {

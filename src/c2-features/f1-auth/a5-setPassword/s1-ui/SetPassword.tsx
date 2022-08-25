@@ -1,9 +1,8 @@
 import React, {FC, useEffect} from 'react';
 import {Navigate, useParams} from "react-router-dom";
 import {FormikHelpers, useFormik} from "formik";
-import {useDispatch, useSelector} from "react-redux";
 import {setNewPassword, setStatusPassword} from "../../a1-login/l2-bll/authReducer";
-import {RootStateType} from "../../../../c1-main/m2-bll/store";
+import {useAppDispatch, useAppSelector} from "../../../../c0-common/c1-hooks/hooks";
 
 type FormikErrorType = {
     password?: string
@@ -13,8 +12,8 @@ type FormikValuesType = {
 }
 
 export const SetPassword: FC = () => {
-    const dispatch = useDispatch<any>()
-    const isChangedPassword = useSelector<RootStateType, boolean>(state => state.auth.isChangedPassword)
+    const dispatch = useAppDispatch()
+    const isChangedPassword = useAppSelector(state => state.auth.isChangedPassword)
     let {token} = useParams()
 
     useEffect(() => {

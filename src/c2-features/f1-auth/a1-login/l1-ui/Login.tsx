@@ -1,10 +1,9 @@
 import React, {FC} from 'react';
 import {FormikHelpers, useFormik} from "formik";
-import {useDispatch, useSelector} from "react-redux";
 import {login} from "../l2-bll/authReducer";
-import {RootStateType} from "../../../../c1-main/m2-bll/store";
 import {Navigate, useNavigate} from "react-router-dom";
 import {PATH} from "../../../../c1-main/m1-ui/main/routes/MyRoutes";
+import {useAppDispatch, useAppSelector} from "../../../../c0-common/c1-hooks/hooks";
 
 type FormikErrorType = {
     email?: string
@@ -18,8 +17,8 @@ type FormikValuesType = {
 }
 
 export const Login: FC = () => {
-    const isLoggedIn = useSelector<RootStateType, boolean>(state => state.auth.isLoggedIn)
-    const dispatch = useDispatch<any>()
+    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
+    const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const navigateToRegister = () => navigate(PATH.REGISTER)
     const navigateToForgot = () => navigate(PATH.FORGOT_PASSWORD)

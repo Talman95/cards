@@ -2,9 +2,8 @@ import React, {FC, useEffect} from 'react';
 import {Navigate, useNavigate} from "react-router-dom";
 import {PATH} from "../../../../c1-main/m1-ui/main/routes/MyRoutes";
 import {FormikHelpers, useFormik} from "formik";
-import {useDispatch, useSelector} from "react-redux";
-import {RootStateType} from "../../../../c1-main/m2-bll/store";
 import {register, setRegister} from "../../a1-login/l2-bll/authReducer";
+import {useAppDispatch, useAppSelector} from "../../../../c0-common/c1-hooks/hooks";
 
 type FormikErrorType = {
     email?: string
@@ -18,9 +17,9 @@ type FormikValuesType = {
 }
 
 export const Register: FC = () => {
-    const isLoggedIn = useSelector<RootStateType, boolean>(state => state.auth.isLoggedIn)
-    const isRegistered = useSelector<RootStateType, boolean>(state => state.auth.isRegistered)
-    const dispatch = useDispatch<any>()
+    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
+    const isRegistered = useAppSelector(state => state.auth.isRegistered)
+    const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const navigateToLogin = () => navigate(PATH.LOGIN)
 

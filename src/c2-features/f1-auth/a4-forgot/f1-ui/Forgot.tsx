@@ -1,9 +1,8 @@
 import React, {FC, useEffect} from 'react';
 import {Navigate, useNavigate} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
 import {FormikHelpers, useFormik} from "formik";
 import {sendPassword, setSend} from "../../a1-login/l2-bll/authReducer";
-import {RootStateType} from "../../../../c1-main/m2-bll/store";
+import {useAppDispatch, useAppSelector} from "../../../../c0-common/c1-hooks/hooks";
 
 type ForgotErrorsType = {
     email?: string
@@ -15,9 +14,9 @@ type FormikValuesType = {
 export const Forgot: FC = () => {
     const navigate = useNavigate()
     const navigateToLogin = () => navigate('/login')
-    const dispatch = useDispatch<any>()
-    const isLoggedIn = useSelector<RootStateType, boolean>(state => state.auth.isLoggedIn)
-    const isSent = useSelector<RootStateType, boolean>(state => state.auth.isSent)
+    const dispatch = useAppDispatch()
+    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
+    const isSent = useAppSelector(state => state.auth.isSent)
 
     useEffect(() => {
         return () => {

@@ -1,14 +1,12 @@
 import React, {useEffect} from 'react';
 import {MyRoutes} from "./routes/MyRoutes";
 import {Header} from "./header/Header";
-import {useDispatch, useSelector} from "react-redux";
 import {getAuthData} from "../../../c2-features/f1-auth/a1-login/l2-bll/authReducer";
-import {RootStateType} from "../../m2-bll/store";
-import {ProfileType} from "../../../c2-features/f1-auth/a1-login/l3-dal/authAPI";
+import {useAppDispatch, useAppSelector} from "../../../c0-common/c1-hooks/hooks";
 
 export const Main = () => {
-    const profile = useSelector<RootStateType, ProfileType | null>(state => state.profile.profile)
-    const dispatch = useDispatch<any>()
+    const profile = useAppSelector(state => state.profile.profile)
+    const dispatch = useAppDispatch()
 
     useEffect(() => {
         if (!profile) {
