@@ -4,6 +4,17 @@ import {login} from "../l2-bll/authReducer";
 import {Navigate, useNavigate} from "react-router-dom";
 import {PATH} from "../../../../c1-main/m1-ui/main/routes/MyRoutes";
 import {useAppDispatch, useAppSelector} from "../../../../c0-common/c1-hooks/hooks";
+import {
+    Button,
+    Checkbox,
+    FormControl,
+    FormControlLabel,
+    FormGroup,
+    Grid,
+    Link,
+    TextField,
+    Typography
+} from "@mui/material";
 
 type FormikErrorType = {
     email?: string
@@ -45,7 +56,7 @@ export const Login: FC = () => {
             const action = await dispatch(login(values))
             if (login.rejected.match(action)) {
                 if (action.payload?.error) {
-                    formikHelpers.setFieldError('password', action.payload.error)
+                    formikHelpers.setFieldError('email', action.payload.error)
                 }
             }
         },
@@ -56,40 +67,50 @@ export const Login: FC = () => {
     }
 
     return (
-        <div>
-            Login
-            <div style={{display: 'flex', flexDirection: 'column'}}>
+        <Grid container justifyContent={'center'} style={{width: '300px'}}>
+            <Grid item justifyContent={'center'}>
                 <form onSubmit={formik.handleSubmit}>
-                    <div>
-                        <input type={"email"} {...formik.getFieldProps("email")}/>
-                        {formik.touched.email && formik.errors.email ?
-                            <div style={{color: "red"}}>{formik.errors.email}</div> : null}
-                    </div>
-                    <div>
-                        <input type={"password"} {...formik.getFieldProps("password")}/>
-                        {formik.touched.password && formik.errors.password ?
-                            <div style={{color: "red"}}>{formik.errors.password}</div> : null}
-                    </div>
-                    <div>
-                        <input type={"checkbox"} {...formik.getFieldProps("rememberMe")}/>
-                        <span>Remeber me?</span>
-                    </div>
-                    <button type={"submit"}>Sign In</button>
-                    <p>
-                        <span style={{textDecoration: 'underline', cursor: 'pointer'}} onClick={navigateToForgot}>
-                            Forgot password?
-                        </span>
-                    </p>
-                    <div>
-                        <p>Already have an account</p>
-                        <p>
-                            <span style={{textDecoration: 'underline', cursor: 'pointer'}} onClick={navigateToRegister}>
+                    <FormControl>
+                        <FormGroup>
+                            <Typography variant="h6" style={{alignSelf: 'center', margin: '16px 0'}}>
+                                Sign In
+                            </Typography>
+                            <TextField
+                                label={'Email'}
+                                margin={'normal'}
+                                type={'email'}
+                                {...formik.getFieldProps("email")}
+                                error={formik.touched.email && Boolean(formik.errors.email)}
+                                helperText={formik.touched.email && formik.errors.email}
+                            />
+                            <TextField
+                                label={'Password'}
+                                margin={'normal'}
+                                type={'password'}
+                                {...formik.getFieldProps("password")}
+                                error={formik.touched.password && Boolean(formik.errors.password)}
+                                helperText={formik.touched.password && formik.errors.password}
+                            />
+                            <FormControlLabel
+                                label={'Remember me?'}
+                                control={
+                                    <Checkbox {...formik.getFieldProps("rememberMe")}/>}
+                            />
+                            <Link component="button" onClick={navigateToForgot}
+                                  style={{alignSelf: 'end', marginBottom: '16px'}}>
+                                Forgot password?
+                            </Link>
+                            <Button type={'submit'} variant={'contained'} color={'primary'}>
+                                Sign In
+                            </Button>
+                            <p style={{alignSelf: 'center'}}>Don't have an account?</p>
+                            <Link component="button" onClick={navigateToRegister} variant={'body1'}>
                                 Sign Up
-                            </span>
-                        </p>
-                    </div>
+                            </Link>
+                        </FormGroup>
+                    </FormControl>
                 </form>
-            </div>
-        </div>
+            </Grid>
+        </Grid>
     )
 };

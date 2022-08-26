@@ -6,6 +6,7 @@ import {Register} from "../../../../c2-features/f1-auth/a2-register/r1-ui/Regist
 import {Profile} from "../../../../c2-features/f1-auth/a3-profile/p1-ui/Profile";
 import {Forgot} from "../../../../c2-features/f1-auth/a4-forgot/f1-ui/Forgot";
 import {SetPassword} from "../../../../c2-features/f1-auth/a5-setPassword/s1-ui/SetPassword";
+import {Container} from "@mui/material";
 
 export const PATH = {
     LOGIN: '/login',
@@ -18,9 +19,9 @@ export const PATH = {
 
 export const MyRoutes = () => {
     return (
-        <>
+        <Container fixed>
             <Routes>
-                <Route path={'/'} element={<Navigate to={PATH.LOGIN}/>}/>
+                <Route path={'/'} element={<Navigate to={PATH.PROFILE}/>}/>
                 <Route path={PATH.LOGIN} element={<Login/>}/>
                 <Route path={PATH.REGISTER} element={<Register/>}/>
                 <Route path={PATH.PROFILE} element={<Profile/>}/>
@@ -29,6 +30,6 @@ export const MyRoutes = () => {
                 <Route path={PATH.TEST} element={<Test/>}/>
                 <Route path={'*'} element={<div>ERROR 404</div>}/>
             </Routes>
-        </>
+        </Container>
     )
 };

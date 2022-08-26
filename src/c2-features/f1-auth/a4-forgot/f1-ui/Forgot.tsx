@@ -3,6 +3,7 @@ import {Navigate, useNavigate} from "react-router-dom";
 import {FormikHelpers, useFormik} from "formik";
 import {sendPassword, setSend} from "../../a1-login/l2-bll/authReducer";
 import {useAppDispatch, useAppSelector} from "../../../../c0-common/c1-hooks/hooks";
+import {Button, FormControl, FormGroup, Grid, Link, TextField, Typography} from "@mui/material";
 
 type ForgotErrorsType = {
     email?: string
@@ -52,32 +53,50 @@ export const Forgot: FC = () => {
     }
 
     return (
-        <div>
+        <Grid container justifyContent={'center'} style={{maxWidth: '300px'}}>
             {isSent
                 ?
-                <div>
-                    <h3>Check Email</h3>
-                    <p>We've sent an Email with instructions to {formik.values.email}</p>
-                </div>
+                <Grid item justifyContent={'center'}>
+                    <Typography variant="h6" style={{alignSelf: 'center', margin: '16px 0'}}>
+                        Check Email
+                    </Typography>
+                    <Typography style={{alignSelf: 'center'}}>
+                        We've sent an Email with instructions to {formik.values.email}
+                    </Typography>
+                    <Button variant={'contained'} color={'primary'} onClick={navigateToLogin}>
+                        Back to login
+                    </Button>
+                </Grid>
                 :
-                <form onSubmit={formik.handleSubmit}>
-                    <h3>Forgot your password?</h3>
-                    <div>
-                        <input type={'email'} {...formik.getFieldProps('email')}/>
-                        {formik.touched.email && formik.errors.email ?
-                            <div style={{color: "red"}}>{formik.errors.email}</div> : null}
-                    </div>
-                    <p>Enter your email address and we will send you further instructions</p>
-                    <div>
-                        <button type={'submit'}>Send instructions</button>
-                    </div>
-                    <p>Did you remember your password?</p>
-                    <p>
-                <span style={{textDecoration: 'underline', cursor: 'pointer'}} onClick={navigateToLogin}>
-                    Try loggin in
-                </span>
-                    </p>
-                </form>}
-        </div>
+                <Grid item justifyContent={'center'}>
+                    <form onSubmit={formik.handleSubmit}>
+                        <FormControl>
+                            <FormGroup>
+                                <Typography variant="h6" style={{alignSelf: 'center', margin: '16px 0'}}>
+                                    Forgot your password?
+                                </Typography>
+                                <TextField
+                                    label={'Email'}
+                                    margin={'normal'}
+                                    type={'email'}
+                                    {...formik.getFieldProps("email")}
+                                    error={formik.touched.email && Boolean(formik.errors.email)}
+                                    helperText={formik.touched.email && formik.errors.email}
+                                />
+                                <p style={{alignSelf: 'center'}}>
+                                    Enter your email address and we will send you further instructions
+                                </p>
+                                <Button type={'submit'} variant={'contained'} color={'primary'}>
+                                    Send instructions
+                                </Button>
+                                <p style={{alignSelf: 'center'}}>Did you remember your password?</p>
+                                <Link component="button" onClick={navigateToLogin} variant={'body1'}>
+                                    Try loggin in
+                                </Link>
+                            </FormGroup>
+                        </FormControl>
+                    </form>
+                </Grid>}
+        </Grid>
     )
 };

@@ -3,6 +3,7 @@ import {Navigate, useParams} from "react-router-dom";
 import {FormikHelpers, useFormik} from "formik";
 import {setNewPassword, setStatusPassword} from "../../a1-login/l2-bll/authReducer";
 import {useAppDispatch, useAppSelector} from "../../../../c0-common/c1-hooks/hooks";
+import {Button, FormControl, FormGroup, Grid, TextField, Typography} from "@mui/material";
 
 type FormikErrorType = {
     password?: string
@@ -47,21 +48,32 @@ export const SetPassword: FC = () => {
     }
 
     return (
-        <div>
-            <form onSubmit={formik.handleSubmit}>
-                <h3>Create new password</h3>
-                <div>
-                    <input type={'password'} {...formik.getFieldProps('password')}/>
-                    {formik.touched.password && formik.errors.password ?
-                        <div style={{color: "red"}}>{formik.errors.password}</div> : null}
-                </div>
-                <p>
-                    Create a new password and try to logging in again
-                </p>
-                <button>
-                    Create new password
-                </button>
-            </form>
-        </div>
+        <Grid container justifyContent={'center'} style={{maxWidth: '300px'}}>
+            <Grid item justifyContent={'center'}>
+                <form onSubmit={formik.handleSubmit}>
+                    <FormControl>
+                        <FormGroup>
+                            <Typography variant="h6" style={{alignSelf: 'center', margin: '16px 0'}}>
+                                Create new password
+                            </Typography>
+                            <TextField
+                                label={'Password'}
+                                margin={'normal'}
+                                type={'password'}
+                                {...formik.getFieldProps("password")}
+                                error={formik.touched.password && Boolean(formik.errors.password)}
+                                helperText={formik.touched.password && formik.errors.password}
+                            />
+                            <p style={{alignSelf: 'center'}}>
+                                Create a new password and try to loggin again
+                            </p>
+                            <Button type={'submit'} variant={'contained'} color={'primary'}>
+                                Create new password
+                            </Button>
+                        </FormGroup>
+                    </FormControl>
+                </form>
+            </Grid>
+        </Grid>
     )
 };
