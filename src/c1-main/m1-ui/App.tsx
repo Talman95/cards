@@ -1,17 +1,25 @@
-import React from 'react';
-import {Main} from "./main/Main";
-import {HashRouter} from "react-router-dom";
-import {Provider} from "react-redux";
-import {store} from "../m2-bll/store";
+import React, {useEffect} from 'react';
+import {useAppDispatch, useAppSelector} from "../../c0-common/c1-hooks/hooks";
+import {Header} from "./header/Header";
+import {getAuthData} from "../../c2-features/f1-auth/a1-login/l2-bll/authReducer";
+import {MyRoutes} from "./routes/MyRoutes";
+import {ErrorSnackbar} from "../../c0-common/c2-components/c1-ErrorSnackbar/ErrorSnackbar";
 
 const App = () => {
+    const profile = useAppSelector(state => state.profile.profile)
+    const dispatch = useAppDispatch()
+
+    useEffect(() => {
+        if (!profile) {
+            dispatch(getAuthData())
+        }
+    }, [dispatch, profile])
+
     return (
         <div>
-            <HashRouter>
-                <Provider store={store}>
-                    <Main/>
-                </Provider>
-            </HashRouter>
+            <ErrorSnackbar/>
+            <Header/>
+            <MyRoutes/>
         </div>
     )
 };

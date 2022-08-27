@@ -1,24 +1,20 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {authAPI, LoginParamsType, RegisterParamsType} from "../l3-dal/authAPI";
 import {setProfile} from "../../a3-profile/p2-bll/profileReducer";
-import axios, {AxiosError} from "axios";
+import {handleAppError} from "../../../../c0-common/c3-utils/errorUtils";
+import {setAppStatus} from "../../../../c1-main/m2-bll/appReducer";
 
-export const login = createAsyncThunk<{ login: boolean }, LoginParamsType, {
-    rejectValue: { error: string }
-}>('auth/login',
+export const login = createAsyncThunk(
+    'auth/login',
     async (params: LoginParamsType, thunkAPI) => {
+        thunkAPI.dispatch(setAppStatus('loading'))
         try {
             const res = await authAPI.login(params)
             thunkAPI.dispatch(setProfile({profile: res.data}))
+            thunkAPI.dispatch(setAppStatus('idle'))
             return {login: true}
         } catch (e) {
-            const err = e as Error | AxiosError<{ error: string }>
-            if (axios.isAxiosError(err)) {
-                const error = err.response?.data ? err.response.data.error : err.message
-                return thunkAPI.rejectWithValue({error: error})
-            } else {
-                return thunkAPI.rejectWithValue({error: `Native error ${err.message}`})
-            }
+            return handleAppError(e, thunkAPI)
         }
     })
 export const getAuthData = createAsyncThunk(
@@ -36,65 +32,54 @@ export const getAuthData = createAsyncThunk(
 export const logout = createAsyncThunk(
     'auth/logout',
     async (param: undefined, thunkAPI) => {
+        thunkAPI.dispatch(setAppStatus('loading'))
         try {
             await authAPI.logout()
             thunkAPI.dispatch(setProfile({profile: null}))
+            thunkAPI.dispatch(setAppStatus('idle'))
             return {login: false}
-        } catch {
-            return thunkAPI.rejectWithValue({login: true})
+        } catch (e) {
+            return handleAppError(e, thunkAPI)
         }
     }
 )
-export const register = createAsyncThunk<{ isRegistered: boolean }, RegisterParamsType, {
-    rejectValue: { error: string }
-}>('auth/register',
+export const register = createAsyncThunk(
+    'auth/register',
     async (params: RegisterParamsType, thunkAPI) => {
+        thunkAPI.dispatch(setAppStatus('loading'))
         try {
             await authAPI.register(params)
+            thunkAPI.dispatch(setAppStatus('idle'))
             return {isRegistered: true}
         } catch (e) {
-            const err = e as Error | AxiosError<{ error: string }>
-            if (axios.isAxiosError(err)) {
-                const error = err.response?.data ? err.response.data.error : err.message
-                return thunkAPI.rejectWithValue({error: error})
-            } else {
-                return thunkAPI.rejectWithValue({error: `Native error ${err.message}`})
-            }
+            return handleAppError(e, thunkAPI)
         }
     }
 )
-export const sendPassword = createAsyncThunk<{ isSend: boolean }, string, {
+export const sendPassword = createAsyncThunk<{ isSent: boolean }, string, {
     rejectValue: { error: string }
 }>('auth/sendPassword',
     async (email, thunkAPI) => {
+        thunkAPI.dispatch(setAppStatus('loading'))
         try {
             await authAPI.sendPassword(email)
-            return {isSend: true}
+            thunkAPI.dispatch(setAppStatus('idle'))
+            return {isSent: true}
         } catch (e) {
-            const err = e as Error | AxiosError<{ error: string }>
-            if (axios.isAxiosError(err)) {
-                const error = err.response?.data ? err.response.data.error : err.message
-                return thunkAPI.rejectWithValue({error: error})
-            } else {
-                return thunkAPI.rejectWithValue({error: `Native error ${err.message}`})
-            }
+            return handleAppError(e, thunkAPI)
         }
     })
 export const setNewPassword = createAsyncThunk<{ isChangedPassword: true }, { password: string, token: string | undefined }, {
     rejectValue: { error: string }
 }>('auth/setNewPassword',
     async (param: { password: string, token: string | undefined }, thunkAPI) => {
+        thunkAPI.dispatch(setAppStatus('loading'))
         try {
             await authAPI.setNewPassword(param.password, param.token)
+            thunkAPI.dispatch(setAppStatus('idle'))
             return {isChangedPassword: true}
         } catch (e) {
-            const err = e as Error | AxiosError<{ error: string }>
-            if (axios.isAxiosError(err)) {
-                const error = err.response?.data ? err.response.data.error : err.message
-                return thunkAPI.rejectWithValue({error: error})
-            } else {
-                return thunkAPI.rejectWithValue({error: `Native error ${err.message}`})
-            }
+            return handleAppError(e, thunkAPI)
         }
     })
 
@@ -131,7 +116,7 @@ const slice = createSlice({
             state.isRegistered = action.payload.isRegistered
         })
         builder.addCase(sendPassword.fulfilled, (state, action) => {
-            state.isSent = action.payload.isSend
+            state.isSent = action.payload.isSent
         })
         builder.addCase(setNewPassword.fulfilled, (state, action) => {
             state.isChangedPassword = action.payload.isChangedPassword

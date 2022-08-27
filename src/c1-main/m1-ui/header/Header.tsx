@@ -1,12 +1,12 @@
 import React from 'react';
-import {AppBar, Avatar, Box, IconButton, Menu, MenuItem, Toolbar, Typography} from "@mui/material";
+import {AppBar, Avatar, Box, IconButton, LinearProgress, Menu, MenuItem, Toolbar, Typography} from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
-import {useAppSelector} from "../../../../c0-common/c1-hooks/hooks";
+import {useAppSelector} from "../../../c0-common/c1-hooks/hooks";
 
 export const Header = () => {
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
-    const name = useAppSelector(state => state.profile.profile?.name)
-    const avatar = useAppSelector(state => state.profile.profile?.avatar)
+    const profile = useAppSelector(state => state.profile.profile)
+    const status = useAppSelector(state => state.app.status)
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
     const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -44,8 +44,8 @@ export const Header = () => {
                             >
                                 <Avatar
                                     sx={{width: 45, height: 45}}
-                                    alt={name}
-                                    src={avatar || ''}
+                                    alt={profile?.name}
+                                    src={profile?.avatar || ''}
                                 />
                             </IconButton>
                             <Menu
@@ -68,16 +68,8 @@ export const Header = () => {
                         </div>
                     )}
                 </Toolbar>
+                {status === 'loading' && <LinearProgress/>}
             </AppBar>
         </Box>
     )
 };
-
-// <div className={s.header}>
-//     <NavLink to={PATH.LOGIN}>LOGIN</NavLink>
-//     <NavLink to={PATH.REGISTER}>REGISTER</NavLink>
-//     <NavLink to={PATH.PROFILE}>PROFILE</NavLink>
-//     <NavLink to={PATH.FORGOT_PASSWORD}>FORGOT PASSWORD</NavLink>
-//     <NavLink to={PATH.SET_NEW_PASSWORD}>SET NEW PASSWORD</NavLink>
-//     <NavLink to={PATH.TEST}>TEST</NavLink>
-// </div>

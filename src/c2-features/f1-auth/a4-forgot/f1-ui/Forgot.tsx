@@ -53,19 +53,21 @@ export const Forgot: FC = () => {
     }
 
     return (
-        <Grid container justifyContent={'center'} style={{maxWidth: '300px'}}>
+        <Grid container justifyContent={'center'} style={{maxWidth: '250px'}}>
             {isSent
                 ?
                 <Grid item justifyContent={'center'}>
-                    <Typography variant="h6" style={{alignSelf: 'center', margin: '16px 0'}}>
-                        Check Email
-                    </Typography>
-                    <Typography style={{alignSelf: 'center'}}>
-                        We've sent an Email with instructions to {formik.values.email}
-                    </Typography>
-                    <Button variant={'contained'} color={'primary'} onClick={navigateToLogin}>
-                        Back to login
-                    </Button>
+                    <FormGroup>
+                        <Typography variant="h6" style={{alignSelf: 'center', marginTop: '16px'}}>
+                            Check Email
+                        </Typography>
+                        <Typography style={{margin: '16px 0'}}>
+                            We've sent an Email with instructions to {formik.values.email}
+                        </Typography>
+                        <Button variant={'contained'} color={'primary'} onClick={navigateToLogin}>
+                            Back to login
+                        </Button>
+                    </FormGroup>
                 </Grid>
                 :
                 <Grid item justifyContent={'center'}>

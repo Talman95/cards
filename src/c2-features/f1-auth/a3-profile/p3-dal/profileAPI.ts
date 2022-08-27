@@ -1,4 +1,5 @@
-import {instance, ProfileType} from "../../a1-login/l3-dal/authAPI";
+import {ProfileType} from "../../a1-login/l3-dal/authAPI";
+import {instance} from "../../../../c1-main/m3-dal/instance";
 
 type UpdateProfileType = {
     updatedUser: ProfileType

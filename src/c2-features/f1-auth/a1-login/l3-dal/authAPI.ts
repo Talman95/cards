@@ -1,11 +1,4 @@
-import axios from "axios";
-
-export const instance = axios.create({
-    baseURL:
-        // "http://localhost:7542/2.0/",
-    "https://neko-back.herokuapp.com/2.0/",
-    withCredentials: true,
-})
+import {instance} from "../../../../c1-main/m3-dal/instance";
 
 export type LoginParamsType = {
     email: string

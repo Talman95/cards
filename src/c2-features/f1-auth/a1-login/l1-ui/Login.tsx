@@ -1,8 +1,8 @@
 import React, {FC} from 'react';
-import {FormikHelpers, useFormik} from "formik";
+import {useFormik} from "formik";
 import {login} from "../l2-bll/authReducer";
 import {Navigate, useNavigate} from "react-router-dom";
-import {PATH} from "../../../../c1-main/m1-ui/main/routes/MyRoutes";
+import {PATH} from "../../../../c1-main/m1-ui/routes/MyRoutes";
 import {useAppDispatch, useAppSelector} from "../../../../c0-common/c1-hooks/hooks";
 import {
     Button,
@@ -20,11 +20,6 @@ type FormikErrorType = {
     email?: string
     password?: string
     rememberMe?: boolean
-}
-type FormikValuesType = {
-    email: string
-    password: string
-    rememberMe: boolean
 }
 
 export const Login: FC = () => {
@@ -52,13 +47,8 @@ export const Login: FC = () => {
             }
             return errors;
         },
-        onSubmit: async (values, formikHelpers: FormikHelpers<FormikValuesType>) => {
-            const action = await dispatch(login(values))
-            if (login.rejected.match(action)) {
-                if (action.payload?.error) {
-                    formikHelpers.setFieldError('email', action.payload.error)
-                }
-            }
+        onSubmit: (values) => {
+            dispatch(login(values))
         },
     })
 

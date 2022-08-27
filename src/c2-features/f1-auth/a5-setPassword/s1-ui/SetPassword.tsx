@@ -48,7 +48,7 @@ export const SetPassword: FC = () => {
     }
 
     return (
-        <Grid container justifyContent={'center'} style={{maxWidth: '300px'}}>
+        <Grid container justifyContent={'center'} style={{maxWidth: '250px'}}>
             <Grid item justifyContent={'center'}>
                 <form onSubmit={formik.handleSubmit}>
                     <FormControl>
