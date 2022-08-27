@@ -2,7 +2,7 @@ import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {authAPI, LoginParamsType, RegisterParamsType} from "../l3-dal/authAPI";
 import {setProfile} from "../../a3-profile/p2-bll/profileReducer";
 import {handleAppError} from "../../../../c0-common/c3-utils/errorUtils";
-import {setAppStatus} from "../../../../c1-main/m2-bll/appReducer";
+import {setAppStatus, setInitialization} from "../../../../c1-main/m2-bll/appReducer";
 
 export const login = createAsyncThunk(
     'auth/login',
@@ -20,11 +20,16 @@ export const login = createAsyncThunk(
 export const getAuthData = createAsyncThunk(
     'auth/authMe',
     async (param: undefined, thunkAPI) => {
+        thunkAPI.dispatch(setAppStatus('loading'))
         try {
             const res = await authAPI.authMe()
             thunkAPI.dispatch(setProfile({profile: res.data}))
+            thunkAPI.dispatch(setAppStatus('idle'))
+            thunkAPI.dispatch(setInitialization(true))
             return {login: true}
         } catch {
+            thunkAPI.dispatch(setAppStatus('failed'))
+            thunkAPI.dispatch(setInitialization(true))
             return thunkAPI.rejectWithValue({login: false})
         }
     }
