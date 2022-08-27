@@ -6,6 +6,7 @@ type InitType = {
     status: AppStatusType
     error: string | null
     isInitialized: boolean
+    message: string | null
 }
 
 const slice = createSlice({
@@ -14,6 +15,7 @@ const slice = createSlice({
         status: 'idle',
         error: null,
         isInitialized: false,
+        message: null,
     } as InitType,
     reducers: {
         setAppStatus: (state, action: PayloadAction<AppStatusType>) => {
@@ -25,8 +27,16 @@ const slice = createSlice({
         setInitialization: (state, action: PayloadAction<boolean>) => {
             state.isInitialized = action.payload
         },
+        setAppMessage: (state, action: PayloadAction<string | null>) => {
+            state.message = action.payload
+        }
     },
 })
 
-export const {setAppStatus, setAppError, setInitialization} = slice.actions
+export const {
+    setAppStatus,
+    setAppError,
+    setInitialization,
+    setAppMessage,
+} = slice.actions
 export const appReducer = slice.reducer

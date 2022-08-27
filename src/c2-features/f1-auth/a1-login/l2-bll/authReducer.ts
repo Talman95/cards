@@ -2,7 +2,7 @@ import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {authAPI, LoginParamsType, RegisterParamsType} from "../l3-dal/authAPI";
 import {setProfile} from "../../a3-profile/p2-bll/profileReducer";
 import {handleAppError} from "../../../../c0-common/c3-utils/errorUtils";
-import {setAppStatus, setInitialization} from "../../../../c1-main/m2-bll/appReducer";
+import {setAppMessage, setAppStatus, setInitialization} from "../../../../c1-main/m2-bll/appReducer";
 
 export const login = createAsyncThunk(
     'auth/login',
@@ -32,8 +32,7 @@ export const getAuthData = createAsyncThunk(
             thunkAPI.dispatch(setInitialization(true))
             return thunkAPI.rejectWithValue({login: false})
         }
-    }
-)
+    })
 export const logout = createAsyncThunk(
     'auth/logout',
     async (param: undefined, thunkAPI) => {
@@ -46,8 +45,7 @@ export const logout = createAsyncThunk(
         } catch (e) {
             return handleAppError(e, thunkAPI)
         }
-    }
-)
+    })
 export const register = createAsyncThunk(
     'auth/register',
     async (params: RegisterParamsType, thunkAPI) => {
@@ -55,12 +53,12 @@ export const register = createAsyncThunk(
         try {
             await authAPI.register(params)
             thunkAPI.dispatch(setAppStatus('idle'))
+            thunkAPI.dispatch(setAppMessage('Registration is successful'))
             return {isRegistered: true}
         } catch (e) {
             return handleAppError(e, thunkAPI)
         }
-    }
-)
+    })
 export const sendPassword = createAsyncThunk<{ isSent: boolean }, string, {
     rejectValue: { error: string }
 }>('auth/sendPassword',
@@ -69,6 +67,7 @@ export const sendPassword = createAsyncThunk<{ isSent: boolean }, string, {
         try {
             await authAPI.sendPassword(email)
             thunkAPI.dispatch(setAppStatus('idle'))
+            thunkAPI.dispatch(setAppMessage('Message has been sent successfully'))
             return {isSent: true}
         } catch (e) {
             return handleAppError(e, thunkAPI)
@@ -82,6 +81,7 @@ export const setNewPassword = createAsyncThunk<{ isChangedPassword: true }, { pa
         try {
             await authAPI.setNewPassword(param.password, param.token)
             thunkAPI.dispatch(setAppStatus('idle'))
+            thunkAPI.dispatch(setAppMessage('Password has been changed successfully'))
             return {isChangedPassword: true}
         } catch (e) {
             return handleAppError(e, thunkAPI)

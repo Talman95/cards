@@ -5,6 +5,7 @@ import {getAuthData} from "../../c2-features/f1-auth/a1-login/l2-bll/authReducer
 import {MyRoutes} from "./routes/MyRoutes";
 import {ErrorSnackbar} from "../../c0-common/c2-components/c1-ErrorSnackbar/ErrorSnackbar";
 import {CircularProgress} from "@mui/material";
+import {SuccessSnackbar} from "../../c0-common/c2-components/c2-SuccessSnackbar/SuccessSnackbar";
 
 const App = () => {
     const profile = useAppSelector(state => state.profile.profile)
@@ -26,6 +27,7 @@ const App = () => {
 
     return (
         <div>
+            <SuccessSnackbar/>
             <ErrorSnackbar/>
             <Header/>
             <MyRoutes/>
