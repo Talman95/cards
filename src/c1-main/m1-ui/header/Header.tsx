@@ -33,7 +33,15 @@ export const Header = () => {
                         Cards App
                     </Typography>
                     {isLoggedIn && (
-                        <div>
+                        <div style={{display: 'flex', alignItems: 'center'}}>
+                            <Typography variant="h6" style={{
+                                textOverflow: 'ellipsis',
+                                maxWidth: '250px',
+                                whiteSpace: 'nowrap',
+                                overflow: 'hidden',
+                            }}>
+                                {profile?.name}
+                            </Typography>
                             <IconButton
                                 size="large"
                                 aria-label="account of current user"

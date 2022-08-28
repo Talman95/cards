@@ -18,7 +18,7 @@ export const PATH = {
 
 export const MyRoutes = () => {
     return (
-        <Container fixed style={{display: 'flex', justifyContent:'center'}}>
+        <Container fixed style={{display: 'flex', justifyContent:'center', marginTop: '30px'}}>
             <Routes>
                 <Route path={'/'} element={<Navigate to={PATH.PROFILE}/>}/>
                 <Route path={PATH.LOGIN} element={<Login/>}/>
