@@ -11,13 +11,12 @@ import {
     TablePagination,
     TableRow,
     TextField,
-    ToggleButton,
-    ToggleButtonGroup,
     Typography
 } from "@mui/material";
 import {useAppDispatch, useAppSelector} from "../../../c0-common/c1-hooks/hooks";
-import {getPacks, setCurrentPage, setPageCount, setShowPacks, ShowPacksType} from "../p2-bll/packsReducer";
+import {getPacks, setCurrentPage, setPageCount} from "../p2-bll/packsReducer";
 import {Navigate} from "react-router-dom";
+import {ToggleButtonBox} from "./ToggleButtonBox/ToggleButtonBox";
 
 export const PacksList: FC = () => {
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
@@ -42,9 +41,6 @@ export const PacksList: FC = () => {
     const handleChangeRowsPerPage = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         dispatch(setPageCount(+event.target.value))
     }
-    const handleChangeShowPacks = (event: React.MouseEvent<HTMLElement>, value: ShowPacksType) => {
-        dispatch(setShowPacks(value))
-    }
 
     useEffect(() => {
         dispatch(getPacks())
@@ -65,20 +61,7 @@ export const PacksList: FC = () => {
                     <Typography variant={'body2'}>Search</Typography>
                     <TextField size={'small'}/>
                 </Box>
-                <Box>
-                    <Typography variant={'body2'}>Show packs cards</Typography>
-                    <ToggleButtonGroup
-                        color={'primary'}
-                        value={showPacks}
-                        exclusive
-                        onChange={handleChangeShowPacks}
-                        aria-label={'Platform'}
-                        size={'small'}
-                    >
-                        <ToggleButton value={'My'}>My</ToggleButton>
-                        <ToggleButton value={'All'}>All</ToggleButton>
-                    </ToggleButtonGroup>
-                </Box>
+                <ToggleButtonBox/>
             </Box>
 
             <TableContainer component={Paper}>
