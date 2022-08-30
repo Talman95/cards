@@ -1,5 +1,5 @@
 import React, {ChangeEvent, FC, KeyboardEvent, useState} from 'react';
-import {Navigate} from "react-router-dom";
+import {Navigate, useNavigate} from "react-router-dom";
 import {logout} from "../../a1-login/l2-bll/authReducer";
 import {useAppDispatch, useAppSelector} from "../../../../c0-common/c1-hooks/hooks";
 import {updateProfile} from "../p2-bll/profileReducer";
@@ -20,6 +20,7 @@ import EditIcon from '@mui/icons-material/Edit';
 export const Profile: FC = () => {
     const profile = useAppSelector(state => state.profile.profile)
     const dispatch = useAppDispatch()
+    const navigate = useNavigate()
     const logoutHandler = () => dispatch(logout())
     const [name, setName] = useState<string>(profile?.name || '')
     const [editMode, setEditMode] = useState(false)
@@ -37,6 +38,9 @@ export const Profile: FC = () => {
         if (e.key === 'Enter') {
             offEditMode()
         }
+    }
+    const navigateToPacks = () => {
+        navigate('/packs')
     }
 
     if (!profile) {
@@ -83,6 +87,9 @@ export const Profile: FC = () => {
                     </CardActions>
                 }
                 <Typography color="text.secondary">{profile.email}</Typography>
+                <Button onClick={() => navigateToPacks()}>
+                    Packs
+                </Button>
                 <Button
                     variant="outlined"
                     startIcon={<LogoutIcon/>}

@@ -6,6 +6,7 @@ import {Profile} from "../../../c2-features/f1-auth/a3-profile/p1-ui/Profile";
 import {Forgot} from "../../../c2-features/f1-auth/a4-forgot/f1-ui/Forgot";
 import {SetPassword} from "../../../c2-features/f1-auth/a5-setPassword/s1-ui/SetPassword";
 import {Container} from "@mui/material";
+import {PacksList} from "../../../c2-features/f2-packs/p1-ui/PacksList";
 
 export const PATH = {
     LOGIN: '/login',
@@ -14,11 +15,12 @@ export const PATH = {
     FORGOT_PASSWORD: '/forgot',
     SET_NEW_PASSWORD: '/set-new-password/:token',
     TEST: '/test',
+    PACKS: '/packs',
 }
 
 export const MyRoutes = () => {
     return (
-        <Container fixed style={{display: 'flex', justifyContent:'center', marginTop: '30px'}}>
+        <Container fixed style={{display: 'flex', justifyContent: 'center', marginTop: '30px'}}>
             <Routes>
                 <Route path={'/'} element={<Navigate to={PATH.PROFILE}/>}/>
                 <Route path={PATH.LOGIN} element={<Login/>}/>
@@ -26,6 +28,7 @@ export const MyRoutes = () => {
                 <Route path={PATH.PROFILE} element={<Profile/>}/>
                 <Route path={PATH.FORGOT_PASSWORD} element={<Forgot/>}/>
                 <Route path={PATH.SET_NEW_PASSWORD} element={<SetPassword/>}/>
+                <Route path={PATH.PACKS} element={<PacksList/>}/>
                 <Route path={'*'} element={<div>ERROR 404</div>}/>
             </Routes>
         </Container>
