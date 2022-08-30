@@ -1,12 +1,10 @@
 import {instance} from "../../../c1-main/m3-dal/instance";
 
-type sortPacksType = '0updated' | '1updated'
-
 export type GetPacksParamsType = {
     packName?: string
     min?: number
     max?: number
-    sortPacks?: sortPacksType
+    sortPacks?: string
     page?: number
     pageCount?: number
     user_id?: string

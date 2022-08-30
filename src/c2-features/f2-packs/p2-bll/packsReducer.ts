@@ -1,11 +1,34 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {GetPacksParamsType, packsAPI, PackType} from "../p3-dal/packsAPI";
+import {packsAPI, PackType} from "../p3-dal/packsAPI";
+import {RootState} from "../../../c1-main/m2-bll/store";
+
+export type ShowPacksType = 'My' | 'All'
 
 export const getPacks = createAsyncThunk(
     'packs/getPacks',
-    async (params: GetPacksParamsType, thunkAPI) => {
+    async (params: undefined, thunkAPI) => {
         try {
-            const res = await packsAPI.getPacks(params)
+            const state = thunkAPI.getState() as RootState
+            const {
+                packName,
+                min,
+                max,
+                sortPacks,
+                page,
+                pageCount,
+                showPacks,
+            } = state.packs
+            const user_id = state.profile.profile?._id
+            let res;
+            if (showPacks === 'My' && user_id) {
+                res = await packsAPI.getPacks(
+                    {packName, min, max, sortPacks, page, pageCount, user_id}
+                )
+            } else {
+                res = await packsAPI.getPacks(
+                    {packName, min, max, sortPacks, page, pageCount}
+                )
+            }
             return res.data
         } catch {
             return thunkAPI.rejectWithValue(null)
@@ -18,10 +41,13 @@ const slice = createSlice({
     initialState: {
         cardPacks: [] as PackType[],
         cardPacksTotalCount: 0,
-        maxCardsCount: 0,
-        minCardsCount: 0,
+        max: 1000,
+        min: 0,
         page: 1,
         pageCount: 10,
+        packName: '',
+        sortPacks: '0updated',
+        showPacks: 'All' as ShowPacksType,
     },
     reducers: {
         setCurrentPage: (state, action: PayloadAction<number>) => {
@@ -29,15 +55,17 @@ const slice = createSlice({
         },
         setPageCount: (state, action: PayloadAction<number>) => {
             state.pageCount = action.payload
+            state.page = 1
+        },
+        setShowPacks: (state, action: PayloadAction<ShowPacksType>) => {
+            state.showPacks = action.payload
+            state.page = 1
         }
     },
     extraReducers: builder => {
         builder.addCase(getPacks.fulfilled, (state, action) => {
             state.cardPacks = action.payload.cardPacks
             state.cardPacksTotalCount = action.payload.cardPacksTotalCount
-            state.maxCardsCount = action.payload.maxCardsCount
-            state.minCardsCount = action.payload.minCardsCount
-            state.page = action.payload.page
         })
     }
 })
@@ -45,5 +73,6 @@ const slice = createSlice({
 export const packsReducer = slice.reducer
 export const {
     setCurrentPage,
-    setPageCount
+    setPageCount,
+    setShowPacks,
 } = slice.actions

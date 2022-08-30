@@ -1,6 +1,7 @@
 import React, {ChangeEvent, FC, MouseEvent, useEffect} from 'react';
 import {
     Box,
+    Button,
     Paper,
     Table,
     TableBody,
@@ -8,30 +9,46 @@ import {
     TableContainer,
     TableHead,
     TablePagination,
-    TableRow
+    TableRow,
+    TextField,
+    ToggleButton,
+    ToggleButtonGroup,
+    Typography
 } from "@mui/material";
 import {useAppDispatch, useAppSelector} from "../../../c0-common/c1-hooks/hooks";
-import {getPacks, setCurrentPage, setPageCount} from "../p2-bll/packsReducer";
+import {getPacks, setCurrentPage, setPageCount, setShowPacks, ShowPacksType} from "../p2-bll/packsReducer";
 import {Navigate} from "react-router-dom";
 
 export const PacksList: FC = () => {
-    const cardPacks = useAppSelector(state => state.packs.cardPacks)
-    const totalCount = useAppSelector(state => state.packs.cardPacksTotalCount)
-    const currentPage = useAppSelector(state => state.packs.page)
-    const rowsPerPage = useAppSelector(state => state.packs.pageCount)
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
+    const {
+        cardPacks,
+        cardPacksTotalCount,
+        packName,
+        min,
+        max,
+        sortPacks,
+        page,
+        pageCount,
+        showPacks,
+    } = useAppSelector(state => state.packs)
+
     const dispatch = useAppDispatch()
 
     const handleChangePage = (event: MouseEvent<HTMLButtonElement> | null, page: number) => {
-        dispatch(setCurrentPage(page))
+        const currentPage = page + 1
+        dispatch(setCurrentPage(currentPage))
     }
     const handleChangeRowsPerPage = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-        dispatch(setPageCount(+event.currentTarget.value))
+        dispatch(setPageCount(+event.target.value))
+    }
+    const handleChangeShowPacks = (event: React.MouseEvent<HTMLElement>, value: ShowPacksType) => {
+        dispatch(setShowPacks(value))
     }
 
     useEffect(() => {
-        dispatch(getPacks({pageCount: 10}))
-    }, [dispatch])
+        dispatch(getPacks())
+    }, [packName, min, max, sortPacks, page, pageCount, showPacks, dispatch])
 
     if (!isLoggedIn) {
         return <Navigate to={'/login'}/>
@@ -39,44 +56,69 @@ export const PacksList: FC = () => {
 
     return (
         <Box>
+            <Box style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px'}}>
+                <Typography variant={'h6'}>Packs list</Typography>
+                <Button variant={'contained'}>Add new pack</Button>
+            </Box>
+            <Box style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+                <Box>
+                    <Typography variant={'body2'}>Search</Typography>
+                    <TextField size={'small'}/>
+                </Box>
+                <Box>
+                    <Typography variant={'body2'}>Show packs cards</Typography>
+                    <ToggleButtonGroup
+                        color={'primary'}
+                        value={showPacks}
+                        exclusive
+                        onChange={handleChangeShowPacks}
+                        aria-label={'Platform'}
+                        size={'small'}
+                    >
+                        <ToggleButton value={'My'}>My</ToggleButton>
+                        <ToggleButton value={'All'}>All</ToggleButton>
+                    </ToggleButtonGroup>
+                </Box>
+            </Box>
+
             <TableContainer component={Paper}>
-                <Table sx={{minWidth: 650}} aria-label="simple table">
+                <Table sx={{minWidth: 650}} aria-label={'simple table'}>
                     <TableHead>
                         <TableRow>
                             <TableCell>Name</TableCell>
-                            <TableCell align="right">Cards</TableCell>
-                            <TableCell align="right">Last Updated</TableCell>
-                            <TableCell align="right">Created by</TableCell>
-                            <TableCell align="right">Actions</TableCell>
+                            <TableCell align={'left'}>Cards</TableCell>
+                            <TableCell align={'left'}>Last Updated</TableCell>
+                            <TableCell align={'left'}>Created by</TableCell>
+                            <TableCell align={'left'}>Actions</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {cardPacks.map((p) => (
                             <TableRow
-                                key={p.name}
+                                key={p._id}
                                 sx={{'&:last-child td, &:last-child th': {border: 0}}}
                             >
-                                <TableCell component="th" scope="row">
+                                <TableCell component={'th'} scope={'row'}>
                                     {p.name}
                                 </TableCell>
-                                <TableCell align="right">{p.cardsCount}</TableCell>
-                                <TableCell align="right">{p.updated}</TableCell>
-                                <TableCell align="right">{p.created}</TableCell>
-                                <TableCell align="right">Actions</TableCell>
+                                <TableCell align={'left'}>{p.cardsCount}</TableCell>
+                                <TableCell align={'left'}>{p.updated}</TableCell>
+                                <TableCell align={'left'}>{p.created}</TableCell>
+                                <TableCell align={'left'}>Actions</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
                 </Table>
-                <TablePagination
-                    rowsPerPageOptions={[5, 10, 20]}
-                    component="div"
-                    count={totalCount}
-                    rowsPerPage={rowsPerPage}
-                    page={currentPage}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                />
             </TableContainer>
+            <TablePagination
+                rowsPerPageOptions={[5, 10, 20]}
+                component={'div'}
+                count={cardPacksTotalCount}
+                rowsPerPage={pageCount}
+                page={page - 1}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+            />
         </Box>
     );
 };
