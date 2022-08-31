@@ -60,11 +60,22 @@ const slice = createSlice({
         setShowPacks: (state, action: PayloadAction<ShowPacksType>) => {
             state.showPacks = action.payload
             state.page = 1
+            state.min = 0
+            state.max = 150
         },
         setMinMaxCount: (state, action: PayloadAction<{min: number, max: number}>) => {
             state.min = action.payload.min
             state.max = action.payload.max
             state.page = 1
+        },
+        setDefaultValues: (state, action: PayloadAction<undefined>) => {
+            state.page = 1
+            state.min = 0
+            state.max = 150
+            state.pageCount = 10
+            state.packName = ''
+            state.showPacks = 'All'
+            state.sortPacks = '0updated'
         },
     },
     extraReducers: builder => {
@@ -81,4 +92,5 @@ export const {
     setPageCount,
     setShowPacks,
     setMinMaxCount,
+    setDefaultValues
 } = slice.actions

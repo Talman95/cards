@@ -3,12 +3,17 @@ import {Box, ToggleButton, ToggleButtonGroup, Typography} from "@mui/material";
 import {setShowPacks, ShowPacksType} from "../../p2-bll/packsReducer";
 import {useAppDispatch, useAppSelector} from "../../../../c0-common/c1-hooks/hooks";
 
-export const ToggleButtonBox: FC = memo(() => {
+type ToggleButtonBoxType = {
+    setValues: () => void
+}
+
+export const ToggleButtonBox: FC<ToggleButtonBoxType> = memo(({setValues}) => {
     console.log('Button Box')
     const dispatch = useAppDispatch()
     const showPacks = useAppSelector(state => state.packs.showPacks)
     const handleChangeShowPacks = (event: React.MouseEvent<HTMLElement>, value: ShowPacksType) => {
         dispatch(setShowPacks(value))
+        setValues()
     }
     return (
         <Box>

@@ -1,4 +1,4 @@
-import React, {ChangeEvent, FC, MouseEvent, useEffect} from 'react';
+import React, {ChangeEvent, FC, MouseEvent, useCallback, useEffect, useState} from 'react';
 import {
     Box,
     Button,
@@ -14,12 +14,14 @@ import {
     Typography
 } from "@mui/material";
 import {useAppDispatch, useAppSelector} from "../../../c0-common/c1-hooks/hooks";
-import {getPacks, setCurrentPage, setPageCount} from "../p2-bll/packsReducer";
+import {getPacks, setCurrentPage, setDefaultValues, setMinMaxCount, setPageCount} from "../p2-bll/packsReducer";
 import {Navigate} from "react-router-dom";
 import {ToggleButtonBox} from "./ToggleButtonBox/ToggleButtonBox";
 import {DoubleRangeCards} from "./DoubleRangeCards/DoubleRangeCards";
+import {ResetSettings} from "./ResetSettings/ResetSettings";
 
 export const PacksList: FC = () => {
+    const dispatch = useAppDispatch()
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
     const {
         cardPacks,
@@ -32,8 +34,19 @@ export const PacksList: FC = () => {
         pageCount,
         showPacks,
     } = useAppSelector(state => state.packs)
+    const [values, setValues] = useState<number[]>([min, max])
 
-    const dispatch = useAppDispatch()
+    const setValuesHandler = useCallback((values: number[]) => {
+        setValues(values)
+    }, [])
+    const resetValuesHandler = useCallback(() => {
+        setValues([0, 150])
+        setMinMaxCount({min: 0, max: 150})
+    }, [])
+    const setDefaultValuesHandler = useCallback(() => {
+        setValues([0, 150])
+        dispatch(setDefaultValues())
+    }, [dispatch])
 
     const handleChangePage = (event: MouseEvent<HTMLButtonElement> | null, page: number) => {
         const currentPage = page + 1
@@ -52,7 +65,7 @@ export const PacksList: FC = () => {
     }
 
     return (
-        <Box>
+        <Box style={{width: '800px'}}>
             <Box style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px'}}>
                 <Typography variant={'h6'}>Packs list</Typography>
                 <Button variant={'contained'}>Add new pack</Button>
@@ -62,8 +75,9 @@ export const PacksList: FC = () => {
                     <Typography variant={'body2'}>Search</Typography>
                     <TextField size={'small'}/>
                 </Box>
-                <ToggleButtonBox/>
-                <DoubleRangeCards/>
+                <ToggleButtonBox setValues={resetValuesHandler}/>
+                <DoubleRangeCards values={values} setValues={setValuesHandler}/>
+                <ResetSettings setValues={setDefaultValuesHandler}/>
             </Box>
 
             <TableContainer component={Paper}>
@@ -106,4 +120,4 @@ export const PacksList: FC = () => {
             />
         </Box>
     );
-};
+}

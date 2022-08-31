@@ -1,16 +1,20 @@
-import React, {FC} from 'react';
+import React, {FC, memo} from 'react';
 import {Box, Slider, Stack, Typography} from "@mui/material";
-import {useAppDispatch, useAppSelector} from "../../../../c0-common/c1-hooks/hooks";
+import {useAppDispatch} from "../../../../c0-common/c1-hooks/hooks";
 import {setMinMaxCount} from "../../p2-bll/packsReducer";
 
 function valuetext(value: number) {
     return `${value}°C`;
 }
 
-export const DoubleRangeCards: FC = () => {
+type DoubleRangeCardsType = {
+    values: number[]
+    setValues: (value: number[]) => void
+}
+
+export const DoubleRangeCards: FC<DoubleRangeCardsType> = memo(({values, setValues}) => {
+    console.log('Double range')
     const dispatch = useAppDispatch()
-    const {min, max} = useAppSelector(state => state.packs)
-    const [values, setValues] = React.useState<number[]>([min, max])
 
     const handleChange = (
         e: Event,
@@ -32,7 +36,7 @@ export const DoubleRangeCards: FC = () => {
     }
 
     return (
-        <Box sx={{width: 250}}>
+        <Box sx={{width: '250px'}}>
             <Typography variant={'body2'}>Number of cards</Typography>
             <Stack spacing={2} direction="row" sx={{mb: 1}} alignItems="center">
                 <Typography variant={'body2'} style={{minWidth: '16px'}}>{values[0]}</Typography>
@@ -49,4 +53,4 @@ export const DoubleRangeCards: FC = () => {
             </Stack>
         </Box>
     );
-}
+})
