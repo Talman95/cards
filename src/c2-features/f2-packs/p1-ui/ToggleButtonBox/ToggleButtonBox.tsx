@@ -20,9 +20,10 @@ export const ToggleButtonBox: FC = memo(() => {
                 onChange={handleChangeShowPacks}
                 aria-label={'Platform'}
                 size={'small'}
+                style={{width: '120px'}}
             >
-                <ToggleButton value={'My'}>My</ToggleButton>
-                <ToggleButton value={'All'}>All</ToggleButton>
+                <ToggleButton style={{width: '-webkit-fill-available'}} value={'My'}>My</ToggleButton>
+                <ToggleButton style={{width: '-webkit-fill-available'}} value={'All'}>All</ToggleButton>
             </ToggleButtonGroup>
         </Box>
     );

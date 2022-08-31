@@ -10,12 +10,21 @@ export type GetPacksParamsType = {
     user_id?: string
 }
 export type PackType = {
-    _id: string
-    user_id: string
-    name: string
     cardsCount: number
-    created: string
-    updated: string
+    created: string // data
+    grade: number
+    more_id: string
+    name: string
+    path: string
+    private: boolean
+    rating: number
+    shots: number
+    type: string
+    updated: string // data
+    user_id: string
+    user_name: string
+    __v: number
+    _id: string
 }
 type GetPacksType = {
     cardPacks: Array<PackType>

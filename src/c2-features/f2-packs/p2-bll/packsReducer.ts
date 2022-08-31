@@ -41,7 +41,7 @@ const slice = createSlice({
     initialState: {
         cardPacks: [] as PackType[],
         cardPacksTotalCount: 0,
-        max: 1000,
+        max: 150,
         min: 0,
         page: 1,
         pageCount: 10,
@@ -60,7 +60,12 @@ const slice = createSlice({
         setShowPacks: (state, action: PayloadAction<ShowPacksType>) => {
             state.showPacks = action.payload
             state.page = 1
-        }
+        },
+        setMinMaxCount: (state, action: PayloadAction<{min: number, max: number}>) => {
+            state.min = action.payload.min
+            state.max = action.payload.max
+            state.page = 1
+        },
     },
     extraReducers: builder => {
         builder.addCase(getPacks.fulfilled, (state, action) => {
@@ -75,4 +80,5 @@ export const {
     setCurrentPage,
     setPageCount,
     setShowPacks,
+    setMinMaxCount,
 } = slice.actions

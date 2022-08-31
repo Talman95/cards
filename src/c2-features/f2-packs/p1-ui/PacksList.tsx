@@ -17,6 +17,7 @@ import {useAppDispatch, useAppSelector} from "../../../c0-common/c1-hooks/hooks"
 import {getPacks, setCurrentPage, setPageCount} from "../p2-bll/packsReducer";
 import {Navigate} from "react-router-dom";
 import {ToggleButtonBox} from "./ToggleButtonBox/ToggleButtonBox";
+import {DoubleRangeCards} from "./DoubleRangeCards/DoubleRangeCards";
 
 export const PacksList: FC = () => {
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
@@ -62,6 +63,7 @@ export const PacksList: FC = () => {
                     <TextField size={'small'}/>
                 </Box>
                 <ToggleButtonBox/>
+                <DoubleRangeCards/>
             </Box>
 
             <TableContainer component={Paper}>
@@ -86,7 +88,7 @@ export const PacksList: FC = () => {
                                 </TableCell>
                                 <TableCell align={'left'}>{p.cardsCount}</TableCell>
                                 <TableCell align={'left'}>{p.updated}</TableCell>
-                                <TableCell align={'left'}>{p.created}</TableCell>
+                                <TableCell align={'left'}>{p.user_name}</TableCell>
                                 <TableCell align={'left'}>Actions</TableCell>
                             </TableRow>
                         ))}
