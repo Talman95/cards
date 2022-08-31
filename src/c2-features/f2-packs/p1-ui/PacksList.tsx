@@ -1,8 +1,8 @@
 import React, {ChangeEvent, FC, MouseEvent, useCallback, useEffect, useState} from 'react';
 import {
     Box,
-    Button,
-    Paper,
+    Button, IconButton,
+    Paper, Stack,
     Table,
     TableBody,
     TableCell,
@@ -19,6 +19,9 @@ import {Navigate} from "react-router-dom";
 import {ToggleButtonBox} from "./ToggleButtonBox/ToggleButtonBox";
 import {DoubleRangeCards} from "./DoubleRangeCards/DoubleRangeCards";
 import {ResetSettings} from "./ResetSettings/ResetSettings";
+import SchoolIcon from '@mui/icons-material/School';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 export const PacksList: FC = () => {
     const dispatch = useAppDispatch()
@@ -34,6 +37,7 @@ export const PacksList: FC = () => {
         pageCount,
         showPacks,
     } = useAppSelector(state => state.packs)
+    const user_id = useAppSelector(state => state.profile.profile?._id)
     const [values, setValues] = useState<number[]>([min, max])
 
     const setValuesHandler = useCallback((values: number[]) => {
@@ -103,7 +107,27 @@ export const PacksList: FC = () => {
                                 <TableCell align={'left'}>{p.cardsCount}</TableCell>
                                 <TableCell align={'left'}>{p.updated}</TableCell>
                                 <TableCell align={'left'}>{p.user_name}</TableCell>
-                                <TableCell align={'left'}>Actions</TableCell>
+                                <TableCell align={'left'} style={{width: '100px'}}>
+                                    {user_id === p.user_id
+                                        ?
+                                        <Stack direction={'row'} alignItems={'center'} spacing={1}>
+                                            <IconButton aria-label={'delete'} size={'small'}>
+                                                <SchoolIcon fontSize={'small'}/>
+                                            </IconButton>
+                                            <IconButton aria-label={'delete'} size={'small'}>
+                                                <EditIcon fontSize={'small'}/>
+                                            </IconButton>
+                                            <IconButton aria-label={'delete'} size={'small'}>
+                                                <DeleteIcon fontSize={'small'}/>
+                                            </IconButton>
+                                        </Stack>
+                                        :
+                                        <Stack direction={'row'} alignItems={'flex-start'} spacing={1}>
+                                            <IconButton aria-label={'delete'} size={'small'}>
+                                                <SchoolIcon fontSize={'small'}/>
+                                            </IconButton>
+                                        </Stack>}
+                                </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
