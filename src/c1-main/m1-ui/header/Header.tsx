@@ -1,9 +1,13 @@
 import React from 'react';
 import {AppBar, Avatar, Box, IconButton, LinearProgress, Menu, MenuItem, Toolbar, Typography} from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
-import {useAppSelector} from "../../../c0-common/c1-hooks/hooks";
+import {useAppDispatch, useAppSelector} from "../../../c0-common/c1-hooks/hooks";
+import {useNavigate} from "react-router-dom";
+import {logout} from "../../../c2-features/f1-auth/a1-login/l2-bll/authReducer";
 
 export const Header = () => {
+    const dispatch = useAppDispatch()
+    const navigate = useNavigate()
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
     const profile = useAppSelector(state => state.profile.profile)
     const status = useAppSelector(state => state.app.status)
@@ -14,6 +18,18 @@ export const Header = () => {
     }
     const handleClose = () => {
         setAnchorEl(null);
+    }
+    const navigateToProfile = () => {
+        navigate('/profile')
+        handleClose()
+    }
+    const logoutHandler = () => {
+        dispatch(logout())
+        handleClose()
+    }
+    const navigateToPacksList = () => {
+        navigate('/packs')
+        handleClose()
     }
 
     return (
@@ -71,7 +87,9 @@ export const Header = () => {
                                 open={Boolean(anchorEl)}
                                 onClose={handleClose}
                             >
-                                <MenuItem onClick={handleClose}>Profile</MenuItem>
+                                <MenuItem onClick={navigateToProfile}>Profile</MenuItem>
+                                <MenuItem onClick={navigateToPacksList}>Packs list</MenuItem>
+                                <MenuItem onClick={logoutHandler}>Log out</MenuItem>
                             </Menu>
                         </div>
                     )}
