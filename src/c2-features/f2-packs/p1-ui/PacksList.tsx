@@ -22,16 +22,18 @@ import {
     setMinMaxCount,
     setPageCount
 } from "../p2-bll/packsReducer";
-import {Navigate} from "react-router-dom";
+import {Navigate, useNavigate} from "react-router-dom";
 import {ToggleButtonBox} from "./ToggleButtonBox/ToggleButtonBox";
 import {DoubleRangeCards} from "./DoubleRangeCards/DoubleRangeCards";
 import {ResetSettings} from "./ResetSettings/ResetSettings";
 import SchoolIcon from '@mui/icons-material/School';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import {PATH} from "../../../c1-main/m1-ui/routes/MyRoutes";
 
 export const PacksList: FC = () => {
     const dispatch = useAppDispatch()
+    const navigate = useNavigate()
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
     const {
         cardPacks,
@@ -75,6 +77,9 @@ export const PacksList: FC = () => {
     const handleChangeRowsPerPage = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         dispatch(setPageCount(+event.target.value))
     }
+    const navigateToCardsList = () => {
+        navigate(PATH.CARDS)
+    }
 
     if (!isLoggedIn) {
         return <Navigate to={'/login'}/>
@@ -102,7 +107,7 @@ export const PacksList: FC = () => {
                 <Table sx={{minWidth: 650}} aria-label={'simple table'}>
                     <TableHead>
                         <TableRow>
-                            <TableCell>Name</TableCell>
+                            <TableCell align={'left'}>Name</TableCell>
                             <TableCell align={'left'}>Cards</TableCell>
                             <TableCell align={'left'}>Last Updated</TableCell>
                             <TableCell align={'left'}>Created by</TableCell>
@@ -114,8 +119,12 @@ export const PacksList: FC = () => {
                             <TableRow
                                 key={p._id}
                                 sx={{'&:last-child td, &:last-child th': {border: 0}}}
+                                hover
                             >
-                                <TableCell component={'th'} scope={'row'}>
+                                <TableCell component={'th'} scope={'row'} align={'left'}
+                                           onClick={navigateToCardsList}
+                                           style={{cursor: 'pointer'}}
+                                >
                                     {p.name}
                                 </TableCell>
                                 <TableCell align={'left'}>{p.cardsCount}</TableCell>

@@ -7,6 +7,7 @@ import {Forgot} from "../../../c2-features/f1-auth/a4-forgot/f1-ui/Forgot";
 import {SetPassword} from "../../../c2-features/f1-auth/a5-setPassword/s1-ui/SetPassword";
 import {Container} from "@mui/material";
 import {PacksList} from "../../../c2-features/f2-packs/p1-ui/PacksList";
+import {CardsList} from "../../../c2-features/f3-cards/c1-ui/CardsList";
 
 export const PATH = {
     LOGIN: '/login',
@@ -16,6 +17,7 @@ export const PATH = {
     SET_NEW_PASSWORD: '/set-new-password/:token',
     TEST: '/test',
     PACKS: '/packs',
+    CARDS: '/packs/cards',
 }
 
 export const MyRoutes = () => {
@@ -29,6 +31,7 @@ export const MyRoutes = () => {
                 <Route path={PATH.FORGOT_PASSWORD} element={<Forgot/>}/>
                 <Route path={PATH.SET_NEW_PASSWORD} element={<SetPassword/>}/>
                 <Route path={PATH.PACKS} element={<PacksList/>}/>
+                <Route path={PATH.CARDS} element={<CardsList/>}/>
                 <Route path={'*'} element={<div>ERROR 404</div>}/>
             </Routes>
         </Container>
