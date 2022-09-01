@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 import {useAppDispatch, useAppSelector} from "../../../c0-common/c1-hooks/hooks";
 import {
-    addPack,
+    addPack, deletePack,
     getPacks,
     setCurrentPage,
     setDefaultValues,
@@ -47,8 +47,15 @@ export const PacksList: FC = () => {
     const user_id = useAppSelector(state => state.profile.profile?._id)
     const [values, setValues] = useState<number[]>([min, max])
 
+    useEffect(() => {
+        dispatch(getPacks())
+    }, [packName, min, max, sortPacks, page, pageCount, showPacks, dispatch])
+
     const addTaskHandler = () => {
         dispatch(addPack({name: 'New Pack', isPrivate: true}))
+    }
+    const deletePackHandler = (id: string) => {
+        dispatch(deletePack(id))
     }
     const setValuesHandler = useCallback((values: number[]) => {
         setValues(values)
@@ -61,7 +68,6 @@ export const PacksList: FC = () => {
         setValues([0, 150])
         dispatch(setDefaultValues())
     }, [dispatch])
-
     const handleChangePage = (event: MouseEvent<HTMLButtonElement> | null, page: number) => {
         const currentPage = page + 1
         dispatch(setCurrentPage(currentPage))
@@ -69,10 +75,6 @@ export const PacksList: FC = () => {
     const handleChangeRowsPerPage = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         dispatch(setPageCount(+event.target.value))
     }
-
-    useEffect(() => {
-        dispatch(getPacks())
-    }, [packName, min, max, sortPacks, page, pageCount, showPacks, dispatch])
 
     if (!isLoggedIn) {
         return <Navigate to={'/login'}/>
@@ -130,7 +132,8 @@ export const PacksList: FC = () => {
                                                 <EditIcon fontSize={'small'}/>
                                             </IconButton>
                                             <IconButton aria-label={'delete'} size={'small'}>
-                                                <DeleteIcon fontSize={'small'}/>
+                                                <DeleteIcon fontSize={'small'}
+                                                            onClick={() => deletePackHandler(p._id)}/>
                                             </IconButton>
                                         </Stack>
                                         :

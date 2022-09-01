@@ -44,7 +44,19 @@ export const addPack = createAsyncThunk(
             await packsAPI.addPack({...params})
             await thunkAPI.dispatch(getPacks())
             thunkAPI.dispatch(setAppStatus('idle'))
-            thunkAPI.dispatch(setAppMessage('Pack has been added'))
+            thunkAPI.dispatch(setAppMessage('New pack created'))
+        } catch (e) {
+            return handleAppError(e, thunkAPI)
+        }
+    })
+export const deletePack = createAsyncThunk(
+    'packs/deletePack',
+    async (id: string, thunkAPI) => {
+        thunkAPI.dispatch(setAppStatus('loading'))
+        try {
+            await packsAPI.deletePack(id)
+            await thunkAPI.dispatch(getPacks())
+            thunkAPI.dispatch(setAppStatus('idle'))
         } catch (e) {
             return handleAppError(e, thunkAPI)
         }

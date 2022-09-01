@@ -42,7 +42,7 @@ export type AddPackParamsType = {
 
 export const packsAPI = {
     getPacks: ({packName, min, max, sortPacks, page = 1, pageCount, user_id}: GetPacksParamsType) => {
-        return instance.get<GetPacksType>('/cards/pack', {
+        return instance.get<GetPacksType>('cards/pack', {
             params: {
                 packName,
                 min,
@@ -55,12 +55,15 @@ export const packsAPI = {
         })
     },
     addPack: ({name, deckCover, isPrivate}: AddPackParamsType) => {
-        return instance.post('/cards/pack', {
+        return instance.post('cards/pack', {
             cardsPack: {
                 name,
                 deckCover,
                 private: isPrivate,
             }
         })
+    },
+    deletePack: (id: string) => {
+        return instance.delete(`cards/pack?id=${id}`)
     },
 }
