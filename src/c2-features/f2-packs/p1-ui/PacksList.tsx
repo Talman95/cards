@@ -14,7 +14,14 @@ import {
     Typography
 } from "@mui/material";
 import {useAppDispatch, useAppSelector} from "../../../c0-common/c1-hooks/hooks";
-import {getPacks, setCurrentPage, setDefaultValues, setMinMaxCount, setPageCount} from "../p2-bll/packsReducer";
+import {
+    addPack,
+    getPacks,
+    setCurrentPage,
+    setDefaultValues,
+    setMinMaxCount,
+    setPageCount
+} from "../p2-bll/packsReducer";
 import {Navigate} from "react-router-dom";
 import {ToggleButtonBox} from "./ToggleButtonBox/ToggleButtonBox";
 import {DoubleRangeCards} from "./DoubleRangeCards/DoubleRangeCards";
@@ -40,6 +47,9 @@ export const PacksList: FC = () => {
     const user_id = useAppSelector(state => state.profile.profile?._id)
     const [values, setValues] = useState<number[]>([min, max])
 
+    const addTaskHandler = () => {
+        dispatch(addPack({name: 'New Pack', isPrivate: true}))
+    }
     const setValuesHandler = useCallback((values: number[]) => {
         setValues(values)
     }, [])
@@ -72,7 +82,9 @@ export const PacksList: FC = () => {
         <Box style={{width: '800px'}}>
             <Box style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px'}}>
                 <Typography variant={'h6'}>Packs list</Typography>
-                <Button variant={'contained'}>Add new pack</Button>
+                <Button variant={'contained'} onClick={addTaskHandler}>
+                    Add new pack
+                </Button>
             </Box>
             <Box style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
                 <Box>

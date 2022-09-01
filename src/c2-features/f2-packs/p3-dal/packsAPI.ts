@@ -34,6 +34,11 @@ type GetPacksType = {
     page: number // выбранная страница
     pageCount: number // количество элементов на странице
 }
+export type AddPackParamsType = {
+    name: string
+    deckCover?: string
+    isPrivate?: boolean
+}
 
 export const packsAPI = {
     getPacks: ({packName, min, max, sortPacks, page = 1, pageCount, user_id}: GetPacksParamsType) => {
@@ -48,5 +53,14 @@ export const packsAPI = {
                 user_id,
             }
         })
-    }
+    },
+    addPack: ({name, deckCover, isPrivate}: AddPackParamsType) => {
+        return instance.post('/cards/pack', {
+            cardsPack: {
+                name,
+                deckCover,
+                private: isPrivate,
+            }
+        })
+    },
 }

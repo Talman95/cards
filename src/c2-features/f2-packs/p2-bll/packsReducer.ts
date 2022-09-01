@@ -1,6 +1,8 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {packsAPI, PackType} from "../p3-dal/packsAPI";
 import {RootState} from "../../../c1-main/m2-bll/store";
+import {setAppMessage, setAppStatus} from "../../../c1-main/m2-bll/appReducer";
+import {handleAppError} from "../../../c0-common/c3-utils/errorUtils";
 
 export type ShowPacksType = 'My' | 'All'
 
@@ -33,8 +35,20 @@ export const getPacks = createAsyncThunk(
         } catch {
             return thunkAPI.rejectWithValue(null)
         }
-    }
-)
+    })
+export const addPack = createAsyncThunk(
+    'packs/addPack',
+    async (params: { name: string, deckCover?: string, isPrivate?: boolean }, thunkAPI) => {
+        thunkAPI.dispatch(setAppStatus('loading'))
+        try {
+            await packsAPI.addPack({...params})
+            await thunkAPI.dispatch(getPacks())
+            thunkAPI.dispatch(setAppStatus('idle'))
+            thunkAPI.dispatch(setAppMessage('Pack has been added'))
+        } catch (e) {
+            return handleAppError(e, thunkAPI)
+        }
+    })
 
 const slice = createSlice({
     name: 'packs',
@@ -63,7 +77,7 @@ const slice = createSlice({
             state.min = 0
             state.max = 150
         },
-        setMinMaxCount: (state, action: PayloadAction<{min: number, max: number}>) => {
+        setMinMaxCount: (state, action: PayloadAction<{ min: number, max: number }>) => {
             state.min = action.payload.min
             state.max = action.payload.max
             state.page = 1
