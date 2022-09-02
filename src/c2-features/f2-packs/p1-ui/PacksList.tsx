@@ -30,6 +30,7 @@ import SchoolIcon from '@mui/icons-material/School';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {PATH} from "../../../c1-main/m1-ui/routes/MyRoutes";
+import {setCardPackId} from "../../f3-cards/c2-bll/cardsReducer";
 
 export const PacksList: FC = () => {
     const dispatch = useAppDispatch()
@@ -77,7 +78,8 @@ export const PacksList: FC = () => {
     const handleChangeRowsPerPage = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         dispatch(setPageCount(+event.target.value))
     }
-    const navigateToCardsList = () => {
+    const navigateToCardsList = async (id: string) => {
+        await dispatch(setCardPackId(id))
         navigate(PATH.CARDS)
     }
 
@@ -122,7 +124,7 @@ export const PacksList: FC = () => {
                                 hover
                             >
                                 <TableCell component={'th'} scope={'row'} align={'left'}
-                                           onClick={navigateToCardsList}
+                                           onClick={() => navigateToCardsList(p._id)}
                                            style={{cursor: 'pointer'}}
                                 >
                                     {p.name}

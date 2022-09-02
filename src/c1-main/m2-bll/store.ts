@@ -4,12 +4,14 @@ import {profileReducer} from "../../c2-features/f1-auth/a3-profile/p2-bll/profil
 import {configureStore} from "@reduxjs/toolkit";
 import {appReducer} from "./appReducer";
 import {packsReducer} from "../../c2-features/f2-packs/p2-bll/packsReducer";
+import {cardsReducer} from "../../c2-features/f3-cards/c2-bll/cardsReducer";
 
 const rootReducers = combineReducers({
     auth: authReducer,
     profile: profileReducer,
     app: appReducer,
     packs: packsReducer,
+    cards: cardsReducer,
 })
 
 export const store = configureStore({
