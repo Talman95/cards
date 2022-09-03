@@ -30,11 +30,27 @@ type GetCardsResponseType = {
     pageCount: number
     packUserId: string
 }
+export type AddCardType = {
+    cardsPack_id: string
+    question: string
+    answer: string
+    grade?: number
+    shots?: number
+    answerImg?: string //"url or base 64"
+    questionImg?: string //"url or base 64"
+    questionVideo?: string //"url or base 64"
+    answerVideo?: string //"url or base 64"
+}
 
 export const cardsAPI = {
     getCards: (params: GetCardsParamsType) => {
         return instance.get<GetCardsResponseType>('cards/card', {
             params: {...params}
+        })
+    },
+    addCard: (card: AddCardType) => {
+        return instance.post('cards/card', {
+            card: card
         })
     },
 }

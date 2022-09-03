@@ -1,7 +1,7 @@
 import React, {ChangeEvent, FC, MouseEvent, useEffect} from 'react';
 import {
     Box,
-    Button,
+    Button, CircularProgress,
     IconButton,
     Paper,
     Rating,
@@ -22,7 +22,7 @@ import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import {useNavigate} from "react-router-dom";
 import {PATH} from "../../../c1-main/m1-ui/routes/MyRoutes";
 import {useAppDispatch, useAppSelector} from "../../../c0-common/c1-hooks/hooks";
-import {getCards, setCurrentPageCards, setPageCountCards} from "../c2-bll/cardsReducer";
+import {addCard, getCards, setCardsLoad, setCurrentPageCards, setPageCountCards} from "../c2-bll/cardsReducer";
 
 export const CardsList: FC = () => {
     const navigate = useNavigate()
@@ -35,11 +35,15 @@ export const CardsList: FC = () => {
         sortCards,
         cardsPack_id,
         packUserId,
+        cardsLoaded,
     } = useAppSelector(state => state.cards)
     const userId = useAppSelector(state => state.profile.profile?._id)
 
     useEffect(() => {
         dispatch(getCards(cardsPack_id))
+        return () => {
+            dispatch(setCardsLoad(true))
+        }
     }, [cardsPack_id, page, pageCount, sortCards, dispatch])
 
     const navigateToPacksList = () => {
@@ -51,6 +55,21 @@ export const CardsList: FC = () => {
     }
     const handleChangeRowsPerPage = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         dispatch(setPageCountCards(+event.target.value))
+    }
+    const addCardHandle = () => {
+        const card = {
+            cardsPack_id: cardsPack_id,
+            question: 'new question 1',
+            answer: 'new answer 2',
+        }
+        dispatch(addCard(card))
+    }
+
+    if (!cardsLoaded) {
+        return <div
+            style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
+            <CircularProgress/>
+        </div>
     }
 
     return (
@@ -64,7 +83,7 @@ export const CardsList: FC = () => {
                 <Typography variant={'h6'}>Pack Name</Typography>
                 {userId === packUserId
                     ?
-                    <Button variant={'contained'}>
+                    <Button variant={'contained'} onClick={addCardHandle}>
                         Add new card
                     </Button>
                     :
