@@ -1,13 +1,11 @@
 import React, {ChangeEvent, FC, MouseEvent, useEffect} from 'react';
 import {
     Box,
-    Button, CircularProgress,
+    Button,
+    CircularProgress,
     IconButton,
     Paper,
-    Rating,
-    Stack,
     Table,
-    TableBody,
     TableCell,
     TableContainer,
     TableHead,
@@ -16,20 +14,12 @@ import {
     TextField,
     Typography
 } from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import {useNavigate} from "react-router-dom";
 import {PATH} from "../../../c1-main/m1-ui/routes/MyRoutes";
 import {useAppDispatch, useAppSelector} from "../../../c0-common/c1-hooks/hooks";
-import {
-    addCard,
-    deleteCard,
-    getCards,
-    setCardsLoad,
-    setCurrentPageCards,
-    setPageCountCards, updateCard
-} from "../c2-bll/cardsReducer";
+import {addCard, getCards, setCardsLoad, setCurrentPageCards, setPageCountCards} from "../c2-bll/cardsReducer";
+import {CardsTableBody} from "./CardsTableBody/CardsTableBody";
 
 export const CardsList: FC = () => {
     const navigate = useNavigate()
@@ -71,17 +61,7 @@ export const CardsList: FC = () => {
         }
         dispatch(addCard(card))
     }
-    const deleteCardHandler = (id: string) => {
-        dispatch(deleteCard(id))
-    }
-    const updateCardHandler = (id: string) => {
-        const card = {
-            _id: id,
-            question: 'new question 5468 792',
-            answer: 'new answer 1231 23',
-        }
-        dispatch(updateCard(card))
-    }
+
 
     if (!cardsLoaded) {
         return <div
@@ -140,39 +120,7 @@ export const CardsList: FC = () => {
                                     <TableCell align={'left'}>Actions</TableCell>}
                             </TableRow>
                         </TableHead>
-                        <TableBody>
-                            {cards.map(c => (
-                                <TableRow
-                                    key={c._id}
-                                    sx={{'&:last-child td, &:last-child th': {border: 0}}}
-                                    hover
-                                >
-                                    <TableCell component={'th'} scope={'row'} align={'left'}>
-                                        {c.question}
-                                    </TableCell>
-                                    <TableCell align={'left'}>{c.answer}</TableCell>
-                                    <TableCell align={'left'}>{c.updated}</TableCell>
-                                    <TableCell align={'left'}>
-                                        <Rating name={'read-only'} value={c.grade} readOnly size={'small'}
-                                                precision={0.5}/>
-                                    </TableCell>
-                                    {userId === packUserId &&
-                                        <TableCell align={'left'} style={{width: '70px'}}>
-                                            <Stack direction={'row'} alignItems={'center'} spacing={1}>
-                                                <IconButton aria-label={'delete'} size={'small'}>
-                                                    <EditIcon fontSize={'small'}
-                                                              onClick={() => updateCardHandler(c._id)}/>
-                                                </IconButton>
-                                                <IconButton aria-label={'delete'} size={'small'}>
-                                                    <DeleteIcon fontSize={'small'}
-                                                                onClick={() => deleteCardHandler(c._id)}/>
-                                                </IconButton>
-                                            </Stack>
-                                        </TableCell>
-                                    }
-                                </TableRow>
-                            ))}
-                        </TableBody>
+                        <CardsTableBody cards={cards}/>
                     </Table>
                 </TableContainer>
             }

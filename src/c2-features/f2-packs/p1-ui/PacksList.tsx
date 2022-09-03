@@ -1,10 +1,9 @@
 import React, {ChangeEvent, FC, MouseEvent, useCallback, useEffect, useState} from 'react';
 import {
     Box,
-    Button, IconButton,
-    Paper, Stack,
+    Button,
+    Paper,
     Table,
-    TableBody,
     TableCell,
     TableContainer,
     TableHead,
@@ -15,26 +14,21 @@ import {
 } from "@mui/material";
 import {useAppDispatch, useAppSelector} from "../../../c0-common/c1-hooks/hooks";
 import {
-    addPack, deletePack,
+    addPack,
     getPacks,
     setCurrentPage,
     setDefaultValues,
     setMinMaxCount,
     setPageCount
 } from "../p2-bll/packsReducer";
-import {Navigate, useNavigate} from "react-router-dom";
+import {Navigate} from "react-router-dom";
 import {ToggleButtonBox} from "./ToggleButtonBox/ToggleButtonBox";
 import {DoubleRangeCards} from "./DoubleRangeCards/DoubleRangeCards";
 import {ResetSettings} from "./ResetSettings/ResetSettings";
-import SchoolIcon from '@mui/icons-material/School';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import {PATH} from "../../../c1-main/m1-ui/routes/MyRoutes";
-import {setCardPackId} from "../../f3-cards/c2-bll/cardsReducer";
+import {PacksTableBody} from "./PacksTableBody/PacksTableBody";
 
 export const PacksList: FC = () => {
     const dispatch = useAppDispatch()
-    const navigate = useNavigate()
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
     const {
         cardPacks,
@@ -47,7 +41,6 @@ export const PacksList: FC = () => {
         pageCount,
         showPacks,
     } = useAppSelector(state => state.packs)
-    const user_id = useAppSelector(state => state.profile.profile?._id)
     const [values, setValues] = useState<number[]>([min, max])
 
     useEffect(() => {
@@ -56,9 +49,6 @@ export const PacksList: FC = () => {
 
     const addTaskHandler = () => {
         dispatch(addPack({name: 'New Pack', isPrivate: true}))
-    }
-    const deletePackHandler = (id: string) => {
-        dispatch(deletePack(id))
     }
     const setValuesHandler = useCallback((values: number[]) => {
         setValues(values)
@@ -78,10 +68,7 @@ export const PacksList: FC = () => {
     const handleChangeRowsPerPage = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         dispatch(setPageCount(+event.target.value))
     }
-    const navigateToCardsList = async (id: string) => {
-        await dispatch(setCardPackId(id))
-        navigate(PATH.CARDS)
-    }
+
 
     if (!isLoggedIn) {
         return <Navigate to={'/login'}/>
@@ -116,47 +103,7 @@ export const PacksList: FC = () => {
                             <TableCell align={'left'}>Actions</TableCell>
                         </TableRow>
                     </TableHead>
-                    <TableBody>
-                        {cardPacks.map((p) => (
-                            <TableRow
-                                key={p._id}
-                                sx={{'&:last-child td, &:last-child th': {border: 0}}}
-                                hover
-                            >
-                                <TableCell component={'th'} scope={'row'} align={'left'}
-                                           onClick={() => navigateToCardsList(p._id)}
-                                           style={{cursor: 'pointer'}}
-                                >
-                                    {p.name}
-                                </TableCell>
-                                <TableCell align={'left'}>{p.cardsCount}</TableCell>
-                                <TableCell align={'left'}>{p.updated}</TableCell>
-                                <TableCell align={'left'}>{p.user_name}</TableCell>
-                                <TableCell align={'left'} style={{width: '100px'}}>
-                                    {user_id === p.user_id
-                                        ?
-                                        <Stack direction={'row'} alignItems={'center'} spacing={1}>
-                                            <IconButton aria-label={'delete'} size={'small'}>
-                                                <SchoolIcon fontSize={'small'}/>
-                                            </IconButton>
-                                            <IconButton aria-label={'delete'} size={'small'}>
-                                                <EditIcon fontSize={'small'}/>
-                                            </IconButton>
-                                            <IconButton aria-label={'delete'} size={'small'}>
-                                                <DeleteIcon fontSize={'small'}
-                                                            onClick={() => deletePackHandler(p._id)}/>
-                                            </IconButton>
-                                        </Stack>
-                                        :
-                                        <Stack direction={'row'} alignItems={'flex-start'} spacing={1}>
-                                            <IconButton aria-label={'delete'} size={'small'}>
-                                                <SchoolIcon fontSize={'small'}/>
-                                            </IconButton>
-                                        </Stack>}
-                                </TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
+                    <PacksTableBody cardPacks={cardPacks}/>
                 </Table>
             </TableContainer>
             <TablePagination
