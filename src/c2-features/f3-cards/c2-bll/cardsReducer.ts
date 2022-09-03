@@ -36,6 +36,17 @@ export const addCard = createAsyncThunk(
             return handleAppError(e, thunkAPI)
         }
     })
+export const deleteCard = createAsyncThunk(
+    'cards/deleteCard',
+    async (id: string, thunkAPI) => {
+        try {
+            const state = thunkAPI.getState() as RootState
+            await cardsAPI.deleteCard(id)
+            await thunkAPI.dispatch(getCards(state.cards.cardsPack_id))
+        } catch (e) {
+            return thunkAPI.rejectWithValue(null)
+        }
+    })
 
 const slice = createSlice({
     name: 'cards',

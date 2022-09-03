@@ -53,4 +53,11 @@ export const cardsAPI = {
             card: card
         })
     },
+    deleteCard: (id: string) => {
+        return instance.delete('cards/card', {
+            params: {
+                id,
+            }
+        })
+    }
 }

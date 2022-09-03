@@ -22,7 +22,14 @@ import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import {useNavigate} from "react-router-dom";
 import {PATH} from "../../../c1-main/m1-ui/routes/MyRoutes";
 import {useAppDispatch, useAppSelector} from "../../../c0-common/c1-hooks/hooks";
-import {addCard, getCards, setCardsLoad, setCurrentPageCards, setPageCountCards} from "../c2-bll/cardsReducer";
+import {
+    addCard,
+    deleteCard,
+    getCards,
+    setCardsLoad,
+    setCurrentPageCards,
+    setPageCountCards
+} from "../c2-bll/cardsReducer";
 
 export const CardsList: FC = () => {
     const navigate = useNavigate()
@@ -64,6 +71,9 @@ export const CardsList: FC = () => {
         }
         dispatch(addCard(card))
     }
+    const deleteCardHandler = (id: string) => {
+        dispatch(deleteCard(id))
+    }
 
     if (!cardsLoaded) {
         return <div
@@ -92,66 +102,82 @@ export const CardsList: FC = () => {
                     </Button>
                 }
             </Box>
-            <Box>
-                <Typography variant={'body2'}>
-                    Search
-                </Typography>
-                <TextField size={'small'} fullWidth/>
-            </Box>
-
-            <TableContainer component={Paper}>
-                <Table sx={{minWidth: 650}} aria-label={'simple table'}>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell align={'left'}>Question</TableCell>
-                            <TableCell align={'left'}>Answer</TableCell>
-                            <TableCell align={'left'}>Last Updated</TableCell>
-                            <TableCell align={'left'}>Grade</TableCell>
-                            {userId === packUserId &&
-                                <TableCell align={'left'}>Actions</TableCell>}
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {cards.map(c => (
-                            <TableRow
-                                key={c._id}
-                                sx={{'&:last-child td, &:last-child th': {border: 0}}}
-                                hover
-                            >
-                                <TableCell component={'th'} scope={'row'} align={'left'}>
-                                    {c.question}
-                                </TableCell>
-                                <TableCell align={'left'}>{c.answer}</TableCell>
-                                <TableCell align={'left'}>{c.updated}</TableCell>
-                                <TableCell align={'left'}>
-                                    <Rating name={'read-only'} value={c.grade} readOnly size={'small'} precision={0.5}/>
-                                </TableCell>
+            {cards.length !== 0 &&
+                <Box>
+                    <Typography variant={'body2'}>
+                        Search
+                    </Typography>
+                    <TextField size={'small'} fullWidth/>
+                </Box>
+            }
+            {cards.length === 0
+                ?
+                <Box style={{
+                    display: 'flex', justifyContent: 'center', alignItems: 'center', height: '70vh'
+                }}>
+                    <Typography style={{opacity: '0.6'}}>
+                        This pack is empty. Click add new card to fill this pack
+                    </Typography>
+                </Box>
+                :
+                <TableContainer component={Paper}>
+                    <Table sx={{minWidth: 650}} aria-label={'simple table'}>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell align={'left'}>Question</TableCell>
+                                <TableCell align={'left'}>Answer</TableCell>
+                                <TableCell align={'left'}>Last Updated</TableCell>
+                                <TableCell align={'left'}>Grade</TableCell>
                                 {userId === packUserId &&
-                                    <TableCell align={'left'} style={{width: '70px'}}>
-                                        <Stack direction={'row'} alignItems={'center'} spacing={1}>
-                                            <IconButton aria-label={'delete'} size={'small'}>
-                                                <EditIcon fontSize={'small'}/>
-                                            </IconButton>
-                                            <IconButton aria-label={'delete'} size={'small'}>
-                                                <DeleteIcon fontSize={'small'}/>
-                                            </IconButton>
-                                        </Stack>
-                                    </TableCell>
-                                }
+                                    <TableCell align={'left'}>Actions</TableCell>}
                             </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-            <TablePagination
-                rowsPerPageOptions={[5, 10, 20]}
-                component={'div'}
-                count={cardsTotalCount}
-                rowsPerPage={pageCount}
-                page={page - 1}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-            />
+                        </TableHead>
+                        <TableBody>
+                            {cards.map(c => (
+                                <TableRow
+                                    key={c._id}
+                                    sx={{'&:last-child td, &:last-child th': {border: 0}}}
+                                    hover
+                                >
+                                    <TableCell component={'th'} scope={'row'} align={'left'}>
+                                        {c.question}
+                                    </TableCell>
+                                    <TableCell align={'left'}>{c.answer}</TableCell>
+                                    <TableCell align={'left'}>{c.updated}</TableCell>
+                                    <TableCell align={'left'}>
+                                        <Rating name={'read-only'} value={c.grade} readOnly size={'small'}
+                                                precision={0.5}/>
+                                    </TableCell>
+                                    {userId === packUserId &&
+                                        <TableCell align={'left'} style={{width: '70px'}}>
+                                            <Stack direction={'row'} alignItems={'center'} spacing={1}>
+                                                <IconButton aria-label={'delete'} size={'small'}>
+                                                    <EditIcon fontSize={'small'}/>
+                                                </IconButton>
+                                                <IconButton aria-label={'delete'} size={'small'}>
+                                                    <DeleteIcon fontSize={'small'}
+                                                                onClick={() => deleteCardHandler(c._id)}/>
+                                                </IconButton>
+                                            </Stack>
+                                        </TableCell>
+                                    }
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            }
+            {cards.length !== 0 &&
+                <TablePagination
+                    rowsPerPageOptions={[5, 10, 20]}
+                    component={'div'}
+                    count={cardsTotalCount}
+                    rowsPerPage={pageCount}
+                    page={page - 1}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                />
+            }
         </Box>
     );
 }
