@@ -41,6 +41,12 @@ export type AddCardType = {
     questionVideo?: string //"url or base 64"
     answerVideo?: string //"url or base 64"
 }
+export type UpdateCardType = {
+    _id: string
+    question?: string
+    answer?: string
+    comments?: string
+}
 
 export const cardsAPI = {
     getCards: (params: GetCardsParamsType) => {
@@ -58,6 +64,11 @@ export const cardsAPI = {
             params: {
                 id,
             }
+        })
+    },
+    updateCard: (card: UpdateCardType) => {
+        return instance.put('cards/card', {
+            card: card,
         })
     }
 }

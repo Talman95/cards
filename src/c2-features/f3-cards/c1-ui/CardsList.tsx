@@ -28,7 +28,7 @@ import {
     getCards,
     setCardsLoad,
     setCurrentPageCards,
-    setPageCountCards
+    setPageCountCards, updateCard
 } from "../c2-bll/cardsReducer";
 
 export const CardsList: FC = () => {
@@ -73,6 +73,14 @@ export const CardsList: FC = () => {
     }
     const deleteCardHandler = (id: string) => {
         dispatch(deleteCard(id))
+    }
+    const updateCardHandler = (id: string) => {
+        const card = {
+            _id: id,
+            question: 'new question 5468 792',
+            answer: 'new answer 1231 23',
+        }
+        dispatch(updateCard(card))
     }
 
     if (!cardsLoaded) {
@@ -152,7 +160,8 @@ export const CardsList: FC = () => {
                                         <TableCell align={'left'} style={{width: '70px'}}>
                                             <Stack direction={'row'} alignItems={'center'} spacing={1}>
                                                 <IconButton aria-label={'delete'} size={'small'}>
-                                                    <EditIcon fontSize={'small'}/>
+                                                    <EditIcon fontSize={'small'}
+                                                              onClick={() => updateCardHandler(c._id)}/>
                                                 </IconButton>
                                                 <IconButton aria-label={'delete'} size={'small'}>
                                                     <DeleteIcon fontSize={'small'}
