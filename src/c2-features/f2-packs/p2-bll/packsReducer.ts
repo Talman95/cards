@@ -103,6 +103,10 @@ const slice = createSlice({
             state.showPacks = 'All'
             state.sortPacks = '0updated'
         },
+        setSortPacks: (state, action: PayloadAction<string>) => {
+            state.sortPacks = action.payload
+            state.page = 1
+        },
     },
     extraReducers: builder => {
         builder.addCase(getPacks.fulfilled, (state, action) => {
@@ -118,5 +122,6 @@ export const {
     setPageCount,
     setShowPacks,
     setMinMaxCount,
-    setDefaultValues
+    setDefaultValues,
+    setSortPacks,
 } = slice.actions

@@ -8,7 +8,7 @@ import {
     TableContainer,
     TableHead,
     TablePagination,
-    TableRow,
+    TableRow, TableSortLabel,
     TextField,
     Typography
 } from "@mui/material";
@@ -19,13 +19,14 @@ import {
     setCurrentPage,
     setDefaultValues,
     setMinMaxCount,
-    setPageCount
+    setPageCount, setSortPacks
 } from "../p2-bll/packsReducer";
 import {Navigate} from "react-router-dom";
 import {ToggleButtonBox} from "./ToggleButtonBox/ToggleButtonBox";
 import {DoubleRangeCards} from "./DoubleRangeCards/DoubleRangeCards";
 import {ResetSettings} from "./ResetSettings/ResetSettings";
 import {PacksTableBody} from "./PacksTableBody/PacksTableBody";
+import { visuallyHidden } from '@mui/utils';
 
 export const PacksList: FC = () => {
     const dispatch = useAppDispatch()
@@ -69,6 +70,19 @@ export const PacksList: FC = () => {
         dispatch(setPageCount(+event.target.value))
     }
 
+    type Order = 'asc' | 'desc';
+    type Data = 'cardsCount' | 'updated';
+    const [order, setOrder] = useState<Order>('asc');
+    const [orderBy, setOrderBy] = useState<Data>('updated');
+
+    const sortHandler = (order: Order, orderBy: Data) => {
+        const direction = order === 'asc' ? 0 : 1
+        const str = direction + orderBy
+
+        setOrder(order)
+        setOrderBy(orderBy)
+        dispatch(setSortPacks(str))
+    }
 
     if (!isLoggedIn) {
         return <Navigate to={'/login'}/>
@@ -97,8 +111,34 @@ export const PacksList: FC = () => {
                     <TableHead>
                         <TableRow>
                             <TableCell align={'left'}>Name</TableCell>
-                            <TableCell align={'left'}>Cards</TableCell>
-                            <TableCell align={'left'}>Last Updated</TableCell>
+                            <TableCell align={'left'}>
+                                <TableSortLabel
+                                    active={orderBy === 'cardsCount'}
+                                    direction={orderBy === 'cardsCount' ? order : 'asc'}
+                                    onClick={() => sortHandler(order === 'asc' ? 'desc' : 'asc', 'cardsCount')}
+                                >
+                                    Cards
+                                    {orderBy === 'cardsCount' ? (
+                                        <Box component="span" sx={visuallyHidden}>
+                                            {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                                        </Box>
+                                    ) : null}
+                                </TableSortLabel>
+                            </TableCell>
+                            <TableCell align={'left'}>
+                                <TableSortLabel
+                                    active={orderBy === 'updated'}
+                                    direction={orderBy === 'updated' ? order : 'asc'}
+                                    onClick={() => sortHandler(order === 'asc' ? 'desc' : 'asc', 'updated')}
+                                >
+                                    Last Updated
+                                    {orderBy === 'updated' ? (
+                                        <Box component="span" sx={visuallyHidden}>
+                                            {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                                        </Box>
+                                    ) : null}
+                                </TableSortLabel>
+                            </TableCell>
                             <TableCell align={'left'}>Created by</TableCell>
                             <TableCell align={'left'}>Actions</TableCell>
                         </TableRow>
