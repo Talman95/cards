@@ -1,5 +1,5 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {packsAPI, PackType} from "../p3-dal/packsAPI";
+import {packsAPI, PackType, UpdatePackType} from "../p3-dal/packsAPI";
 import {RootState} from "../../../c1-main/m2-bll/store";
 import {setAppMessage, setAppStatus} from "../../../c1-main/m2-bll/appReducer";
 import {handleAppError} from "../../../c0-common/c3-utils/errorUtils";
@@ -57,6 +57,19 @@ export const deletePack = createAsyncThunk(
             await packsAPI.deletePack(id)
             await thunkAPI.dispatch(getPacks())
             thunkAPI.dispatch(setAppStatus('idle'))
+        } catch (e) {
+            return handleAppError(e, thunkAPI)
+        }
+    })
+export const updatePack = createAsyncThunk(
+    'pack/updatePack',
+    async (pack: UpdatePackType, thunkAPI) => {
+        thunkAPI.dispatch(setAppStatus('loading'))
+        try {
+            await packsAPI.updatePack(pack)
+            await thunkAPI.dispatch(getPacks())
+            thunkAPI.dispatch(setAppStatus('idle'))
+            thunkAPI.dispatch(setAppMessage('Pack updated'))
         } catch (e) {
             return handleAppError(e, thunkAPI)
         }

@@ -8,7 +8,8 @@ import {
     TableContainer,
     TableHead,
     TablePagination,
-    TableRow, TableSortLabel,
+    TableRow,
+    TableSortLabel,
     TextField,
     Typography
 } from "@mui/material";
@@ -19,14 +20,15 @@ import {
     setCurrentPage,
     setDefaultValues,
     setMinMaxCount,
-    setPageCount, setSortPacks
+    setPageCount,
+    setSortPacks
 } from "../p2-bll/packsReducer";
 import {Navigate} from "react-router-dom";
 import {ToggleButtonBox} from "./ToggleButtonBox/ToggleButtonBox";
 import {DoubleRangeCards} from "./DoubleRangeCards/DoubleRangeCards";
 import {ResetSettings} from "./ResetSettings/ResetSettings";
 import {PacksTableBody} from "./PacksTableBody/PacksTableBody";
-import { visuallyHidden } from '@mui/utils';
+import {visuallyHidden} from '@mui/utils';
 
 export const PacksList: FC = () => {
     const dispatch = useAppDispatch()
@@ -48,7 +50,7 @@ export const PacksList: FC = () => {
         dispatch(getPacks())
     }, [packName, min, max, sortPacks, page, pageCount, showPacks, dispatch])
 
-    const addTaskHandler = () => {
+    const addPackHandler = () => {
         dispatch(addPack({name: 'New Pack', isPrivate: true}))
     }
     const setValuesHandler = useCallback((values: number[]) => {
@@ -92,7 +94,7 @@ export const PacksList: FC = () => {
         <Box style={{width: '800px'}}>
             <Box style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px'}}>
                 <Typography variant={'h6'}>Packs list</Typography>
-                <Button variant={'contained'} onClick={addTaskHandler}>
+                <Button variant={'contained'} onClick={addPackHandler}>
                     Add new pack
                 </Button>
             </Box>

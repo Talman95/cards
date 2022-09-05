@@ -39,6 +39,12 @@ export type AddPackParamsType = {
     deckCover?: string
     isPrivate?: boolean
 }
+export type UpdatePackType = {
+    _id: string
+    name?: string
+    deckCover?: string
+    isPrivate?: boolean
+}
 
 export const packsAPI = {
     getPacks: ({packName, min, max, sortPacks, page = 1, pageCount, user_id}: GetPacksParamsType) => {
@@ -65,5 +71,15 @@ export const packsAPI = {
     },
     deletePack: (id: string) => {
         return instance.delete(`cards/pack?id=${id}`)
+    },
+    updatePack: ({_id, name, deckCover, isPrivate}: UpdatePackType) => {
+        return instance.put('cards/pack', {
+            cardsPack: {
+                _id,
+                name,
+                deckCover,
+                private: isPrivate,
+            }
+        })
     },
 }

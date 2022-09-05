@@ -3,9 +3,9 @@ import {IconButton, Stack, TableBody, TableCell, TableRow} from "@mui/material";
 import SchoolIcon from "@mui/icons-material/School";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import {PackType} from "../../p3-dal/packsAPI";
+import {PackType, UpdatePackType} from "../../p3-dal/packsAPI";
 import {useAppDispatch, useAppSelector} from "../../../../c0-common/c1-hooks/hooks";
-import {deletePack} from "../../p2-bll/packsReducer";
+import {deletePack, updatePack} from "../../p2-bll/packsReducer";
 import {setCardPackId} from "../../../f3-cards/c2-bll/cardsReducer";
 import {PATH} from "../../../../c1-main/m1-ui/routes/MyRoutes";
 import {useNavigate} from "react-router-dom";
@@ -21,6 +21,14 @@ export const PacksTableBody: FC<PacksTableBodyType> = ({cardPacks}) => {
     const user_id = useAppSelector(state => state.profile.profile?._id)
     const deletePackHandler = (id: string) => {
         dispatch(deletePack(id))
+    }
+    const updatePackHandler = (_id: string) => {
+        const pack: UpdatePackType = {
+            _id,
+            name: 'Update Pack',
+            isPrivate: true,
+        }
+        dispatch(updatePack(pack))
     }
     const navigateToCardsList = async (id: string) => {
         await dispatch(setCardPackId(id))
@@ -48,10 +56,11 @@ export const PacksTableBody: FC<PacksTableBodyType> = ({cardPacks}) => {
                         {user_id === p.user_id
                             ?
                             <Stack direction={'row'} alignItems={'center'} spacing={1}>
-                                <IconButton aria-label={'delete'} size={'small'}>
+                                <IconButton aria-label={'learn'} size={'small'}>
                                     <SchoolIcon fontSize={'small'}/>
                                 </IconButton>
-                                <IconButton aria-label={'delete'} size={'small'}>
+                                <IconButton aria-label={'update'} size={'small'}
+                                            onClick={() => updatePackHandler(p._id)}>
                                     <EditIcon fontSize={'small'}/>
                                 </IconButton>
                                 <IconButton aria-label={'delete'} size={'small'}
