@@ -82,7 +82,11 @@ const slice = createSlice({
         },
         setCardsLoad: (state, action: PayloadAction<boolean>) => {
             state.cardsLoaded = action.payload
-        }
+        },
+        setSortCards: (state, action: PayloadAction<string>)  => {
+            state.sortCards = action.payload
+            state.page = 1
+        },
     },
     extraReducers: builder => {
         builder.addCase(getCards.fulfilled, (state, action) => {
@@ -100,4 +104,5 @@ export const {
     setCurrentPageCards,
     setPageCountCards,
     setCardsLoad,
+    setSortCards,
 } = slice.actions

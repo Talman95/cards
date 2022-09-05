@@ -1,4 +1,4 @@
-import React, {ChangeEvent, FC, MouseEvent, useEffect} from 'react';
+import React, {ChangeEvent, FC, MouseEvent, useEffect, useState} from 'react';
 import {
     Box,
     Button,
@@ -10,7 +10,7 @@ import {
     TableContainer,
     TableHead,
     TablePagination,
-    TableRow,
+    TableRow, TableSortLabel,
     TextField,
     Typography
 } from "@mui/material";
@@ -18,8 +18,16 @@ import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import {useNavigate} from "react-router-dom";
 import {PATH} from "../../../c1-main/m1-ui/routes/MyRoutes";
 import {useAppDispatch, useAppSelector} from "../../../c0-common/c1-hooks/hooks";
-import {addCard, getCards, setCardsLoad, setCurrentPageCards, setPageCountCards} from "../c2-bll/cardsReducer";
+import {
+    addCard,
+    getCards,
+    setCardsLoad,
+    setCurrentPageCards,
+    setPageCountCards,
+    setSortCards
+} from "../c2-bll/cardsReducer";
 import {CardsTableBody} from "./CardsTableBody/CardsTableBody";
+import {visuallyHidden} from "@mui/utils";
 
 export const CardsList: FC = () => {
     const navigate = useNavigate()
@@ -62,6 +70,19 @@ export const CardsList: FC = () => {
         dispatch(addCard(card))
     }
 
+    type Order = 'asc' | 'desc';
+    type Data = 'grade' | 'updated';
+    const [order, setOrder] = useState<Order>('asc')
+    const [orderBy, setOrderBy] = useState<Data>('updated')
+
+    const sortHandler = (order: Order, orderBy: Data) => {
+        const direction = order === 'asc' ? 0 : 1
+        const str = direction + orderBy
+
+        setOrder(order)
+        setOrderBy(orderBy)
+        dispatch(setSortCards(str))
+    }
 
     if (!cardsLoaded) {
         return <div
@@ -114,8 +135,34 @@ export const CardsList: FC = () => {
                             <TableRow>
                                 <TableCell align={'left'}>Question</TableCell>
                                 <TableCell align={'left'}>Answer</TableCell>
-                                <TableCell align={'left'}>Last Updated</TableCell>
-                                <TableCell align={'left'}>Grade</TableCell>
+                                <TableCell align={'left'}>
+                                    <TableSortLabel
+                                        active={orderBy === 'updated'}
+                                        direction={orderBy === 'updated' ? order : 'asc'}
+                                        onClick={() => sortHandler(order === 'asc' ? 'desc' : 'asc', 'updated')}
+                                    >
+                                        Last Updated
+                                        {orderBy === 'updated' ? (
+                                            <Box component="span" sx={visuallyHidden}>
+                                                {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                                            </Box>
+                                        ) : null}
+                                    </TableSortLabel>
+                                </TableCell>
+                                <TableCell align={'left'}>
+                                    <TableSortLabel
+                                        active={orderBy === 'grade'}
+                                        direction={orderBy === 'grade' ? order : 'asc'}
+                                        onClick={() => sortHandler(order === 'asc' ? 'desc' : 'asc', 'grade')}
+                                    >
+                                        Grade
+                                        {orderBy === 'grade' ? (
+                                            <Box component="span" sx={visuallyHidden}>
+                                                {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                                            </Box>
+                                        ) : null}
+                                    </TableSortLabel>
+                                </TableCell>
                                 {userId === packUserId &&
                                     <TableCell align={'left'}>Actions</TableCell>}
                             </TableRow>

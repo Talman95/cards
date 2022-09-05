@@ -36,7 +36,7 @@ export const CardsTableBody: FC<CardsTableBodyType> = ({cards}) => {
                         {c.question}
                     </TableCell>
                     <TableCell align={'left'}>{c.answer}</TableCell>
-                    <TableCell align={'left'}>{c.updated}</TableCell>
+                    <TableCell align={'left'}>{new Date(c.updated).toLocaleString()}</TableCell>
                     <TableCell align={'left'}>
                         <Rating name={'read-only'} value={c.grade} readOnly size={'small'}
                                 precision={0.5}/>

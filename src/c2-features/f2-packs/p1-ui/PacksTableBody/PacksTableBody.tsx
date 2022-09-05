@@ -42,7 +42,7 @@ export const PacksTableBody: FC<PacksTableBodyType> = ({cardPacks}) => {
                         {p.name}
                     </TableCell>
                     <TableCell align={'left'}>{p.cardsCount}</TableCell>
-                    <TableCell align={'left'}>{p.updated}</TableCell>
+                    <TableCell align={'left'}>{new Date(p.updated).toLocaleString()}</TableCell>
                     <TableCell align={'left'}>{p.user_name}</TableCell>
                     <TableCell align={'left'} style={{width: '100px'}}>
                         {user_id === p.user_id
