@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {FC} from 'react';
 import {Navigate, Route, Routes} from "react-router-dom";
 import {Login} from "../../../c2-features/f1-auth/a1-login/l1-ui/Login";
 import {Register} from "../../../c2-features/f1-auth/a2-register/r1-ui/Register";
@@ -20,19 +20,24 @@ export const PATH = {
     CARDS: '/packs/cards',
 }
 
-export const MyRoutes = () => {
+export const RoutesPage: FC = () => {
+    const routes = [
+        {path: PATH.LOGIN, component: <Login/>},
+        {path: PATH.REGISTER, component: <Register/>},
+        {path: PATH.PROFILE, component: <Profile/>},
+        {path: PATH.FORGOT_PASSWORD, component: <Forgot/>},
+        {path: PATH.SET_NEW_PASSWORD, component: <SetPassword/>},
+        {path: PATH.PACKS, component: <PacksList/>},
+        {path: PATH.CARDS, component: <CardsList/>},
+        {path: '*', component: <div>ERROR 404</div>},
+    ]
     return (
         <Container fixed style={{display: 'flex', justifyContent: 'center', marginTop: '30px'}}>
             <Routes>
                 <Route path={'/'} element={<Navigate to={PATH.PROFILE}/>}/>
-                <Route path={PATH.LOGIN} element={<Login/>}/>
-                <Route path={PATH.REGISTER} element={<Register/>}/>
-                <Route path={PATH.PROFILE} element={<Profile/>}/>
-                <Route path={PATH.FORGOT_PASSWORD} element={<Forgot/>}/>
-                <Route path={PATH.SET_NEW_PASSWORD} element={<SetPassword/>}/>
-                <Route path={PATH.PACKS} element={<PacksList/>}/>
-                <Route path={PATH.CARDS} element={<CardsList/>}/>
-                <Route path={'*'} element={<div>ERROR 404</div>}/>
+                {routes.map(({path, component}) => (
+                    <Route key={path} path={path} element={component}/>
+                ))}
             </Routes>
         </Container>
     )

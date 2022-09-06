@@ -1,6 +1,6 @@
 import React, {FC, useEffect} from 'react';
 import {Navigate, useNavigate} from "react-router-dom";
-import {PATH} from "../../../../c1-main/m1-ui/routes/MyRoutes";
+import {PATH} from "../../../../c1-main/m1-ui/routes/RoutesPage";
 import {useFormik} from "formik";
 import {register, setRegister} from "../../a1-login/l2-bll/authReducer";
 import {useAppDispatch, useAppSelector} from "../../../../c0-common/c1-hooks/hooks";

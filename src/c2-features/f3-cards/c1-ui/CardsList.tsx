@@ -16,7 +16,7 @@ import {
 } from "@mui/material";
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import {useNavigate} from "react-router-dom";
-import {PATH} from "../../../c1-main/m1-ui/routes/MyRoutes";
+import {PATH} from "../../../c1-main/m1-ui/routes/RoutesPage";
 import {useAppDispatch, useAppSelector} from "../../../c0-common/c1-hooks/hooks";
 import {
     addCard,

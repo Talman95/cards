@@ -7,7 +7,7 @@ import {PackType, UpdatePackType} from "../../p3-dal/packsAPI";
 import {useAppDispatch, useAppSelector} from "../../../../c0-common/c1-hooks/hooks";
 import {deletePack, updatePack} from "../../p2-bll/packsReducer";
 import {setCardPackId} from "../../../f3-cards/c2-bll/cardsReducer";
-import {PATH} from "../../../../c1-main/m1-ui/routes/MyRoutes";
+import {PATH} from "../../../../c1-main/m1-ui/routes/RoutesPage";
 import {useNavigate} from "react-router-dom";
 
 type PacksTableBodyType = {
