@@ -120,6 +120,9 @@ const slice = createSlice({
             state.sortPacks = action.payload
             state.page = 1
         },
+        setPackName: (state, action: PayloadAction<string>) => {
+            state.packName = action.payload
+        },
     },
     extraReducers: builder => {
         builder.addCase(getPacks.fulfilled, (state, action) => {
@@ -137,4 +140,5 @@ export const {
     setMinMaxCount,
     setDefaultValues,
     setSortPacks,
+    setPackName,
 } = slice.actions

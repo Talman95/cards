@@ -10,7 +10,6 @@ import {
     TablePagination,
     TableRow,
     TableSortLabel,
-    TextField,
     Typography
 } from "@mui/material";
 import {useAppDispatch, useAppSelector} from "../../../c0-common/c1-hooks/hooks";
@@ -29,6 +28,7 @@ import {DoubleRangeCards} from "./DoubleRangeCards/DoubleRangeCards";
 import {ResetSettings} from "./ResetSettings/ResetSettings";
 import {PacksTableBody} from "./PacksTableBody/PacksTableBody";
 import {visuallyHidden} from '@mui/utils';
+import {PacksSearch} from "./PacksSearch/PacksSearch";
 
 export const PacksList: FC = () => {
     const dispatch = useAppDispatch()
@@ -99,10 +99,7 @@ export const PacksList: FC = () => {
                 </Button>
             </Box>
             <Box style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
-                <Box>
-                    <Typography variant={'body2'}>Search</Typography>
-                    <TextField size={'small'}/>
-                </Box>
+                <PacksSearch/>
                 <ToggleButtonBox setValues={resetValuesHandler}/>
                 <DoubleRangeCards values={values} setValues={setValuesHandler}/>
                 <ResetSettings setValues={setDefaultValuesHandler}/>
