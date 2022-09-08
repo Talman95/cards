@@ -3,11 +3,11 @@ import {IconButton, Stack, TableBody, TableCell, TableRow} from "@mui/material";
 import SchoolIcon from "@mui/icons-material/School";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import {PackType, UpdatePackType} from "../../p3-dal/packsAPI";
-import {useAppDispatch, useAppSelector} from "../../../../c0-common/c1-hooks/hooks";
-import {deletePack, updatePack} from "../../p2-bll/packsReducer";
-import {setCardPackId} from "../../../f3-cards/c2-bll/cardsReducer";
-import {PATH} from "../../../../c1-main/m1-ui/routes/RoutesPage";
+import {PackType, UpdatePackType} from "../../../p3-dal/packsAPI";
+import {useAppDispatch, useAppSelector} from "../../../../../c0-common/c1-hooks/hooks";
+import {deletePack, updatePack} from "../../../p2-bll/packsReducer";
+import {setCardPackId} from "../../../../f3-cards/c2-bll/cardsReducer";
+import {PATH} from "../../../../../c1-main/m1-ui/routes/RoutesPage";
 import {useNavigate} from "react-router-dom";
 
 type PacksTableBodyType = {

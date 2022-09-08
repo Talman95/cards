@@ -1,4 +1,4 @@
-import React, {ChangeEvent, FC, MouseEvent, useCallback, useEffect, useState} from 'react';
+import React, {ChangeEvent, FC, MouseEvent, useEffect, useState} from 'react';
 import {
     Box,
     Button,
@@ -13,22 +13,11 @@ import {
     Typography
 } from "@mui/material";
 import {useAppDispatch, useAppSelector} from "../../../c0-common/c1-hooks/hooks";
-import {
-    addPack,
-    getPacks,
-    setCurrentPage,
-    setDefaultValues,
-    setMinMaxCount,
-    setPageCount,
-    setSortPacks
-} from "../p2-bll/packsReducer";
+import {addPack, getPacks, setCurrentPage, setPageCount, setSortPacks} from "../p2-bll/packsReducer";
 import {Navigate} from "react-router-dom";
-import {ToggleButtonBox} from "./ToggleButtonBox/ToggleButtonBox";
-import {DoubleRangeCards} from "./DoubleRangeCards/DoubleRangeCards";
-import {ResetSettings} from "./ResetSettings/ResetSettings";
-import {PacksTableBody} from "./PacksTableBody/PacksTableBody";
+import {PacksTableBody} from "./FilterBlock/PacksTableBody/PacksTableBody";
 import {visuallyHidden} from '@mui/utils';
-import {PacksSearch} from "./PacksSearch/PacksSearch";
+import {FilterBlock} from "./FilterBlock/FilterBlock";
 
 export const PacksList: FC = () => {
     const dispatch = useAppDispatch()
@@ -44,7 +33,6 @@ export const PacksList: FC = () => {
         pageCount,
         showPacks,
     } = useAppSelector(state => state.packs)
-    const [values, setValues] = useState<number[]>([min, max])
 
     useEffect(() => {
         dispatch(getPacks())
@@ -53,17 +41,6 @@ export const PacksList: FC = () => {
     const addPackHandler = () => {
         dispatch(addPack({name: 'New Pack', isPrivate: true}))
     }
-    const setValuesHandler = useCallback((values: number[]) => {
-        setValues(values)
-    }, [])
-    const resetValuesHandler = useCallback(() => {
-        setValues([0, 150])
-        setMinMaxCount({min: 0, max: 150})
-    }, [])
-    const setDefaultValuesHandler = useCallback(() => {
-        setValues([0, 150])
-        dispatch(setDefaultValues())
-    }, [dispatch])
     const handleChangePage = (event: MouseEvent<HTMLButtonElement> | null, page: number) => {
         const currentPage = page + 1
         dispatch(setCurrentPage(currentPage))
@@ -91,26 +68,22 @@ export const PacksList: FC = () => {
     }
 
     return (
-        <Box style={{width: '800px'}}>
+        <Box>
             <Box style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px'}}>
                 <Typography variant={'h6'}>Packs list</Typography>
                 <Button variant={'contained'} onClick={addPackHandler}>
                     Add new pack
                 </Button>
             </Box>
-            <Box style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
-                <PacksSearch/>
-                <ToggleButtonBox setValues={resetValuesHandler}/>
-                <DoubleRangeCards values={values} setValues={setValuesHandler}/>
-                <ResetSettings setValues={setDefaultValuesHandler}/>
-            </Box>
+
+            <FilterBlock/>
 
             <TableContainer component={Paper}>
-                <Table sx={{minWidth: 650}} aria-label={'simple table'}>
+                <Table sx={{width: 1000}} aria-label={'table'}>
                     <TableHead>
                         <TableRow>
-                            <TableCell align={'left'}>Name</TableCell>
-                            <TableCell align={'left'}>
+                            <TableCell align={'left'} style={{width: '300px'}}>Name</TableCell>
+                            <TableCell align={'left'} style={{width: '50px'}}>
                                 <TableSortLabel
                                     active={orderBy === 'cardsCount'}
                                     direction={orderBy === 'cardsCount' ? order : 'asc'}
@@ -124,7 +97,7 @@ export const PacksList: FC = () => {
                                     ) : null}
                                 </TableSortLabel>
                             </TableCell>
-                            <TableCell align={'left'}>
+                            <TableCell align={'left'} style={{width: '300px'}}>
                                 <TableSortLabel
                                     active={orderBy === 'updated'}
                                     direction={orderBy === 'updated' ? order : 'asc'}
@@ -138,8 +111,8 @@ export const PacksList: FC = () => {
                                     ) : null}
                                 </TableSortLabel>
                             </TableCell>
-                            <TableCell align={'left'}>Created by</TableCell>
-                            <TableCell align={'left'}>Actions</TableCell>
+                            <TableCell align={'left'} style={{width: '200px'}}>Created by</TableCell>
+                            <TableCell align={'left'} style={{width: '150px'}}>Actions</TableCell>
                         </TableRow>
                     </TableHead>
                     <PacksTableBody cardPacks={cardPacks}/>

@@ -1,20 +1,21 @@
-import React, {FC, memo} from 'react';
+import React, {FC, memo, useEffect, useState} from 'react';
 import {Box, Slider, Stack, Typography} from "@mui/material";
-import {useAppDispatch} from "../../../../c0-common/c1-hooks/hooks";
-import {setMinMaxCount} from "../../p2-bll/packsReducer";
+import {useAppDispatch, useAppSelector} from "../../../../../c0-common/c1-hooks/hooks";
+import {setMinMaxCount} from "../../../p2-bll/packsReducer";
 
 function valuetext(value: number) {
     return `${value}°C`;
 }
 
-type DoubleRangeCardsType = {
-    values: number[]
-    setValues: (value: number[]) => void
-}
-
-export const DoubleRangeCards: FC<DoubleRangeCardsType> = memo(({values, setValues}) => {
-    console.log('Double range')
+export const DoubleRangeCards: FC = memo(() => {
+    console.log('Double Range')
     const dispatch = useAppDispatch()
+    const {min, max} = useAppSelector(state => state.packs)
+    const [values, setValues] = useState<number[]>([min, max])
+
+    useEffect(() => {
+        setValues([min, max])
+    }, [min, max])
 
     const handleChange = (
         e: Event,
@@ -36,7 +37,7 @@ export const DoubleRangeCards: FC<DoubleRangeCardsType> = memo(({values, setValu
     }
 
     return (
-        <Box sx={{width: '250px'}}>
+        <Box sx={{height: '62px', width: '300px', display: 'grid'}}>
             <Typography variant={'body2'}>Number of cards</Typography>
             <Stack spacing={2} direction="row" sx={{mb: 1}} alignItems="center">
                 <Typography variant={'body2'} style={{minWidth: '16px'}}>{values[0]}</Typography>
