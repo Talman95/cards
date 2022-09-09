@@ -78,10 +78,12 @@ const slice = createSlice({
         cardsLoaded: true,
         cardAnswer: '',
         cardQuestion: '',
+        currentCardPackName: '',
     },
     reducers: {
-        setCardPackId: (state, action: PayloadAction<string>) => {
-            state.cardsPack_id = action.payload
+        setCardPackId: (state, action: PayloadAction<{id: string, packName: string}>) => {
+            state.cardsPack_id = action.payload.id
+            state.currentCardPackName = action.payload.packName
         },
         setCurrentPageCards: (state, action: PayloadAction<number>) => {
             state.page = action.payload

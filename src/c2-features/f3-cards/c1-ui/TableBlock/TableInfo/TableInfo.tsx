@@ -2,17 +2,15 @@ import React, {FC} from 'react';
 import {IconButton, Rating, Stack, TableBody, TableCell, TableRow} from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import {CardsType} from "../../c3-dal/cardsAPI";
-import {deleteCard, updateCard} from "../../c2-bll/cardsReducer";
-import {useAppDispatch, useAppSelector} from "../../../../c0-common/c1-hooks/hooks";
+import {deleteCard, updateCard} from "../../../c2-bll/cardsReducer";
+import {useAppDispatch, useAppSelector} from "../../../../../c0-common/c1-hooks/hooks";
 
-type CardsTableBodyType = {
-    cards: CardsType[]
-}
-
-export const CardsTableBody: FC<CardsTableBodyType> = ({cards}) => {
+export const TableInfo: FC = () => {
     const dispatch = useAppDispatch()
+
+    const cards = useAppSelector(state => state.cards.cards)
     const userId = useAppSelector(state => state.profile.profile?._id)
+
     const deleteCardHandler = (id: string) => {
         dispatch(deleteCard(id))
     }
@@ -24,6 +22,7 @@ export const CardsTableBody: FC<CardsTableBodyType> = ({cards}) => {
         }
         dispatch(updateCard(card))
     }
+
     return (
         <TableBody>
             {cards.map(c => (
@@ -32,14 +31,26 @@ export const CardsTableBody: FC<CardsTableBodyType> = ({cards}) => {
                     sx={{'&:last-child td, &:last-child th': {border: 0}}}
                     hover
                 >
-                    <TableCell component={'th'} scope={'row'} align={'left'}>
+                    <TableCell component={'th'} scope={'row'} align={'left'}
+                               style={{width: '261px', overflowWrap: 'anywhere'}}
+                    >
                         {c.question}
                     </TableCell>
-                    <TableCell align={'left'}>{c.answer}</TableCell>
-                    <TableCell align={'left'}>{new Date(c.updated).toLocaleString()}</TableCell>
+                    <TableCell component={'th'} scope={'row'} align={'left'}
+                               style={{width: '261px', overflowWrap: 'anywhere'}}
+                    >
+                        {c.answer}
+                    </TableCell>
                     <TableCell align={'left'}>
-                        <Rating name={'read-only'} value={c.grade} readOnly size={'small'}
-                                precision={0.5}/>
+                        {new Date(c.updated).toLocaleString()}
+                    </TableCell>
+                    <TableCell align={'left'}>
+                        <Rating
+                            name={'read-only'}
+                            value={c.grade}
+                            readOnly
+                            size={'small'}
+                            precision={0.5}/>
                     </TableCell>
                     {c.user_id === userId &&
                         <TableCell align={'left'} style={{width: '70px'}}>

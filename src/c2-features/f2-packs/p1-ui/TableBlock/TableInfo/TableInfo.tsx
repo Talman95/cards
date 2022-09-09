@@ -28,8 +28,8 @@ export const TableInfo: FC = () => {
         }
         dispatch(updatePack(pack))
     }
-    const navigateToCardsList = async (id: string) => {
-        await dispatch(setCardPackId(id))
+    const navigateToCardsList = async (id: string, packName: string) => {
+        await dispatch(setCardPackId({id, packName}))
         navigate(PATH.CARDS)
     }
 
@@ -44,7 +44,7 @@ export const TableInfo: FC = () => {
                     {(p.cardsCount !== 0 || user_id === p.user_id)
                         ?
                         <TableCell component={'th'} scope={'row'} align={'left'}
-                                   onClick={() => navigateToCardsList(p._id)}
+                                   onClick={() => navigateToCardsList(p._id, p.name)}
                                    style={{
                                        cursor: 'pointer',
                                        maxWidth: '268px',

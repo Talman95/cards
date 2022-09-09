@@ -58,7 +58,9 @@ export const TableHeader: FC = () => {
                 <TableCell align={'left'} style={{minWidth: '180px', maxWidth: '180px'}}>
                     Created by
                 </TableCell>
-                <TableCell align={'left'} style={{width: '150px'}}>Actions</TableCell>
+                <TableCell align={'left'} style={{minWidth: '150px', maxWidth: '150px'}}>
+                    Actions
+                </TableCell>
             </TableRow>
         </TableHead>
     );

@@ -1,41 +1,18 @@
-import React, {ChangeEvent, FC, MouseEvent, useEffect, useState} from 'react';
-import {
-    Box,
-    Button,
-    CircularProgress,
-    IconButton,
-    Paper,
-    Table,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TablePagination,
-    TableRow,
-    TableSortLabel,
-    Typography
-} from "@mui/material";
+import React, {FC, useEffect} from 'react';
+import {Box, Button, CircularProgress, IconButton, Typography} from "@mui/material";
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import {useNavigate} from "react-router-dom";
 import {PATH} from "../../../c1-main/m1-ui/routes/RoutesPage";
 import {useAppDispatch, useAppSelector} from "../../../c0-common/c1-hooks/hooks";
-import {
-    addCard,
-    getCards,
-    resetSetting,
-    setCurrentPageCards,
-    setPageCountCards,
-    setSortCards
-} from "../c2-bll/cardsReducer";
-import {CardsTableBody} from "./CardsTableBody/CardsTableBody";
-import {visuallyHidden} from "@mui/utils";
+import {addCard, getCards, resetSetting} from "../c2-bll/cardsReducer";
 import {SearchBlock} from "./SearchBlock/SearchBlock";
+import {TableBlock} from "./TableBlock/TableBlock";
 
 export const CardsList: FC = () => {
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const {
         cards,
-        cardsTotalCount,
         page,
         pageCount,
         sortCards,
@@ -44,6 +21,7 @@ export const CardsList: FC = () => {
         cardsLoaded,
         cardAnswer,
         cardQuestion,
+        currentCardPackName,
     } = useAppSelector(state => state.cards)
     const userId = useAppSelector(state => state.profile.profile?._id)
 
@@ -60,34 +38,13 @@ export const CardsList: FC = () => {
     const navigateToPacksList = () => {
         navigate(PATH.PACKS)
     }
-    const handleChangePage = (event: MouseEvent<HTMLButtonElement> | null, page: number) => {
-        const currentPage = page + 1
-        dispatch(setCurrentPageCards(currentPage))
-    }
-    const handleChangeRowsPerPage = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-        dispatch(setPageCountCards(+event.target.value))
-    }
     const addCardHandle = () => {
         const card = {
             cardsPack_id: cardsPack_id,
-            question: 'new question 1',
-            answer: 'new answer 2',
+            question: 'new question 1 1232 2333 2232 32321 112 2321 232321',
+            answer: 'new answer 222222222222222222222222222222222222222222222222222222',
         }
         dispatch(addCard(card))
-    }
-
-    type Order = 'asc' | 'desc';
-    type Data = 'grade' | 'updated';
-    const [order, setOrder] = useState<Order>('asc')
-    const [orderBy, setOrderBy] = useState<Data>('updated')
-
-    const sortHandler = (order: Order, orderBy: Data) => {
-        const direction = order === 'asc' ? 0 : 1
-        const str = direction + orderBy
-
-        setOrder(order)
-        setOrderBy(orderBy)
-        dispatch(setSortCards(str))
     }
 
     if (!cardsLoaded) {
@@ -98,14 +55,14 @@ export const CardsList: FC = () => {
     }
 
     return (
-        <Box style={{width: '800px'}}>
+        <Box>
             <Box>
                 <IconButton aria-label={'delete'} size={'small'} onClick={navigateToPacksList}>
                     <KeyboardBackspaceIcon fontSize={'small'}/>
                 </IconButton>
             </Box>
             <Box style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px'}}>
-                <Typography variant={'h6'}>Pack Name</Typography>
+                <Typography variant={'h6'}>{currentCardPackName}</Typography>
                 {userId === packUserId
                     ?
                     <Button variant={'contained'} onClick={addCardHandle}>
@@ -128,58 +85,7 @@ export const CardsList: FC = () => {
                     </Typography>
                 </Box>
                 :
-                <TableContainer component={Paper}>
-                    <Table sx={{minWidth: 650}} aria-label={'simple table'}>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell align={'left'}>Question</TableCell>
-                                <TableCell align={'left'}>Answer</TableCell>
-                                <TableCell align={'left'}>
-                                    <TableSortLabel
-                                        active={orderBy === 'updated'}
-                                        direction={orderBy === 'updated' ? order : 'asc'}
-                                        onClick={() => sortHandler(order === 'asc' ? 'desc' : 'asc', 'updated')}
-                                    >
-                                        Last Updated
-                                        {orderBy === 'updated' ? (
-                                            <Box component="span" sx={visuallyHidden}>
-                                                {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                                            </Box>
-                                        ) : null}
-                                    </TableSortLabel>
-                                </TableCell>
-                                <TableCell align={'left'}>
-                                    <TableSortLabel
-                                        active={orderBy === 'grade'}
-                                        direction={orderBy === 'grade' ? order : 'asc'}
-                                        onClick={() => sortHandler(order === 'asc' ? 'desc' : 'asc', 'grade')}
-                                    >
-                                        Grade
-                                        {orderBy === 'grade' ? (
-                                            <Box component="span" sx={visuallyHidden}>
-                                                {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                                            </Box>
-                                        ) : null}
-                                    </TableSortLabel>
-                                </TableCell>
-                                {userId === packUserId &&
-                                    <TableCell align={'left'}>Actions</TableCell>}
-                            </TableRow>
-                        </TableHead>
-                        <CardsTableBody cards={cards}/>
-                    </Table>
-                </TableContainer>
-            }
-            {cards.length !== 0 &&
-                <TablePagination
-                    rowsPerPageOptions={[5, 10, 20]}
-                    component={'div'}
-                    count={cardsTotalCount}
-                    rowsPerPage={pageCount}
-                    page={page - 1}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                />
+                <TableBlock/>
             }
         </Box>
     );
