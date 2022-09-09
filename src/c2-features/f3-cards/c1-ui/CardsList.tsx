@@ -10,8 +10,8 @@ import {
     TableContainer,
     TableHead,
     TablePagination,
-    TableRow, TableSortLabel,
-    TextField,
+    TableRow,
+    TableSortLabel,
     Typography
 } from "@mui/material";
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
@@ -21,13 +21,14 @@ import {useAppDispatch, useAppSelector} from "../../../c0-common/c1-hooks/hooks"
 import {
     addCard,
     getCards,
-    setCardsLoad,
+    resetSetting,
     setCurrentPageCards,
     setPageCountCards,
     setSortCards
 } from "../c2-bll/cardsReducer";
 import {CardsTableBody} from "./CardsTableBody/CardsTableBody";
 import {visuallyHidden} from "@mui/utils";
+import {SearchBlock} from "./SearchBlock/SearchBlock";
 
 export const CardsList: FC = () => {
     const navigate = useNavigate()
@@ -41,15 +42,20 @@ export const CardsList: FC = () => {
         cardsPack_id,
         packUserId,
         cardsLoaded,
+        cardAnswer,
+        cardQuestion,
     } = useAppSelector(state => state.cards)
     const userId = useAppSelector(state => state.profile.profile?._id)
 
     useEffect(() => {
         dispatch(getCards(cardsPack_id))
+    }, [cardsPack_id, page, pageCount, sortCards, cardAnswer, cardQuestion, dispatch])
+
+    useEffect(() => {
         return () => {
-            dispatch(setCardsLoad(true))
+            dispatch(resetSetting())
         }
-    }, [cardsPack_id, page, pageCount, sortCards, dispatch])
+    }, [])
 
     const navigateToPacksList = () => {
         navigate(PATH.PACKS)
@@ -111,14 +117,7 @@ export const CardsList: FC = () => {
                     </Button>
                 }
             </Box>
-            {cards.length !== 0 &&
-                <Box>
-                    <Typography variant={'body2'}>
-                        Search
-                    </Typography>
-                    <TextField size={'small'} fullWidth/>
-                </Box>
-            }
+            {cards.length !== 0 && <SearchBlock/>}
             {cards.length === 0
                 ?
                 <Box style={{

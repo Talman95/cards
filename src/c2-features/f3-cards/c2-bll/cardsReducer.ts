@@ -9,12 +9,20 @@ export const getCards = createAsyncThunk(
         thunkAPI.dispatch(setCardsLoad(false))
         try {
             const state = thunkAPI.getState() as RootState
-            const {sortCards, page, pageCount} = state.cards
+            const {
+                sortCards,
+                page,
+                pageCount,
+                cardQuestion,
+                cardAnswer,
+            } = state.cards
             const res = await cardsAPI.getCards({
                 cardsPack_id: id,
                 sortCards,
                 page,
                 pageCount,
+                cardQuestion,
+                cardAnswer,
             })
             return res.data
         } catch (e) {
@@ -68,6 +76,8 @@ const slice = createSlice({
         sortCards: '0updated',
         cardsPack_id: '',
         cardsLoaded: true,
+        cardAnswer: '',
+        cardQuestion: '',
     },
     reducers: {
         setCardPackId: (state, action: PayloadAction<string>) => {
@@ -83,10 +93,26 @@ const slice = createSlice({
         setCardsLoad: (state, action: PayloadAction<boolean>) => {
             state.cardsLoaded = action.payload
         },
-        setSortCards: (state, action: PayloadAction<string>)  => {
+        setSortCards: (state, action: PayloadAction<string>) => {
             state.sortCards = action.payload
             state.page = 1
         },
+        setCardQuestion: (state, action: PayloadAction<string>) => {
+            state.cardQuestion = action.payload
+            state.page = 1
+        },
+        setCardAnswer: (state, action: PayloadAction<string>) => {
+            state.cardAnswer = action.payload
+            state.page = 1
+        },
+        resetSetting: (state, action: PayloadAction<undefined>) => {
+            state.cardQuestion = ''
+            state.cardAnswer = ''
+            state.page = 1
+            state.sortCards = '0updated'
+            state.cardsLoaded = true
+            state.pageCount = 10
+        }
     },
     extraReducers: builder => {
         builder.addCase(getCards.fulfilled, (state, action) => {
@@ -105,4 +131,7 @@ export const {
     setPageCountCards,
     setCardsLoad,
     setSortCards,
+    setCardQuestion,
+    setCardAnswer,
+    resetSetting,
 } = slice.actions

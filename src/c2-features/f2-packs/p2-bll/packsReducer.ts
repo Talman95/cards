@@ -122,6 +122,7 @@ const slice = createSlice({
         },
         setPackName: (state, action: PayloadAction<string>) => {
             state.packName = action.payload
+            state.page = 1
         },
     },
     extraReducers: builder => {
