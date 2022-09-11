@@ -1,18 +1,31 @@
-import React, {FC} from 'react';
+import React, {FC, useState} from 'react';
 import {IconButton, Rating, Stack, TableBody, TableCell, TableRow} from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {deleteCard, updateCard} from "../../../c2-bll/cardsReducer";
 import {useAppDispatch, useAppSelector} from "../../../../../c0-common/c1-hooks/hooks";
+import {CardsType} from "../../../c3-dal/cardsAPI";
+import {BasicModal} from "../../../../../c0-common/c2-components/Modals/BasicModal";
+import {QuestionModal} from "../../../../../c0-common/c2-components/Modals/QuestionModal";
 
 export const TableInfo: FC = () => {
     const dispatch = useAppDispatch()
 
+    const [openDelete, setOpenDelete] = useState(false)
+    const [selectedCard, setSelectedCard] = useState<CardsType | null>(null)
+
     const cards = useAppSelector(state => state.cards.cards)
     const userId = useAppSelector(state => state.profile.profile?._id)
 
+    const handleDeleteOpen = (card: CardsType) => {
+        setSelectedCard(card)
+        setOpenDelete(true)
+    }
+    const handleDeleteClose = () => setOpenDelete(false)
+
     const deleteCardHandler = (id: string) => {
         dispatch(deleteCard(id))
+        handleDeleteClose()
     }
     const updateCardHandler = (id: string) => {
         const card = {
@@ -60,7 +73,7 @@ export const TableInfo: FC = () => {
                                     <EditIcon fontSize={'small'}/>
                                 </IconButton>
                                 <IconButton aria-label={'delete'} size={'small'}
-                                            onClick={() => deleteCardHandler(c._id)}>
+                                            onClick={() => handleDeleteOpen(c)}>
                                     <DeleteIcon fontSize={'small'}/>
                                 </IconButton>
                             </Stack>
@@ -68,6 +81,15 @@ export const TableInfo: FC = () => {
                     }
                 </TableRow>
             ))}
+            <BasicModal open={openDelete} setOpen={setOpenDelete}>
+                <QuestionModal
+                    title={'Delete Card'}
+                    itemName={selectedCard ? selectedCard.question : ''}
+                    itemId={selectedCard ? selectedCard._id : ''}
+                    navigateBack={handleDeleteClose}
+                    deleteItem={deleteCardHandler}
+                />
+            </BasicModal>
         </TableBody>
     );
 }

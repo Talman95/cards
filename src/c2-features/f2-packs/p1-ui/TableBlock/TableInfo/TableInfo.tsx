@@ -11,31 +11,40 @@ import {PATH} from "../../../../../c1-main/m1-ui/routes/RoutesPage";
 import {useNavigate} from "react-router-dom";
 import {BasicModal} from "../../../../../c0-common/c2-components/Modals/BasicModal";
 import {UpdatePackModal} from "./UpdatePackModal/UpdatePackModal";
+import {QuestionModal} from "../../../../../c0-common/c2-components/Modals/QuestionModal";
 
 export const TableInfo: FC = () => {
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
-    const [open, setOpen] = useState(false)
-    const [currentPack, setCurrentPack] = useState<PackType | null>(null)
+    const [openAddModal, setOpenAddModal] = useState(false)
+    const [openQuestModal, setOpenQuestModal] = useState(false)
+    const [selectedPack, setSelectedPack] = useState<PackType | null>(null)
 
     const user_id = useAppSelector(state => state.profile.profile?._id)
     const cardPacks = useAppSelector(state => state.packs.cardPacks)
 
-    const handleOpen = (pack: PackType) => {
-        setCurrentPack(pack)
-        setOpen(true)
+    const handleAddOpen = (pack: PackType) => {
+        setSelectedPack(pack)
+        setOpenAddModal(true)
     }
-    const handleClose = () => setOpen(false)
-    const deletePackHandler = (id: string) => {
-        dispatch(deletePack(id))
+    const handleAddClose = () => setOpenAddModal(false)
+    const handleQuestOpen = (pack: PackType) => {
+        setSelectedPack(pack)
+        setOpenQuestModal(true)
     }
+    const handleQuestClose = () => setOpenQuestModal(false)
+
     const navigateToCardsList = async (id: string, packName: string) => {
         await dispatch(setCardPackId({id, packName}))
         navigate(PATH.CARDS)
     }
     const updatePackHandler = (pack: UpdatePackType) => {
         dispatch(updatePack(pack))
-        handleClose()
+        handleAddClose()
+    }
+    const deletePackHandler = (id: string) => {
+        dispatch(deletePack(id))
+        handleQuestClose()
     }
 
     return (
@@ -93,11 +102,11 @@ export const TableInfo: FC = () => {
                                     <SchoolIcon fontSize={'small'}/>
                                 </IconButton>
                                 <IconButton aria-label={'update'} size={'small'}
-                                            onClick={() => handleOpen(p)}>
+                                            onClick={() => handleAddOpen(p)}>
                                     <EditIcon fontSize={'small'}/>
                                 </IconButton>
                                 <IconButton aria-label={'delete'} size={'small'}
-                                            onClick={() => deletePackHandler(p._id)}>
+                                            onClick={() => handleQuestOpen(p)}>
                                     <DeleteIcon fontSize={'small'}/>
                                 </IconButton>
                             </Stack>
@@ -110,11 +119,20 @@ export const TableInfo: FC = () => {
                     </TableCell>
                 </TableRow>
             ))}
-            <BasicModal open={open} setOpen={setOpen}>
+            <BasicModal open={openAddModal} setOpen={setOpenAddModal}>
                 <UpdatePackModal
-                    pack={currentPack}
-                    navigateBack={handleClose}
+                    pack={selectedPack}
+                    navigateBack={handleAddClose}
                     saveData={updatePackHandler}
+                />
+            </BasicModal>
+            <BasicModal open={openQuestModal} setOpen={setOpenQuestModal}>
+                <QuestionModal
+                    title={'Delete Pack'}
+                    itemName={selectedPack ? selectedPack.name : ''}
+                    itemId={selectedPack ? selectedPack._id : ''}
+                    navigateBack={handleQuestClose}
+                    deleteItem={deletePackHandler}
                 />
             </BasicModal>
         </TableBody>
