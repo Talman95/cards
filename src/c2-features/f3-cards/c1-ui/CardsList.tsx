@@ -1,12 +1,13 @@
 import React, {FC, useEffect} from 'react';
-import {Box, Button, CircularProgress, IconButton, Typography} from "@mui/material";
+import {Box, CircularProgress, IconButton, Typography} from "@mui/material";
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import {useNavigate} from "react-router-dom";
 import {PATH} from "../../../c1-main/m1-ui/routes/RoutesPage";
 import {useAppDispatch, useAppSelector} from "../../../c0-common/c1-hooks/hooks";
-import {addCard, getCards, resetSetting} from "../c2-bll/cardsReducer";
+import {getCards, resetSetting} from "../c2-bll/cardsReducer";
 import {SearchBlock} from "./SearchBlock/SearchBlock";
 import {TableBlock} from "./TableBlock/TableBlock";
+import {CardsListHeader} from "./CardsListHeader/CardsListHeader";
 
 export const CardsList: FC = () => {
     const navigate = useNavigate()
@@ -17,13 +18,10 @@ export const CardsList: FC = () => {
         pageCount,
         sortCards,
         cardsPack_id,
-        packUserId,
         cardsLoaded,
         cardAnswer,
         cardQuestion,
-        currentCardPackName,
     } = useAppSelector(state => state.cards)
-    const userId = useAppSelector(state => state.profile.profile?._id)
 
     useEffect(() => {
         dispatch(getCards(cardsPack_id))
@@ -38,14 +36,7 @@ export const CardsList: FC = () => {
     const navigateToPacksList = () => {
         navigate(PATH.PACKS)
     }
-    const addCardHandle = () => {
-        const card = {
-            cardsPack_id: cardsPack_id,
-            question: 'new question 1 1232 2333 2232 32321 112 2321 232321',
-            answer: 'new answer 222222222222222222222222222222222222222222222222222222',
-        }
-        dispatch(addCard(card))
-    }
+
 
     if (!cardsLoaded) {
         return <div
@@ -61,19 +52,7 @@ export const CardsList: FC = () => {
                     <KeyboardBackspaceIcon fontSize={'small'}/>
                 </IconButton>
             </Box>
-            <Box style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px'}}>
-                <Typography variant={'h6'}>{currentCardPackName}</Typography>
-                {userId === packUserId
-                    ?
-                    <Button variant={'contained'} onClick={addCardHandle}>
-                        Add new card
-                    </Button>
-                    :
-                    <Button variant={'contained'}>
-                        Learn pack
-                    </Button>
-                }
-            </Box>
+            <CardsListHeader/>
             {cards.length !== 0 && <SearchBlock/>}
             {cards.length === 0
                 ?

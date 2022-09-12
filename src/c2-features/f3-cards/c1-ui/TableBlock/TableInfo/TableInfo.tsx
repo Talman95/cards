@@ -4,14 +4,16 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {deleteCard, updateCard} from "../../../c2-bll/cardsReducer";
 import {useAppDispatch, useAppSelector} from "../../../../../c0-common/c1-hooks/hooks";
-import {CardsType} from "../../../c3-dal/cardsAPI";
+import {CardsType, UpdateCardType} from "../../../c3-dal/cardsAPI";
 import {BasicModal} from "../../../../../c0-common/c2-components/Modals/BasicModal";
 import {QuestionModal} from "../../../../../c0-common/c2-components/Modals/QuestionModal";
+import {UpdateCardModal} from "./UpdateCardModal/UpdateCardModal";
 
 export const TableInfo: FC = () => {
     const dispatch = useAppDispatch()
 
     const [openDelete, setOpenDelete] = useState(false)
+    const [openUpdate, setOpenUpdate] = useState(false)
     const [selectedCard, setSelectedCard] = useState<CardsType | null>(null)
 
     const cards = useAppSelector(state => state.cards.cards)
@@ -22,18 +24,19 @@ export const TableInfo: FC = () => {
         setOpenDelete(true)
     }
     const handleDeleteClose = () => setOpenDelete(false)
+    const handleUpdateOpen = (card: CardsType) => {
+        setSelectedCard(card)
+        setOpenUpdate(true)
+    }
+    const handleUpdateClose = () => setOpenUpdate(false)
 
     const deleteCardHandler = (id: string) => {
         dispatch(deleteCard(id))
         handleDeleteClose()
     }
-    const updateCardHandler = (id: string) => {
-        const card = {
-            _id: id,
-            question: 'new question 5468 792',
-            answer: 'new answer 1231 23',
-        }
+    const updateCardHandler = (card: UpdateCardType) => {
         dispatch(updateCard(card))
+        handleUpdateClose()
     }
 
     return (
@@ -69,7 +72,7 @@ export const TableInfo: FC = () => {
                         <TableCell align={'left'} style={{width: '70px'}}>
                             <Stack direction={'row'} alignItems={'center'} spacing={1}>
                                 <IconButton aria-label={'delete'} size={'small'}
-                                            onClick={() => updateCardHandler(c._id)}>
+                                            onClick={() => handleUpdateOpen(c)}>
                                     <EditIcon fontSize={'small'}/>
                                 </IconButton>
                                 <IconButton aria-label={'delete'} size={'small'}
@@ -81,6 +84,15 @@ export const TableInfo: FC = () => {
                     }
                 </TableRow>
             ))}
+            <BasicModal open={openUpdate} setOpen={setOpenUpdate}>
+                <UpdateCardModal
+                    cardsPack_id={selectedCard ? selectedCard.cardsPack_id : ''}
+                    answer={selectedCard ? selectedCard.answer : ''}
+                    question={selectedCard ? selectedCard.question : ''}
+                    navigateBack={handleUpdateClose}
+                    updateCard={updateCardHandler}
+                />
+            </BasicModal>
             <BasicModal open={openDelete} setOpen={setOpenDelete}>
                 <QuestionModal
                     title={'Delete Card'}
