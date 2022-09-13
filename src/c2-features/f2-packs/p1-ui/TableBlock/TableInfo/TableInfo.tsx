@@ -46,6 +46,9 @@ export const TableInfo: FC = () => {
         dispatch(deletePack(id))
         handleQuestClose()
     }
+    const learnPackHandler = (id: string) => {
+        navigate(`/learn/${id}`)
+    }
 
     return (
         <TableBody>
@@ -98,7 +101,9 @@ export const TableInfo: FC = () => {
                         {user_id === p.user_id
                             ?
                             <Stack direction={'row'} alignItems={'center'} spacing={1}>
-                                <IconButton aria-label={'learn'} size={'small'} disabled={p.cardsCount === 0}>
+                                <IconButton aria-label={'learn'} size={'small'}
+                                            onClick={() => learnPackHandler(p._id)}
+                                            disabled={p.cardsCount === 0}>
                                     <SchoolIcon fontSize={'small'}/>
                                 </IconButton>
                                 <IconButton aria-label={'update'} size={'small'}

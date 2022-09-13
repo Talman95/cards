@@ -8,6 +8,7 @@ import {SetPassword} from "../../../c2-features/f1-auth/a5-setPassword/s1-ui/Set
 import {Container} from "@mui/material";
 import {PacksList} from "../../../c2-features/f2-packs/p1-ui/PacksList";
 import {CardsList} from "../../../c2-features/f3-cards/c1-ui/CardsList";
+import {LearnList} from "../../../c2-features/f4-learn/l1-ui/LearnList";
 
 export const PATH = {
     LOGIN: '/login',
@@ -18,6 +19,7 @@ export const PATH = {
     TEST: '/test',
     PACKS: '/packs',
     CARDS: '/packs/cards',
+    LEARN: '/learn/:cardsPack_id',
 }
 
 export const RoutesPage: FC = () => {
@@ -29,6 +31,7 @@ export const RoutesPage: FC = () => {
         {path: PATH.SET_NEW_PASSWORD, component: <SetPassword/>},
         {path: PATH.PACKS, component: <PacksList/>},
         {path: PATH.CARDS, component: <CardsList/>},
+        {path: PATH.LEARN, component: <LearnList/>},
         {path: '*', component: <div>ERROR 404</div>},
     ]
     return (
