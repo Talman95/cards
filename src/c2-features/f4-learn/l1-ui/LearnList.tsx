@@ -18,7 +18,7 @@ import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import {useNavigate, useParams} from "react-router-dom";
 import {PATH} from "../../../c1-main/m1-ui/routes/RoutesPage";
 import {useAppDispatch, useAppSelector} from "../../../c0-common/c1-hooks/hooks";
-import {getLearnedCards} from "../l2-bll/learnReducer";
+import {getLearnedCards, updateGradeCard} from "../l2-bll/learnReducer";
 import {getCard} from "../../../c0-common/c3-utils/smartRandom";
 import {CardType} from "../../f3-cards/c3-dal/cardsAPI";
 
@@ -54,8 +54,12 @@ export const LearnList: FC = () => {
 
     const handleShowAnswer = () => setShowAnswer(true)
     const handleNextClick = () => {
-        setCurrentCard(getCard(cards))
+        if (grade && currentCard) {
+            dispatch(updateGradeCard({grade, card_id: currentCard._id}))
+        }
+        // setCurrentCard(getCard(cards))
         setShowAnswer(false)
+        setGrade(null)
     }
     const handleChange = (grade: number) => {
         setGrade(grade)
