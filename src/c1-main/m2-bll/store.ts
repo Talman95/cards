@@ -5,6 +5,7 @@ import {configureStore} from "@reduxjs/toolkit";
 import {appReducer} from "./appReducer";
 import {packsReducer} from "../../c2-features/f2-packs/p2-bll/packsReducer";
 import {cardsReducer} from "../../c2-features/f3-cards/c2-bll/cardsReducer";
+import {learnReducer} from "../../c2-features/f4-learn/l2-bll/learnReducer";
 
 const rootReducers = combineReducers({
     auth: authReducer,
@@ -12,6 +13,7 @@ const rootReducers = combineReducers({
     app: appReducer,
     packs: packsReducer,
     cards: cardsReducer,
+    learn: learnReducer,
 })
 
 export const store = configureStore({

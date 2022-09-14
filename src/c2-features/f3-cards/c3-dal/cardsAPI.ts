@@ -10,7 +10,7 @@ export type GetCardsParamsType = {
     page?: number
     pageCount?: number
 }
-export type CardsType = {
+export type CardType = {
     answer: string
     question: string
     cardsPack_id: string
@@ -22,7 +22,7 @@ export type CardsType = {
     _id: string
 }
 type GetCardsResponseType = {
-    cards: CardsType[]
+    cards: CardType[]
     cardsTotalCount: number
     maxGrade: number
     minGrade: number

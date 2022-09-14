@@ -4,7 +4,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {deleteCard, updateCard} from "../../../c2-bll/cardsReducer";
 import {useAppDispatch, useAppSelector} from "../../../../../c0-common/c1-hooks/hooks";
-import {CardsType, UpdateCardType} from "../../../c3-dal/cardsAPI";
+import {CardType, UpdateCardType} from "../../../c3-dal/cardsAPI";
 import {BasicModal} from "../../../../../c0-common/c2-components/Modals/BasicModal";
 import {QuestionModal} from "../../../../../c0-common/c2-components/Modals/QuestionModal";
 import {UpdateCardModal} from "./UpdateCardModal/UpdateCardModal";
@@ -14,17 +14,17 @@ export const TableInfo: FC = () => {
 
     const [openDelete, setOpenDelete] = useState(false)
     const [openUpdate, setOpenUpdate] = useState(false)
-    const [selectedCard, setSelectedCard] = useState<CardsType | null>(null)
+    const [selectedCard, setSelectedCard] = useState<CardType | null>(null)
 
     const cards = useAppSelector(state => state.cards.cards)
     const userId = useAppSelector(state => state.profile.profile?._id)
 
-    const handleDeleteOpen = (card: CardsType) => {
+    const handleDeleteOpen = (card: CardType) => {
         setSelectedCard(card)
         setOpenDelete(true)
     }
     const handleDeleteClose = () => setOpenDelete(false)
-    const handleUpdateOpen = (card: CardsType) => {
+    const handleUpdateOpen = (card: CardType) => {
         setSelectedCard(card)
         setOpenUpdate(true)
     }
@@ -86,7 +86,7 @@ export const TableInfo: FC = () => {
             ))}
             <BasicModal open={openUpdate} setOpen={setOpenUpdate}>
                 <UpdateCardModal
-                    cardsPack_id={selectedCard ? selectedCard.cardsPack_id : ''}
+                    cardId={selectedCard ? selectedCard._id : ''}
                     answer={selectedCard ? selectedCard.answer : ''}
                     question={selectedCard ? selectedCard.question : ''}
                     navigateBack={handleUpdateClose}

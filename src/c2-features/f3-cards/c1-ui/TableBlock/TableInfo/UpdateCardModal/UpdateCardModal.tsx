@@ -33,7 +33,7 @@ const style = {
 
 type QuestionFormat = 'Text'
 type UpdateCardModalType = {
-    cardsPack_id: string
+    cardId: string
     question: string
     answer: string
     navigateBack: () => void
@@ -42,7 +42,7 @@ type UpdateCardModalType = {
 
 export const UpdateCardModal: FC<UpdateCardModalType> = (
     {
-        cardsPack_id,
+        cardId,
         question,
         answer,
         navigateBack,
@@ -57,7 +57,7 @@ export const UpdateCardModal: FC<UpdateCardModalType> = (
     }
     const clickSaveHandler = () => {
         const card = {
-            _id: cardsPack_id,
+            _id: cardId,
             question: newQuestion,
             answer: newAnswer,
         }

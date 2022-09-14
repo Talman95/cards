@@ -1,7 +1,7 @@
 import React, {FC, useEffect} from 'react';
 import {Box, CircularProgress, IconButton, Typography} from "@mui/material";
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
-import {useNavigate} from "react-router-dom";
+import {Navigate, useNavigate} from "react-router-dom";
 import {PATH} from "../../../c1-main/m1-ui/routes/RoutesPage";
 import {useAppDispatch, useAppSelector} from "../../../c0-common/c1-hooks/hooks";
 import {getCards, resetSetting} from "../c2-bll/cardsReducer";
@@ -43,6 +43,9 @@ export const CardsList: FC = () => {
             style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
             <CircularProgress/>
         </div>
+    }
+    if (!cardsPack_id) {
+        return <Navigate to={PATH.PACKS} replace={true} />
     }
 
     return (

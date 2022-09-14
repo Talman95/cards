@@ -1,5 +1,5 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {AddCardType, cardsAPI, CardsType, UpdateCardType} from "../c3-dal/cardsAPI";
+import {AddCardType, cardsAPI, CardType, UpdateCardType} from "../c3-dal/cardsAPI";
 import {RootState} from "../../../c1-main/m2-bll/store";
 import {handleAppError} from "../../../c0-common/c3-utils/errorUtils";
 
@@ -68,7 +68,7 @@ export const updateCard = createAsyncThunk(
 const slice = createSlice({
     name: 'cards',
     initialState: {
-        cards: [] as CardsType[],
+        cards: [] as CardType[],
         cardsTotalCount: 0,
         page: 1,
         pageCount: 10,
