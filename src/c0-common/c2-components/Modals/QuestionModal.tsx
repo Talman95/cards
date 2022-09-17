@@ -1,5 +1,6 @@
 import React, {FC} from 'react';
-import {Box, Button, Stack, Typography} from "@mui/material";
+import {Box, Button, Divider, Grid, IconButton, Stack, Typography} from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -40,9 +41,19 @@ export const QuestionModal: FC<QuestionModalType> = (
 
     return (
         <Box sx={style}>
-            <Typography id="modal-title" variant="h6" component="h2">
-                {title}
-            </Typography>
+            <Grid container alignItems={'center'}>
+                <Grid item xs>
+                    <Typography id={'title'} variant={'h6'} component={'h2'}>
+                        {title}
+                    </Typography>
+                </Grid>
+                <Grid item>
+                    <IconButton onClick={navigateBack}>
+                        <CloseIcon/>
+                    </IconButton>
+                </Grid>
+            </Grid>
+            <Divider/>
             <Typography>
                 Do you really want to remove <strong>{itemName}</strong>?
             </Typography>

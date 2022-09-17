@@ -1,6 +1,7 @@
 import React, {FC, useState} from 'react';
 import {PackType, UpdatePackType} from "../../../../p3-dal/packsAPI";
-import {Box, Button, Checkbox, FormControlLabel, Stack, TextField, Typography} from "@mui/material";
+import {Box, Button, Checkbox, FormControlLabel, Grid, IconButton, Stack, TextField, Typography} from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -47,9 +48,18 @@ export const UpdatePackModal: FC<UpdatePackModalType> = (
 
     return (
         <Box sx={style}>
-            <Typography id="modal-modal-title" variant="h6" component="h2">
-                Update pack
-            </Typography>
+            <Grid container alignItems={'center'}>
+                <Grid item xs>
+                    <Typography id={'title'} variant={'h6'} component={'h2'}>
+                        Update pack
+                    </Typography>
+                </Grid>
+                <Grid item>
+                    <IconButton onClick={navigateBack}>
+                        <CloseIcon/>
+                    </IconButton>
+                </Grid>
+            </Grid>
             <TextField
                 id={name}
                 label="Name pack"

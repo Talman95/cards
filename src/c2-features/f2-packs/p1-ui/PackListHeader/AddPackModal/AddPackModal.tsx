@@ -1,6 +1,7 @@
 import React, {FC, useState} from 'react';
-import {Box, Button, Checkbox, FormControlLabel, Stack, TextField, Typography} from "@mui/material";
+import {Box, Button, Checkbox, FormControlLabel, Grid, IconButton, Stack, TextField, Typography} from "@mui/material";
 import {AddPackParamsType} from "../../../p3-dal/packsAPI";
+import CloseIcon from "@mui/icons-material/Close";
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -40,9 +41,18 @@ export const AddPackModal: FC<AddPackModalType> = (
 
     return (
         <Box sx={style}>
-            <Typography id="modal-modal-title" variant="h6" component="h2">
-                Add new pack
-            </Typography>
+            <Grid container alignItems={'center'}>
+                <Grid item xs>
+                    <Typography id={'title'} variant={'h6'} component={'h2'}>
+                        Add new pack
+                    </Typography>
+                </Grid>
+                <Grid item>
+                    <IconButton onClick={navigateBack}>
+                        <CloseIcon/>
+                    </IconButton>
+                </Grid>
+            </Grid>
             <TextField
                 id={name}
                 label="Name pack"
@@ -56,7 +66,7 @@ export const AddPackModal: FC<AddPackModalType> = (
                     onChange={(e) => setIsPrivate(e.currentTarget.checked)}
                 />}
             />
-            <Stack direction="row" spacing={2} style={{display:'flex', justifyContent: 'space-evenly'}}>
+            <Stack direction="row" spacing={2} style={{display: 'flex', justifyContent: 'space-evenly'}}>
                 <Button
                     variant="outlined"
                     onClick={navigateBack}
