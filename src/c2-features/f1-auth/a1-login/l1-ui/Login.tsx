@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React from 'react';
 import {useFormik} from "formik";
 import {login} from "../l2-bll/authReducer";
 import {Navigate, useNavigate} from "react-router-dom";
@@ -22,10 +22,12 @@ type FormikErrorType = {
     rememberMe?: boolean
 }
 
-export const Login: FC = () => {
-    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
+export const Login = () => {
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
+
+    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
+
     const navigateToRegister = () => navigate(PATH.REGISTER)
     const navigateToForgot = () => navigate(PATH.FORGOT_PASSWORD)
 
