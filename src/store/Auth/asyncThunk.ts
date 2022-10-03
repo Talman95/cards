@@ -3,11 +3,10 @@ import {authAPI, LoginParamsType, RegisterParamsType} from "../../api/authAPI";
 import {appActions} from "../App/appSlice";
 import {handleAppError} from "../../utils/errorUtils";
 import {profileActions} from "../Profile/profileSlice";
+import {authActions} from "./authSlice";
 
 const setProfile = profileActions.setProfile
-const setAppMessage = appActions.setAppMessage
-const setAppStatus = appActions.setAppStatus
-const setInitialization = appActions.setInitialization
+const {setAppMessage, setAppStatus, setInitialization} = appActions
 
 const login = createAsyncThunk(
     'auth/login',
@@ -30,12 +29,13 @@ const getAuthData = createAsyncThunk(
         try {
             const res = await authAPI.authMe()
             thunkAPI.dispatch(setProfile({profile: res.data}))
+            thunkAPI.dispatch(authActions.setLoggedIn(true))
+            thunkAPI.dispatch(setInitialization(true))
             thunkAPI.dispatch(setAppStatus('idle'))
-            thunkAPI.dispatch(setInitialization(true))
-            return {login: true}
+            return null
         } catch {
-            thunkAPI.dispatch(setAppStatus('failed'))
             thunkAPI.dispatch(setInitialization(true))
+            thunkAPI.dispatch(setAppStatus('failed'))
             return thunkAPI.rejectWithValue({login: false})
         }
     })

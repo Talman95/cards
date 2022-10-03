@@ -2,7 +2,6 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {authAsyncThunks} from "./asyncThunk";
 
 const {
-    getAuthData,
     login,
     logout,
     register,
@@ -28,12 +27,12 @@ const slice = createSlice({
         setStatusPassword: (state, action: PayloadAction<boolean>) => {
             state.isChangedPassword = action.payload
         },
+        setLoggedIn: (state, action: PayloadAction<boolean>) => {
+            state.isLoggedIn = action.payload
+        }
     },
     extraReducers: (builder) => {
         builder.addCase(login.fulfilled, (state, action) => {
-            state.isLoggedIn = action.payload.login
-        })
-        builder.addCase(getAuthData.fulfilled, (state, action) => {
             state.isLoggedIn = action.payload.login
         })
         builder.addCase(logout.fulfilled, (state, action) => {
