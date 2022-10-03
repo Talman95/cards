@@ -1,13 +1,13 @@
+import {cardsActions} from "./cardsSlice";
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import {RootState} from "../store";
 import {AddCardType, cardsAPI, UpdateCardType} from "../../api/cardsAPI";
 import {handleAppError} from "../../utils/errorUtils";
-import {setCardsLoad} from "./cardsSlice";
 
-export const getCards = createAsyncThunk(
+const getCards = createAsyncThunk(
     'cards/getCards',
     async (id: string, thunkAPI) => {
-        thunkAPI.dispatch(setCardsLoad(false))
+        thunkAPI.dispatch(cardsActions.setCardsLoad(false))
         try {
             const state = thunkAPI.getState() as RootState
             const {
@@ -31,10 +31,10 @@ export const getCards = createAsyncThunk(
         }
     })
 
-export const addCard = createAsyncThunk(
+const addCard = createAsyncThunk(
     'cards/addCards',
     async (card: AddCardType, thunkAPI) => {
-        thunkAPI.dispatch(setCardsLoad(false))
+        thunkAPI.dispatch(cardsActions.setCardsLoad(false))
         try {
             await cardsAPI.addCard(card)
             await thunkAPI.dispatch(getCards(card.cardsPack_id))
@@ -43,10 +43,10 @@ export const addCard = createAsyncThunk(
         }
     })
 
-export const deleteCard = createAsyncThunk(
+const deleteCard = createAsyncThunk(
     'cards/deleteCard',
     async (id: string, thunkAPI) => {
-        thunkAPI.dispatch(setCardsLoad(false))
+        thunkAPI.dispatch(cardsActions.setCardsLoad(false))
         try {
             const state = thunkAPI.getState() as RootState
             await cardsAPI.deleteCard(id)
@@ -56,10 +56,10 @@ export const deleteCard = createAsyncThunk(
         }
     })
 
-export const updateCard = createAsyncThunk(
+const updateCard = createAsyncThunk(
     'cards/updateCard',
     async (card: UpdateCardType, thunkAPI) => {
-        thunkAPI.dispatch(setCardsLoad(false))
+        thunkAPI.dispatch(cardsActions.setCardsLoad(false))
         try {
             const state = thunkAPI.getState() as RootState
             await cardsAPI.updateCard(card)
@@ -68,3 +68,11 @@ export const updateCard = createAsyncThunk(
             return thunkAPI.rejectWithValue(null)
         }
     })
+
+
+export const cardsAsyncThunks = {
+    getCards,
+    addCard,
+    deleteCard,
+    updateCard,
+}

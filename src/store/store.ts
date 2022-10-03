@@ -8,8 +8,8 @@ import {cardsSlice} from "./Cards/cardsSlice";
 import {learnSlice} from "./Learn/learnSlice";
 
 const rootReducers = combineReducers({
-    auth: authSlice,
     app: appSlice,
+    auth: authSlice,
     profile: profileSlice,
     packs: packsSlice,
     cards: cardsSlice,

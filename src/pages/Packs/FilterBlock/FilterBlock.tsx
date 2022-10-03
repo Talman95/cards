@@ -3,16 +3,17 @@ import {ToggleButtonBox} from "./ToggleButtonBox/ToggleButtonBox";
 import {DoubleRangeCards} from "./DoubleRangeCards/DoubleRangeCards";
 import {ResetSettings} from "./ResetSettings/ResetSettings";
 import {Box, Typography} from "@mui/material";
-import {setPackName} from "../../../store/Packs/packsSlice";
-import {useAppDispatch, useAppSelector} from "../../../hooks/hooks";
+import {useAppSelector} from "../../../hooks/hooks";
 import {Search} from "../../../components/search/Search";
+import {useActions} from "../../../hooks/useActions";
 
 export const FilterBlock: FC = () => {
-    const dispatch = useAppDispatch()
-    const {packName} = useAppSelector(state => state.packs)
+    const {setPackName} = useActions()
+
+    const packName = useAppSelector(state => state.packs.packName)
 
     const setSearchName = useCallback((searchName: string) => {
-        dispatch(setPackName(searchName))
+        setPackName(searchName)
     }, [])
 
     return (
@@ -25,5 +26,5 @@ export const FilterBlock: FC = () => {
             <DoubleRangeCards/>
             <ResetSettings/>
         </Box>
-    );
+    )
 }

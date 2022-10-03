@@ -1,10 +1,10 @@
 import React, {FC, useEffect} from 'react';
 import {Navigate, useParams} from "react-router-dom";
 import {FormikHelpers, useFormik} from "formik";
-import {setStatusPassword} from "../../store/Auth/authSlice";
 import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
 import {Button, FormControl, FormGroup, Grid, TextField, Typography} from "@mui/material";
-import {setNewPassword} from "../../store/Auth/asyncThunk";
+import {allAuthActions} from "../../store";
+import {useActions} from "../../hooks/useActions";
 
 type FormikErrorType = {
     password?: string
@@ -15,14 +15,17 @@ type FormikValuesType = {
 
 export const SetPassword: FC = () => {
     const dispatch = useAppDispatch()
+    const {setStatusPassword} = useActions()
+
     const isChangedPassword = useAppSelector(state => state.auth.isChangedPassword)
+
     let {token} = useParams()
 
     useEffect(() => {
         return () => {
-            dispatch(setStatusPassword(false))
+            setStatusPassword(false)
         }
-    }, [dispatch])
+    }, [])
 
     const formik = useFormik({
         initialValues: {
@@ -35,8 +38,8 @@ export const SetPassword: FC = () => {
             }
         },
         onSubmit: async (values, formikHelpers: FormikHelpers<FormikValuesType>) => {
-            const action = await dispatch(setNewPassword({password: values.password, token: token}))
-            if (setNewPassword.rejected.match(action)) {
+            const action = await dispatch(allAuthActions.setNewPassword({password: values.password, token: token}))
+            if (allAuthActions.setNewPassword.rejected.match(action)) {
                 if (action.payload?.error) {
                     formikHelpers.setFieldError('password', action.payload.error)
                 }

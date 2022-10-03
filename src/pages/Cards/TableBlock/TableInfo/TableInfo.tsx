@@ -2,15 +2,15 @@ import React, {FC, useState} from 'react';
 import {IconButton, Rating, Stack, TableBody, TableCell, TableRow} from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import {useAppDispatch, useAppSelector} from "../../../../hooks/hooks";
+import {useAppSelector} from "../../../../hooks/hooks";
 import {CardType, UpdateCardType} from "../../../../api/cardsAPI";
 import {BasicModal} from "../../../../components/modals/BasicModal";
 import {QuestionModal} from "../../../../components/modals/QuestionModal";
 import {UpdateCardModal} from "./UpdateCardModal/UpdateCardModal";
-import {deleteCard, updateCard} from "../../../../store/Cards/asyncThunk";
+import {useActions} from "../../../../hooks/useActions";
 
 export const TableInfo: FC = () => {
-    const dispatch = useAppDispatch()
+    const {deleteCard, updateCard} = useActions()
 
     const [openDelete, setOpenDelete] = useState(false)
     const [openUpdate, setOpenUpdate] = useState(false)
@@ -31,11 +31,11 @@ export const TableInfo: FC = () => {
     const handleUpdateClose = () => setOpenUpdate(false)
 
     const deleteCardHandler = (id: string) => {
-        dispatch(deleteCard(id))
+        deleteCard(id)
         handleDeleteClose()
     }
     const updateCardHandler = (card: UpdateCardType) => {
-        dispatch(updateCard(card))
+        updateCard(card)
         handleUpdateClose()
     }
 

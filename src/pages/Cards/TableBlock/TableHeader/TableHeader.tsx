@@ -1,20 +1,20 @@
 import React, {FC, useState} from 'react';
 import {Box, TableCell, TableHead, TableRow, TableSortLabel} from "@mui/material";
 import {visuallyHidden} from "@mui/utils";
-import {setSortCards} from "../../../../store/Cards/cardsSlice";
-import {useAppDispatch, useAppSelector} from "../../../../hooks/hooks";
+import {useAppSelector} from "../../../../hooks/hooks";
+import {useActions} from "../../../../hooks/useActions";
 
 type Order = 'asc' | 'desc'
 type Data = 'grade' | 'updated'
 
 export const TableHeader: FC = () => {
-    const dispatch = useAppDispatch()
-
-    const packUserId = useAppSelector(state => state.cards.packUserId)
-    const userId = useAppSelector(state => state.profile.profile?._id)
+    const {setSortCards} = useActions()
 
     const [order, setOrder] = useState<Order>('asc')
     const [orderBy, setOrderBy] = useState<Data>('updated')
+
+    const packUserId = useAppSelector(state => state.cards.packUserId)
+    const userId = useAppSelector(state => state.profile.profile?._id)
 
     const sortHandler = (order: Order, orderBy: Data) => {
         const direction = order === 'asc' ? 0 : 1
@@ -22,7 +22,7 @@ export const TableHeader: FC = () => {
 
         setOrder(order)
         setOrderBy(orderBy)
-        dispatch(setSortCards(str))
+        setSortCards(str)
     }
     return (
         <TableHead>

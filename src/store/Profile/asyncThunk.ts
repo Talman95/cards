@@ -1,9 +1,12 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {setAppMessage, setAppStatus} from "../App/appSlice";
+import {appActions} from "../App/appSlice";
 import {profileAPI} from "../../api/profileAPI";
 import {handleAppError} from "../../utils/errorUtils";
 
-export const updateProfile = createAsyncThunk(
+const setAppMessage = appActions.setAppMessage
+const setAppStatus = appActions.setAppStatus
+
+const updateProfile = createAsyncThunk(
     'profile/updateProfile',
     async (param: { name: string, avatar?: string }, thunkAPI) => {
         thunkAPI.dispatch(setAppStatus('loading'))
@@ -17,3 +20,7 @@ export const updateProfile = createAsyncThunk(
         }
     }
 )
+
+export const profileAsyncThunks = {
+    updateProfile,
+}

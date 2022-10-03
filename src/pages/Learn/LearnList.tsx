@@ -3,15 +3,15 @@ import {Box, Button, Card, CardActions, CardContent, CircularProgress, IconButto
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import {useNavigate, useParams} from "react-router-dom";
 import {PATH} from "../../components/routes/RoutesPage";
-import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
+import {useAppSelector} from "../../hooks/hooks";
 import {getCard} from "../../utils/smartRandom";
 import {CardType} from "../../api/cardsAPI";
 import {CheckboxBlock} from "./CheckboxBlock/CheckboxBlock";
-import {getLearnedCards, updateGradeCard} from "../../store/Learn/asyncThunk";
+import {useActions} from "../../hooks/useActions";
 
 export const LearnList: FC = () => {
     const navigate = useNavigate()
-    const dispatch = useAppDispatch()
+    const {getLearnedCards, updateGradeCard} = useActions()
     const {cardsPack_id} = useParams<{ cardsPack_id?: string }>()
 
     const cards = useAppSelector(state => state.learn.learnedPack)
@@ -25,7 +25,7 @@ export const LearnList: FC = () => {
     useEffect(() => {
         if (!cardsPack_id) return
 
-        dispatch(getLearnedCards(cardsPack_id))
+        getLearnedCards(cardsPack_id)
     }, [cardsPack_id])
 
     useEffect(() => {
@@ -41,7 +41,7 @@ export const LearnList: FC = () => {
     const handleShowAnswer = () => setShowAnswer(true)
     const handleNextClick = async () => {
         if (grade && currentCard) {
-            await dispatch(updateGradeCard({grade, card_id: currentCard._id}))
+            await updateGradeCard({grade, card_id: currentCard._id})
         } else {
             await setCurrentCard(getCard(cards))
         }

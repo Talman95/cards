@@ -1,10 +1,15 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import {authAPI, LoginParamsType, RegisterParamsType} from "../../api/authAPI";
-import {setAppMessage, setAppStatus, setInitialization} from "../App/appSlice";
-import {setProfile} from "../Profile/profileSlice";
+import {appActions} from "../App/appSlice";
 import {handleAppError} from "../../utils/errorUtils";
+import {profileActions} from "../Profile/profileSlice";
 
-export const login = createAsyncThunk(
+const setProfile = profileActions.setProfile
+const setAppMessage = appActions.setAppMessage
+const setAppStatus = appActions.setAppStatus
+const setInitialization = appActions.setInitialization
+
+const login = createAsyncThunk(
     'auth/login',
     async (params: LoginParamsType, thunkAPI) => {
         thunkAPI.dispatch(setAppStatus('loading'))
@@ -18,7 +23,7 @@ export const login = createAsyncThunk(
         }
     })
 
-export const getAuthData = createAsyncThunk(
+const getAuthData = createAsyncThunk(
     'auth/authMe',
     async (param: undefined, thunkAPI) => {
         thunkAPI.dispatch(setAppStatus('loading'))
@@ -35,7 +40,7 @@ export const getAuthData = createAsyncThunk(
         }
     })
 
-export const logout = createAsyncThunk(
+const logout = createAsyncThunk(
     'auth/logout',
     async (param: undefined, thunkAPI) => {
         thunkAPI.dispatch(setAppStatus('loading'))
@@ -49,7 +54,7 @@ export const logout = createAsyncThunk(
         }
     })
 
-export const register = createAsyncThunk(
+const register = createAsyncThunk(
     'auth/register',
     async (params: RegisterParamsType, thunkAPI) => {
         thunkAPI.dispatch(setAppStatus('loading'))
@@ -63,7 +68,7 @@ export const register = createAsyncThunk(
         }
     })
 
-export const sendPassword = createAsyncThunk<{ isSent: boolean }, string, {
+const sendPassword = createAsyncThunk<{ isSent: boolean }, string, {
     rejectValue: { error: string }
 }>('auth/sendPassword',
     async (email, thunkAPI) => {
@@ -78,7 +83,7 @@ export const sendPassword = createAsyncThunk<{ isSent: boolean }, string, {
         }
     })
 
-export const setNewPassword = createAsyncThunk<{ isChangedPassword: true }, { password: string, token: string | undefined }, {
+const setNewPassword = createAsyncThunk<{ isChangedPassword: true }, { password: string, token: string | undefined }, {
     rejectValue: { error: string }
 }>('auth/setNewPassword',
     async (param: { password: string, token: string | undefined }, thunkAPI) => {
@@ -92,3 +97,12 @@ export const setNewPassword = createAsyncThunk<{ isChangedPassword: true }, { pa
             return handleAppError(e, thunkAPI)
         }
     })
+
+export const authAsyncThunks = {
+    login,
+    getAuthData,
+    logout,
+    register,
+    sendPassword,
+    setNewPassword,
+}

@@ -1,10 +1,13 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import {RootState} from "../store";
 import {packsAPI, UpdatePackType} from "../../api/packsAPI";
-import {setAppMessage, setAppStatus} from "../App/appSlice";
+import {appActions} from "../App/appSlice";
 import {handleAppError} from "../../utils/errorUtils";
 
-export const getPacks = createAsyncThunk(
+const setAppMessage = appActions.setAppMessage
+const setAppStatus = appActions.setAppStatus
+
+const getPacks = createAsyncThunk(
     'packs/getPacks',
     async (params: undefined, thunkAPI) => {
         try {
@@ -33,9 +36,10 @@ export const getPacks = createAsyncThunk(
         } catch {
             return thunkAPI.rejectWithValue(null)
         }
-    })
+    }
+)
 
-export const addPack = createAsyncThunk(
+const addPack = createAsyncThunk(
     'packs/addPack',
     async (params: { name: string, deckCover?: string, isPrivate?: boolean }, thunkAPI) => {
         thunkAPI.dispatch(setAppStatus('loading'))
@@ -49,7 +53,7 @@ export const addPack = createAsyncThunk(
         }
     })
 
-export const deletePack = createAsyncThunk(
+const deletePack = createAsyncThunk(
     'packs/deletePack',
     async (id: string, thunkAPI) => {
         thunkAPI.dispatch(setAppStatus('loading'))
@@ -60,9 +64,10 @@ export const deletePack = createAsyncThunk(
         } catch (e) {
             return handleAppError(e, thunkAPI)
         }
-    })
+    }
+)
 
-export const updatePack = createAsyncThunk(
+const updatePack = createAsyncThunk(
     'pack/updatePack',
     async (pack: UpdatePackType, thunkAPI) => {
         thunkAPI.dispatch(setAppStatus('loading'))
@@ -74,4 +79,12 @@ export const updatePack = createAsyncThunk(
         } catch (e) {
             return handleAppError(e, thunkAPI)
         }
-    })
+    }
+)
+
+export const packsAsyncThunks = {
+    getPacks,
+    addPack,
+    deletePack,
+    updatePack,
+}

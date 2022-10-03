@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {CardType} from "../../api/cardsAPI";
-import {getCards} from "./asyncThunk";
+import {cardsAsyncThunks} from "./asyncThunk";
 
 const slice = createSlice({
     name: 'cards',
@@ -18,7 +18,7 @@ const slice = createSlice({
         currentCardPackName: '',
     },
     reducers: {
-        setCardPackId: (state, action: PayloadAction<{id: string, packName: string}>) => {
+        setCardPackId: (state, action: PayloadAction<{ id: string, packName: string }>) => {
             state.cardsPack_id = action.payload.id
             state.currentCardPackName = action.payload.packName
         },
@@ -54,7 +54,7 @@ const slice = createSlice({
         }
     },
     extraReducers: builder => {
-        builder.addCase(getCards.fulfilled, (state, action) => {
+        builder.addCase(cardsAsyncThunks.getCards.fulfilled, (state, action) => {
             state.cards = action.payload.cards
             state.cardsTotalCount = action.payload.cardsTotalCount
             state.packUserId = action.payload.packUserId
@@ -64,13 +64,4 @@ const slice = createSlice({
 })
 
 export const cardsSlice = slice.reducer
-export const {
-    setCardPackId,
-    setCurrentPageCards,
-    setPageCountCards,
-    setCardsLoad,
-    setSortCards,
-    setCardQuestion,
-    setCardAnswer,
-    resetSetting,
-} = slice.actions
+export const cardsActions = slice.actions

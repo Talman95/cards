@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {PackType} from "../../api/packsAPI";
-import {getPacks} from "./asyncThunk";
+import {packsAsyncThunks} from "./asyncThunk";
 
 export type ShowPacksType = 'My' | 'All'
 
@@ -55,7 +55,7 @@ const slice = createSlice({
         },
     },
     extraReducers: builder => {
-        builder.addCase(getPacks.fulfilled, (state, action) => {
+        builder.addCase(packsAsyncThunks.getPacks.fulfilled, (state, action) => {
             state.cardPacks = action.payload.cardPacks
             state.cardPacksTotalCount = action.payload.cardPacksTotalCount
         })
@@ -63,12 +63,4 @@ const slice = createSlice({
 })
 
 export const packsSlice = slice.reducer
-export const {
-    setCurrentPage,
-    setPageCount,
-    setShowPacks,
-    setMinMaxCount,
-    setDefaultValues,
-    setSortPacks,
-    setPackName,
-} = slice.actions
+export const packsActions = slice.actions

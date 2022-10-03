@@ -1,20 +1,19 @@
 import React, {FC, useState} from 'react';
 import {Box, Button, Typography} from "@mui/material";
-import {useAppDispatch} from "../../../hooks/hooks";
 import {BasicModal} from "../../../components/modals/BasicModal";
 import {AddPackParamsType} from "../../../api/packsAPI";
 import {AddPackModal} from "./AddPackModal/AddPackModal";
-import {addPack} from "../../../store/Packs/asyncThunk";
+import {useActions} from "../../../hooks/useActions";
 
 export const PackListHeader: FC = () => {
-    const dispatch = useAppDispatch()
+    const {addPack} = useActions()
 
     const [open, setOpen] = useState(false)
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false)
 
     const addPackHandler = (pack: AddPackParamsType) => {
-        dispatch(addPack(pack))
+        addPack(pack)
         handleClose()
     }
 
@@ -31,5 +30,5 @@ export const PackListHeader: FC = () => {
                 />
             </BasicModal>
         </Box>
-    );
+    )
 }

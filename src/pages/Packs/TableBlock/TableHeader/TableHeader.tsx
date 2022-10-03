@@ -1,14 +1,14 @@
 import React, {FC, useState} from 'react';
 import {Box, TableCell, TableHead, TableRow, TableSortLabel} from "@mui/material";
 import {visuallyHidden} from "@mui/utils";
-import {setSortPacks} from "../../../../store/Packs/packsSlice";
-import {useAppDispatch} from "../../../../hooks/hooks";
+import {useActions} from "../../../../hooks/useActions";
 
 type Order = 'asc' | 'desc'
 type Data = 'cardsCount' | 'updated'
 
 export const TableHeader: FC = () => {
-    const dispatch = useAppDispatch()
+    const {setSortPacks} = useActions()
+
     const [order, setOrder] = useState<Order>('asc')
     const [orderBy, setOrderBy] = useState<Data>('updated')
 
@@ -18,7 +18,7 @@ export const TableHeader: FC = () => {
 
         setOrder(order)
         setOrderBy(orderBy)
-        dispatch(setSortPacks(str))
+        setSortPacks(str)
     }
 
     return (

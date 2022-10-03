@@ -1,19 +1,20 @@
 import React, {useEffect} from 'react';
-import {useAppDispatch, useAppSelector} from "../hooks/hooks";
+import {useAppSelector} from "../hooks/hooks";
 import {Header} from "../components/header/Header";
 import {RoutesPage} from "../components/routes/RoutesPage";
 import {ErrorSnackbar} from "../components/snackbar/ErrorSnackbar/ErrorSnackbar";
 import {CircularProgress} from "@mui/material";
 import {SuccessSnackbar} from "../components/snackbar/SuccessSnackbar/SuccessSnackbar";
-import {getAuthData} from "../store/Auth/asyncThunk";
+import {useActions} from "../hooks/useActions";
 
 const App = () => {
+    const {getAuthData} = useActions()
+
     const isInitialized = useAppSelector(state => state.app.isInitialized)
-    const dispatch = useAppDispatch()
 
     useEffect(() => {
-        dispatch(getAuthData())
-    }, [dispatch])
+        getAuthData()
+    }, [])
 
     if (!isInitialized) {
         return <div
@@ -30,6 +31,6 @@ const App = () => {
             <RoutesPage/>
         </div>
     )
-};
+}
 
 export default App;

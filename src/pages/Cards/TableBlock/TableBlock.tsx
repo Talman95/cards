@@ -1,24 +1,23 @@
 import React, {ChangeEvent, FC, MouseEvent} from 'react';
 import {Paper, Table, TableContainer, TablePagination} from "@mui/material";
 import {TableInfo} from "./TableInfo/TableInfo";
-import {setCurrentPageCards, setPageCountCards} from "../../../store/Cards/cardsSlice";
-import {useAppDispatch, useAppSelector} from "../../../hooks/hooks";
+import {useAppSelector} from "../../../hooks/hooks";
 import {TableHeader} from "./TableHeader/TableHeader";
+import {useActions} from "../../../hooks/useActions";
 
 export const TableBlock: FC = () => {
-    const dispatch = useAppDispatch()
-    const {
-        page,
-        pageCount,
-        cardsTotalCount,
-    } = useAppSelector(state => state.cards)
+    const {setCurrentPageCards, setPageCountCards} = useActions()
+
+    const page = useAppSelector(state => state.cards.page)
+    const pageCount = useAppSelector(state => state.cards.pageCount)
+    const cardsTotalCount = useAppSelector(state => state.cards.cardsTotalCount)
 
     const handleChangePage = (event: MouseEvent<HTMLButtonElement> | null, page: number) => {
         const currentPage = page + 1
-        dispatch(setCurrentPageCards(currentPage))
+        setCurrentPageCards(currentPage)
     }
     const handleChangeRowsPerPage = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-        dispatch(setPageCountCards(+event.target.value))
+        setPageCountCards(+event.target.value)
     }
 
     return (

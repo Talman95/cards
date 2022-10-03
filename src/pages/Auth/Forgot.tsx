@@ -1,10 +1,11 @@
 import React, {FC, useEffect} from 'react';
 import {Navigate, useNavigate} from "react-router-dom";
 import {FormikHelpers, useFormik} from "formik";
-import {setSend} from "../../store/Auth/authSlice";
 import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
 import {Button, FormControl, FormGroup, Grid, Link, TextField, Typography} from "@mui/material";
-import {sendPassword} from "../../store/Auth/asyncThunk";
+import {useActions} from "../../hooks/useActions";
+import {allAuthActions} from "../../store";
+import {PATH} from "../../components/routes/RoutesPage";
 
 type ForgotErrorsType = {
     email?: string
@@ -15,16 +16,19 @@ type FormikValuesType = {
 
 export const Forgot: FC = () => {
     const navigate = useNavigate()
-    const navigateToLogin = () => navigate('/login')
     const dispatch = useAppDispatch()
+    const {setSend} = useActions()
+
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
     const isSent = useAppSelector(state => state.auth.isSent)
 
+    const navigateToLogin = () => navigate(PATH.LOGIN)
+
     useEffect(() => {
         return () => {
-            dispatch(setSend(false))
+            setSend(false)
         }
-    }, [dispatch])
+    }, [])
 
     const formik = useFormik({
         initialValues: {
@@ -40,8 +44,8 @@ export const Forgot: FC = () => {
             return errors
         },
         onSubmit: async (values, formikHelpers: FormikHelpers<FormikValuesType>) => {
-            const action = await dispatch(sendPassword(values.email))
-            if (sendPassword.rejected.match(action)) {
+            const action = await dispatch(allAuthActions.sendPassword(values.email))
+            if (allAuthActions.sendPassword.rejected.match(action)) {
                 if (action.payload?.error) {
                     formikHelpers.setFieldError('email', action.payload.error)
                 }
@@ -102,4 +106,4 @@ export const Forgot: FC = () => {
                 </Grid>}
         </Grid>
     )
-};
+}

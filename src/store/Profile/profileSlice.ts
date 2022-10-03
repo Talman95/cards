@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {ProfileType} from "../../api/authAPI";
-import {updateProfile} from "./asyncThunk";
+import {profileAsyncThunks} from "./asyncThunk";
 
 const slice = createSlice({
     name: 'profile',
@@ -13,11 +13,11 @@ const slice = createSlice({
         },
     },
     extraReducers: builder => {
-        builder.addCase(updateProfile.fulfilled, (state, action) => {
+        builder.addCase(profileAsyncThunks.updateProfile.fulfilled, (state, action) => {
             state.profile = action.payload.profile
         })
     }
 })
 
 export const profileSlice = slice.reducer
-export const {setProfile} = slice.actions
+export const profileActions = slice.actions

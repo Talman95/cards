@@ -1,14 +1,17 @@
 import React, {FC} from 'react';
 import {Box, Button, Stack, Typography} from "@mui/material";
-import {setShowPacks, ShowPacksType} from "../../../../store/Packs/packsSlice";
-import {useAppDispatch, useAppSelector} from "../../../../hooks/hooks";
+import {ShowPacksType} from "../../../../store/Packs/packsSlice";
+import {useAppSelector} from "../../../../hooks/hooks";
+import {useActions} from "../../../../hooks/useActions";
 
 export const ToggleButtonBox: FC = () => {
     console.log('Toggle Button')
-    const dispatch = useAppDispatch()
+    const {setShowPacks} = useActions()
+
     const showPacks = useAppSelector(state => state.packs.showPacks)
+
     const changeShowPacksHandler = (showPacks: ShowPacksType) => {
-        dispatch(setShowPacks(showPacks))
+        setShowPacks(showPacks)
     }
 
     return (
@@ -33,5 +36,5 @@ export const ToggleButtonBox: FC = () => {
                 </Button>
             </Stack>
         </Box>
-    );
+    )
 }

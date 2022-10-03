@@ -2,10 +2,9 @@ import React, {FC, useEffect} from 'react';
 import {Navigate, useNavigate} from "react-router-dom";
 import {PATH} from "../../components/routes/RoutesPage";
 import {useFormik} from "formik";
-import {setRegister} from "../../store/Auth/authSlice";
-import {register} from "../../store/Auth/asyncThunk";
 import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
 import {Button, FormControl, FormGroup, Grid, Link, TextField, Typography} from "@mui/material";
+import {useActions} from "../../hooks/useActions";
 
 type FormikErrorType = {
     email?: string
@@ -14,15 +13,18 @@ type FormikErrorType = {
 }
 
 export const Register: FC = () => {
-    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
-    const isRegistered = useAppSelector(state => state.auth.isRegistered)
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
+    const {setRegister, register} = useActions()
+
+    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
+    const isRegistered = useAppSelector(state => state.auth.isRegistered)
+
     const navigateToLogin = () => navigate(PATH.LOGIN)
 
     useEffect(() => {
         return () => {
-            dispatch(setRegister(false))
+            setRegister(false)
         }
     }, [dispatch])
 
@@ -50,15 +52,15 @@ export const Register: FC = () => {
             return errors;
         },
         onSubmit: (values) => {
-            dispatch(register({email: values.email, password: values.password}))
+            register({email: values.email, password: values.password})
         },
     })
 
     if (isRegistered) {
-        return <Navigate to={'/login'}/>
+        return <Navigate to={PATH.LOGIN}/>
     }
     if (isLoggedIn) {
-        return <Navigate to={'/profile'}/>
+        return <Navigate to={PATH.PROFILE}/>
     }
 
     return (
@@ -109,46 +111,3 @@ export const Register: FC = () => {
         </Grid>
     )
 };
-
-
-// <div>
-//     <h3>Sign Up</h3>
-//     <div style={{display: 'flex', flexDirection: 'column'}}>
-//         <form onSubmit={formik.handleSubmit}>
-//             <div>
-//                 <input
-//                     type={"text"}
-//                     placeholder={"Enter your email..."}
-//                     {...formik.getFieldProps("email")}
-//                 />
-//                 {formik.touched.email && formik.errors.email ?
-//                     <div style={{color: "red"}}>{formik.errors.email}</div> : null}
-//             </div>
-//             <div>
-//                 <input
-//                     type={"password"}
-//                     placeholder={"Enter your password..."}
-//                     {...formik.getFieldProps("password")}
-//                 />
-//                 {formik.touched.password && formik.errors.password ?
-//                     <div style={{color: "red"}}>{formik.errors.password}</div> : null}
-//             </div>
-//             <div>
-//                 <input
-//                     type={"password"}
-//                     placeholder={"Confirm your password..."}
-//                     {...formik.getFieldProps("confirmedPass")}
-//                 />
-//                 {formik.touched.confirmedPass && formik.errors.confirmedPass ?
-//                     <div style={{color: "red"}}>{formik.errors.confirmedPass}</div> : null}
-//             </div>
-//             <div>
-//                 <button type={"submit"}>Sign Up</button>
-//             </div>
-//             <div>
-//                 <p>Already have an account?</p>
-//                 <p><span style={{textDecoration: 'underline', cursor: 'pointer'}} onClick={navigateToLogin}>Sign In</span></p>
-//             </div>
-//         </form>
-//     </div>
-// </div>

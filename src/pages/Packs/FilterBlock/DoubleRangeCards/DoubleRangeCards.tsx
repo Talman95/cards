@@ -1,7 +1,7 @@
 import React, {FC, memo, useEffect, useState} from 'react';
 import {Box, Slider, Stack, Typography} from "@mui/material";
-import {useAppDispatch, useAppSelector} from "../../../../hooks/hooks";
-import {setMinMaxCount} from "../../../../store/Packs/packsSlice";
+import {useAppSelector} from "../../../../hooks/hooks";
+import {useActions} from "../../../../hooks/useActions";
 
 function valuetext(value: number) {
     return `${value}°C`;
@@ -9,8 +9,11 @@ function valuetext(value: number) {
 
 export const DoubleRangeCards: FC = memo(() => {
     console.log('Double Range')
-    const dispatch = useAppDispatch()
-    const {min, max} = useAppSelector(state => state.packs)
+    const {setMinMaxCount} = useActions()
+
+    const min = useAppSelector(state => state.packs.min)
+    const max = useAppSelector(state => state.packs.max)
+
     const [values, setValues] = useState<number[]>([min, max])
 
     useEffect(() => {
@@ -33,7 +36,7 @@ export const DoubleRangeCards: FC = memo(() => {
         }
     }
     const onMouseUpHandler = () => {
-        dispatch(setMinMaxCount({min: values[0], max: values[1]}))
+        setMinMaxCount({min: values[0], max: values[1]})
     }
 
     return (
@@ -53,5 +56,5 @@ export const DoubleRangeCards: FC = memo(() => {
                 <Typography style={{minWidth: '24px'}} variant={'body2'}>{values[1]}</Typography>
             </Stack>
         </Box>
-    );
+    )
 })

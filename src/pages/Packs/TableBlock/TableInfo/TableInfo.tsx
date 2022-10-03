@@ -4,18 +4,18 @@ import SchoolIcon from "@mui/icons-material/School";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {PackType, UpdatePackType} from "../../../../api/packsAPI";
-import {useAppDispatch, useAppSelector} from "../../../../hooks/hooks";
-import {setCardPackId} from "../../../../store/Cards/cardsSlice";
+import {useAppSelector} from "../../../../hooks/hooks";
 import {PATH} from "../../../../components/routes/RoutesPage";
 import {useNavigate} from "react-router-dom";
 import {BasicModal} from "../../../../components/modals/BasicModal";
 import {UpdatePackModal} from "./UpdatePackModal/UpdatePackModal";
 import {QuestionModal} from "../../../../components/modals/QuestionModal";
-import {deletePack, updatePack} from "../../../../store/Packs/asyncThunk";
+import {useActions} from "../../../../hooks/useActions";
 
 export const TableInfo: FC = () => {
-    const dispatch = useAppDispatch()
     const navigate = useNavigate()
+    const {setCardPackId, deletePack, updatePack} = useActions()
+
     const [openAddModal, setOpenAddModal] = useState(false)
     const [openQuestModal, setOpenQuestModal] = useState(false)
     const [selectedPack, setSelectedPack] = useState<PackType | null>(null)
@@ -35,15 +35,15 @@ export const TableInfo: FC = () => {
     const handleQuestClose = () => setOpenQuestModal(false)
 
     const navigateToCardsList = async (id: string, packName: string) => {
-        await dispatch(setCardPackId({id, packName}))
+        await setCardPackId({id, packName})
         navigate(PATH.CARDS)
     }
     const updatePackHandler = (pack: UpdatePackType) => {
-        dispatch(updatePack(pack))
+        updatePack(pack)
         handleAddClose()
     }
     const deletePackHandler = (id: string) => {
-        dispatch(deletePack(id))
+        deletePack(id)
         handleQuestClose()
     }
     const learnPackHandler = (id: string) => {
@@ -117,7 +117,9 @@ export const TableInfo: FC = () => {
                             </Stack>
                             :
                             <Stack direction={'row'} alignItems={'flex-start'} spacing={1}>
-                                <IconButton aria-label={'delete'} size={'small'} disabled={p.cardsCount === 0}>
+                                <IconButton aria-label={'delete'} size={'small'}
+                                            onClick={() => learnPackHandler(p._id)}
+                                            disabled={p.cardsCount === 0}>
                                     <SchoolIcon fontSize={'small'}/>
                                 </IconButton>
                             </Stack>}

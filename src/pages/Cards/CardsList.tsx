@@ -3,41 +3,36 @@ import {Box, CircularProgress, IconButton, Typography} from "@mui/material";
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import {Navigate, useNavigate} from "react-router-dom";
 import {PATH} from "../../components/routes/RoutesPage";
-import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
-import {resetSetting} from "../../store/Cards/cardsSlice";
+import {useAppSelector} from "../../hooks/hooks";
 import {SearchBlock} from "./SearchBlock/SearchBlock";
 import {TableBlock} from "./TableBlock/TableBlock";
 import {CardsListHeader} from "./CardsListHeader/CardsListHeader";
-import {getCards} from "../../store/Cards/asyncThunk";
+import {useActions} from "../../hooks/useActions";
 
 export const CardsList: FC = () => {
     const navigate = useNavigate()
-    const dispatch = useAppDispatch()
-    const {
-        cards,
-        page,
-        pageCount,
-        sortCards,
-        cardsPack_id,
-        cardsLoaded,
-        cardAnswer,
-        cardQuestion,
-    } = useAppSelector(state => state.cards)
+    const {getCards, resetSetting} = useActions()
+
+    const cards = useAppSelector(state => state.cards.cards)
+    const page = useAppSelector(state => state.cards.page)
+    const pageCount = useAppSelector(state => state.cards.pageCount)
+    const sortCards = useAppSelector(state => state.cards.sortCards)
+    const cardsPack_id = useAppSelector(state => state.cards.cardsPack_id)
+    const cardsLoaded = useAppSelector(state => state.cards.cardsLoaded)
+    const cardAnswer = useAppSelector(state => state.cards.cardAnswer)
+    const cardQuestion = useAppSelector(state => state.cards.cardQuestion)
 
     useEffect(() => {
-        dispatch(getCards(cardsPack_id))
-    }, [cardsPack_id, page, pageCount, sortCards, cardAnswer, cardQuestion, dispatch])
+        getCards(cardsPack_id)
+    }, [cardsPack_id, page, pageCount, sortCards, cardAnswer, cardQuestion])
 
     useEffect(() => {
         return () => {
-            dispatch(resetSetting())
+            resetSetting()
         }
     }, [])
 
-    const navigateToPacksList = () => {
-        navigate(PATH.PACKS)
-    }
-
+    const navigateToPacksList = () => navigate(PATH.PACKS)
 
     if (!cardsLoaded) {
         return <div
@@ -46,7 +41,7 @@ export const CardsList: FC = () => {
         </div>
     }
     if (!cardsPack_id) {
-        return <Navigate to={PATH.PACKS} replace={true} />
+        return <Navigate to={PATH.PACKS} replace={true}/>
     }
 
     return (
@@ -71,5 +66,5 @@ export const CardsList: FC = () => {
                 <TableBlock/>
             }
         </Box>
-    );
+    )
 }

@@ -1,16 +1,19 @@
 import React from 'react';
 import {AppBar, Avatar, Box, IconButton, LinearProgress, Menu, MenuItem, Toolbar, Typography} from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
-import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
+import {useAppSelector} from "../../hooks/hooks";
 import {useNavigate} from "react-router-dom";
-import {logout} from "../../store/Auth/asyncThunk";
+import {useActions} from "../../hooks/useActions";
+import {PATH} from "../routes/RoutesPage";
 
 export const Header = () => {
-    const dispatch = useAppDispatch()
     const navigate = useNavigate()
+    const {logout} = useActions()
+
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
     const profile = useAppSelector(state => state.profile.profile)
     const status = useAppSelector(state => state.app.status)
+
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
     const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -20,15 +23,15 @@ export const Header = () => {
         setAnchorEl(null);
     }
     const navigateToProfile = () => {
-        navigate('/profile')
+        navigate(PATH.PROFILE)
         handleClose()
     }
     const logoutHandler = () => {
-        dispatch(logout())
+        logout()
         handleClose()
     }
     const navigateToPacksList = () => {
-        navigate('/packs')
+        navigate(PATH.PACKS)
         handleClose()
     }
 
@@ -98,4 +101,4 @@ export const Header = () => {
             </AppBar>
         </Box>
     )
-};
+}

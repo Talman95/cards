@@ -1,6 +1,6 @@
 import React, {ChangeEvent, FC, KeyboardEvent, useState} from 'react';
-import {Navigate, useNavigate} from "react-router-dom";
-import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
+import {useNavigate} from "react-router-dom";
+import {useAppSelector} from "../../hooks/hooks";
 import {
     Avatar,
     Button,
@@ -14,16 +14,19 @@ import {
 } from "@mui/material";
 import LogoutIcon from '@mui/icons-material/Logout';
 import EditIcon from '@mui/icons-material/Edit';
-import {logout} from "../../store/Auth/asyncThunk";
-import {updateProfile} from "../../store/Profile/asyncThunk";
+import {useActions} from "../../hooks/useActions";
+import {PATH} from "../../components/routes/RoutesPage";
 
 export const Profile: FC = () => {
-    const profile = useAppSelector(state => state.profile.profile)
-    const dispatch = useAppDispatch()
     const navigate = useNavigate()
-    const logoutHandler = () => dispatch(logout())
+    const {logout, updateProfile} = useActions()
+
+    const profile = useAppSelector(state => state.profile.profile)
+
     const [name, setName] = useState<string>(profile?.name || '')
     const [editMode, setEditMode] = useState(false)
+
+    const logoutHandler = () => logout()
     const changeNameHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setName(e.currentTarget.value)
     }
@@ -31,7 +34,7 @@ export const Profile: FC = () => {
         setEditMode(true)
     }
     const offEditMode = () => {
-        dispatch(updateProfile({name: name}))
+        updateProfile({name: name})
         setEditMode(false)
     }
     const onEnterPressHandler = (e: KeyboardEvent<HTMLDivElement>) => {
@@ -40,11 +43,7 @@ export const Profile: FC = () => {
         }
     }
     const navigateToPacks = () => {
-        navigate('/packs')
-    }
-
-    if (!profile) {
-        return <Navigate to={'/login'}/>
+        navigate(PATH.PACKS)
     }
 
     return (
@@ -79,14 +78,14 @@ export const Profile: FC = () => {
                             whiteSpace: 'nowrap',
                             overflow: 'hidden',
                         }}>
-                            {profile.name}
+                            {profile?.name}
                         </Typography>
                         <IconButton onClick={onEditMode}>
                             <EditIcon/>
                         </IconButton>
                     </CardActions>
                 }
-                <Typography color="text.secondary">{profile.email}</Typography>
+                <Typography color="text.secondary">{profile?.email}</Typography>
                 <Button onClick={() => navigateToPacks()}>
                     Packs
                 </Button>
@@ -100,4 +99,4 @@ export const Profile: FC = () => {
             </CardContent>
         </Card>
     )
-};
+}

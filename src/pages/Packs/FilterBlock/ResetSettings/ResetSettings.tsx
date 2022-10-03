@@ -1,15 +1,14 @@
 import React, {FC, memo} from 'react';
 import {Box, IconButton} from "@mui/material";
 import TuneIcon from '@mui/icons-material/Tune';
-import {setDefaultValues} from "../../../../store/Packs/packsSlice";
-import {useAppDispatch} from "../../../../hooks/hooks";
+import {useActions} from "../../../../hooks/useActions";
 
 export const ResetSettings: FC = memo(() => {
     console.log('Reset')
-    const dispatch = useAppDispatch()
+    const {setDefaultValues} = useActions()
 
     const setDefaultValuesHandler = () => {
-        dispatch(setDefaultValues())
+        setDefaultValues()
     }
 
     return (
@@ -18,5 +17,5 @@ export const ResetSettings: FC = memo(() => {
                 <TuneIcon onClick={setDefaultValuesHandler}/>
             </IconButton>
         </Box>
-    );
+    )
 })

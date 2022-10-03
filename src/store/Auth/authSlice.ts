@@ -1,5 +1,14 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {getAuthData, login, logout, register, sendPassword, setNewPassword} from "./asyncThunk";
+import {authAsyncThunks} from "./asyncThunk";
+
+const {
+    getAuthData,
+    login,
+    logout,
+    register,
+    sendPassword,
+    setNewPassword,
+} = authAsyncThunks
 
 const slice = createSlice({
     name: 'auth',
@@ -43,4 +52,4 @@ const slice = createSlice({
 })
 
 export const authSlice = slice.reducer
-export const {setRegister, setSend, setStatusPassword} = slice.actions
+export const authActions = slice.actions

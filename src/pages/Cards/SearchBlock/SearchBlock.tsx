@@ -1,21 +1,20 @@
 import React, {FC} from 'react';
 import {Box, Stack, Typography} from "@mui/material";
 import {Search} from "../../../components/search/Search";
-import {useAppDispatch, useAppSelector} from "../../../hooks/hooks";
-import {setCardAnswer, setCardQuestion} from "../../../store/Cards/cardsSlice";
+import {useAppSelector} from "../../../hooks/hooks";
+import {useActions} from "../../../hooks/useActions";
 
 export const SearchBlock: FC = () => {
-    const dispatch = useAppDispatch()
-    const {
-        cardAnswer,
-        cardQuestion,
-    } = useAppSelector(state => state.cards)
+    const {setCardQuestion, setCardAnswer} = useActions()
+
+    const cardAnswer = useAppSelector(state => state.cards.cardAnswer)
+    const cardQuestion = useAppSelector(state => state.cards.cardQuestion)
 
     const setSearchQuestion = (question: string) => {
-        dispatch(setCardQuestion(question))
+        setCardQuestion(question)
     }
     const setSearchAnswer = (answer: string) => {
-        dispatch(setCardAnswer(answer))
+        setCardAnswer(answer)
     }
 
     return (

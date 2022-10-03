@@ -1,9 +1,8 @@
 import React from 'react';
 import {useFormik} from "formik";
-import {login} from "../../store/Auth/asyncThunk";
 import {Navigate, useNavigate} from "react-router-dom";
 import {PATH} from "../../components/routes/RoutesPage";
-import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
+import {useAppSelector} from "../../hooks/hooks";
 import {
     Button,
     Checkbox,
@@ -15,6 +14,7 @@ import {
     TextField,
     Typography
 } from "@mui/material";
+import {useActions} from "../../hooks/useActions";
 
 type FormikErrorType = {
     email?: string
@@ -23,8 +23,8 @@ type FormikErrorType = {
 }
 
 export const Login = () => {
-    const dispatch = useAppDispatch()
     const navigate = useNavigate()
+    const {login} = useActions()
 
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
 
@@ -50,7 +50,7 @@ export const Login = () => {
             return errors;
         },
         onSubmit: (values) => {
-            dispatch(login(values))
+            login(values)
         },
     })
 

@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {CardType} from "../../api/cardsAPI";
-import {getLearnedCards, updateGradeCard} from "./asyncThunk";
+import {learnAsyncThunks} from "./asyncThunk";
 
 const slice = createSlice({
     name: 'learn',
@@ -14,11 +14,11 @@ const slice = createSlice({
         },
     },
     extraReducers: builder => {
-        builder.addCase(getLearnedCards.fulfilled, (state, action) => {
+        builder.addCase(learnAsyncThunks.getLearnedCards.fulfilled, (state, action) => {
             state.learnedPack = action.payload
             state.isFetching = false
         })
-        builder.addCase(updateGradeCard.fulfilled, (state, action) => {
+        builder.addCase(learnAsyncThunks.updateGradeCard.fulfilled, (state, action) => {
             if (state.learnedPack) {
                 const index = state.learnedPack.findIndex(p => p._id === action.payload.card_id)
                 if (index !== -1) {
@@ -31,6 +31,4 @@ const slice = createSlice({
 })
 
 export const learnSlice = slice.reducer
-export const {
-    setIsFetching,
-} = slice.actions
+export const learnActions = slice.actions
