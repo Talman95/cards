@@ -1,0 +1,24 @@
+import {combineReducers} from "redux";
+import {authSlice} from "./Auth/authSlice";
+import {profileSlice} from "./Profile/profileSlice";
+import {configureStore} from "@reduxjs/toolkit";
+import {appSlice} from "./App/appSlice";
+import {packsSlice} from "./Packs/packsSlice";
+import {cardsSlice} from "./Cards/cardsSlice";
+import {learnSlice} from "./Learn/learnSlice";
+
+const rootReducers = combineReducers({
+    auth: authSlice,
+    app: appSlice,
+    profile: profileSlice,
+    packs: packsSlice,
+    cards: cardsSlice,
+    learn: learnSlice,
+})
+
+export const store = configureStore({
+    reducer: rootReducers
+})
+
+export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch
