@@ -3,11 +3,15 @@ import {createAsyncThunk} from "@reduxjs/toolkit";
 import {RootState} from "../store";
 import {AddCardType, cardsAPI, UpdateCardType} from "../../api/cardsAPI";
 import {handleAppError} from "../../utils/errorUtils";
+import {appActions} from "../CommonActions/App";
+
+const {setAppStatus} = appActions
 
 const getCards = createAsyncThunk(
     'cards/getCards',
     async (id: string, thunkAPI) => {
-        thunkAPI.dispatch(cardsActions.setCardsLoad(false))
+        thunkAPI.dispatch(setAppStatus({status: 'loading'}))
+        thunkAPI.dispatch(cardsActions.setCardsLoad(true))
         try {
             const state = thunkAPI.getState() as RootState
             const {
@@ -17,6 +21,7 @@ const getCards = createAsyncThunk(
                 cardQuestion,
                 cardAnswer,
             } = state.cards
+
             const res = await cardsAPI.getCards({
                 cardsPack_id: id,
                 sortCards,
@@ -25,6 +30,7 @@ const getCards = createAsyncThunk(
                 cardQuestion,
                 cardAnswer,
             })
+            thunkAPI.dispatch(setAppStatus({status: 'idle'}))
             return res.data
         } catch (e) {
             return handleAppError(e, thunkAPI)
@@ -37,7 +43,12 @@ const addCard = createAsyncThunk(
         thunkAPI.dispatch(cardsActions.setCardsLoad(false))
         try {
             await cardsAPI.addCard(card)
-            await thunkAPI.dispatch(getCards(card.cardsPack_id))
+            const state = thunkAPI.getState() as RootState
+            const packId = state.cards.cardsPack_id
+
+            if (packId) {
+                await thunkAPI.dispatch(getCards(packId))
+            }
         } catch (e) {
             return handleAppError(e, thunkAPI)
         }
@@ -49,8 +60,12 @@ const deleteCard = createAsyncThunk(
         thunkAPI.dispatch(cardsActions.setCardsLoad(false))
         try {
             const state = thunkAPI.getState() as RootState
-            await cardsAPI.deleteCard(id)
-            await thunkAPI.dispatch(getCards(state.cards.cardsPack_id))
+            const packId = state.cards.cardsPack_id
+
+            if (packId) {
+                await cardsAPI.deleteCard(id)
+                await thunkAPI.dispatch(getCards(packId))
+            }
         } catch (e) {
             return thunkAPI.rejectWithValue(null)
         }
@@ -62,8 +77,12 @@ const updateCard = createAsyncThunk(
         thunkAPI.dispatch(cardsActions.setCardsLoad(false))
         try {
             const state = thunkAPI.getState() as RootState
-            await cardsAPI.updateCard(card)
-            await thunkAPI.dispatch(getCards(state.cards.cardsPack_id))
+            const packId = state.cards.cardsPack_id
+
+            if (packId) {
+                await cardsAPI.updateCard(card)
+                await thunkAPI.dispatch(getCards(packId))
+            }
         } catch {
             return thunkAPI.rejectWithValue(null)
         }

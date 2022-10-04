@@ -1,45 +1,59 @@
 import React, {FC, useState} from 'react';
-import {Box, Button, Typography} from "@mui/material";
+import {Box, Button, IconButton, Typography} from "@mui/material";
 import {useAppSelector} from "../../../hooks/hooks";
 import {BasicModal} from "../../../components/modals/BasicModal";
 import {AddCardModal} from "./AddCardModal/AddCardModal";
 import {AddCardType} from "../../../api/cardsAPI";
 import {useActions} from "../../../hooks/useActions";
+import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
+import {PATH} from "../../../components/routes/RoutesPage";
+import {useNavigate} from "react-router-dom";
 
-export const CardsListHeader: FC = () => {
-    const [open, setOpen] = useState(false)
+type PropsType = {
+    title: string
+    id: string
+    length: number
+}
+
+export const CardsListHeader: FC<PropsType> = ({title, id, length}) => {
     const {addCard} = useActions()
+    const navigate = useNavigate()
 
     const packUserId = useAppSelector(state => state.cards.packUserId)
-    const cardsPack_id = useAppSelector(state => state.cards.cardsPack_id)
-    const currentCardPackName = useAppSelector(state => state.cards.currentCardPackName)
-
     const userId = useAppSelector(state => state.profile.profile?._id)
+
+    const [open, setOpen] = useState(false)
 
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false)
-
     const addCardHandle = (card: AddCardType) => {
         addCard(card)
         handleClose()
     }
+    const navigateToPacksList = () => navigate(PATH.PACKS)
+    const learnPackHandler = () => {
+        navigate(`/learn/${id}`)
+    }
 
     return (
         <Box style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px'}}>
-            <Typography variant={'h6'}>{currentCardPackName}</Typography>
+            <IconButton aria-label={'delete'} size={'small'} onClick={navigateToPacksList}>
+                <KeyboardBackspaceIcon fontSize={'small'}/>
+            </IconButton>
+            <Typography variant={'h6'}>{title}</Typography>
             {userId === packUserId
                 ?
                 <Button variant={'contained'} onClick={handleOpen}>
                     Add new card
                 </Button>
                 :
-                <Button variant={'contained'}>
+                <Button variant={'contained'} onClick={learnPackHandler} disabled={length === 0}>
                     Learn pack
                 </Button>
             }
             <BasicModal open={open} setOpen={setOpen}>
                 <AddCardModal
-                    cardsPack_id={cardsPack_id}
+                    cardsPack_id={id}
                     navigateBack={handleClose}
                     addCard={addCardHandle}
                 />

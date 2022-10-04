@@ -11,16 +11,25 @@ const slice = createSlice({
         pageCount: 10,
         packUserId: '',
         sortCards: '0updated',
-        cardsPack_id: '',
-        cardsLoaded: true,
+        cardsPack_id: null as null | string,
+        isLoading: false,
         cardAnswer: '',
         cardQuestion: '',
-        currentCardPackName: '',
+        cardsPackName: '',
     },
     reducers: {
-        setCardPackId: (state, action: PayloadAction<{ id: string, packName: string }>) => {
-            state.cardsPack_id = action.payload.id
-            state.currentCardPackName = action.payload.packName
+        setCardsPackName: (state, action: PayloadAction<string>) => {
+            state.cardsPackName = action.payload
+        },
+        removeCardsData: (state) => {
+            state.cards = []
+            state.cardsTotalCount = 0
+            state.cardQuestion = ''
+            state.cardAnswer = ''
+            state.page = 1
+            state.pageCount = 10
+            state.sortCards = '0updated'
+            state.isLoading = false
         },
         setCurrentPageCards: (state, action: PayloadAction<number>) => {
             state.page = action.payload
@@ -30,7 +39,7 @@ const slice = createSlice({
             state.page = 1
         },
         setCardsLoad: (state, action: PayloadAction<boolean>) => {
-            state.cardsLoaded = action.payload
+            state.isLoading = action.payload
         },
         setSortCards: (state, action: PayloadAction<string>) => {
             state.sortCards = action.payload
@@ -49,7 +58,7 @@ const slice = createSlice({
             state.cardAnswer = ''
             state.page = 1
             state.sortCards = '0updated'
-            state.cardsLoaded = true
+            state.isLoading = false
             state.pageCount = 10
         }
     },
@@ -58,7 +67,7 @@ const slice = createSlice({
             state.cards = action.payload.cards
             state.cardsTotalCount = action.payload.cardsTotalCount
             state.packUserId = action.payload.packUserId
-            state.cardsLoaded = true
+            state.isLoading = false
         })
     }
 })

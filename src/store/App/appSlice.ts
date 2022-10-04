@@ -1,6 +1,7 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {appActions as commonActions} from "../CommonActions/App";
 
-type AppStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
+export type AppStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
 const slice = createSlice({
     name: 'app',
@@ -24,6 +25,12 @@ const slice = createSlice({
             state.message = action.payload
         }
     },
+    extraReducers: builder => {
+        builder
+            .addCase(commonActions.setAppStatus, (state, action) => {
+                state.status = action.payload.status
+            })
+    }
 })
 
 export const {

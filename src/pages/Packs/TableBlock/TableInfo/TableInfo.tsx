@@ -5,7 +5,6 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {PackType, UpdatePackType} from "../../../../api/packsAPI";
 import {useAppSelector} from "../../../../hooks/hooks";
-import {PATH} from "../../../../components/routes/RoutesPage";
 import {useNavigate} from "react-router-dom";
 import {BasicModal} from "../../../../components/modals/BasicModal";
 import {UpdatePackModal} from "./UpdatePackModal/UpdatePackModal";
@@ -14,7 +13,7 @@ import {useActions} from "../../../../hooks/useActions";
 
 export const TableInfo: FC = () => {
     const navigate = useNavigate()
-    const {setCardPackId, deletePack, updatePack} = useActions()
+    const {deletePack, updatePack} = useActions()
 
     const [openAddModal, setOpenAddModal] = useState(false)
     const [openQuestModal, setOpenQuestModal] = useState(false)
@@ -34,9 +33,8 @@ export const TableInfo: FC = () => {
     }
     const handleQuestClose = () => setOpenQuestModal(false)
 
-    const navigateToCardsList = async (id: string, packName: string) => {
-        await setCardPackId({id, packName})
-        navigate(PATH.CARDS)
+    const navigateToCardsList = (id: string) => {
+        navigate(`/cards/${id}`)
     }
     const updatePackHandler = (pack: UpdatePackType) => {
         updatePack(pack)
@@ -61,7 +59,7 @@ export const TableInfo: FC = () => {
                     {(p.cardsCount !== 0 || user_id === p.user_id)
                         ?
                         <TableCell component={'th'} scope={'row'} align={'left'}
-                                   onClick={() => navigateToCardsList(p._id, p.name)}
+                                   onClick={() => navigateToCardsList(p._id)}
                                    style={{
                                        cursor: 'pointer',
                                        maxWidth: '268px',

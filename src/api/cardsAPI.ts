@@ -21,7 +21,7 @@ export type CardType = {
     updated: string
     _id: string
 }
-type GetCardsResponseType = {
+export type GetCardsResponseType = {
     cards: CardType[]
     cardsTotalCount: number
     maxGrade: number
