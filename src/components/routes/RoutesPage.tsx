@@ -1,10 +1,7 @@
 import React, {FC} from 'react';
 import {Navigate, Route, Routes} from "react-router-dom";
-import {Login} from "../../pages/Auth/Login";
-import {Register} from "../../pages/Auth/Register";
+import {Forgot, Login, Register, SetPassword} from "../../pages/Auth";
 import {Profile} from "../../pages/Profile/Profile";
-import {Forgot} from "../../pages/Auth/Forgot";
-import {SetPassword} from "../../pages/Auth/SetPassword";
 import {Container} from "@mui/material";
 import {PacksList} from "../../pages/Packs/PacksList";
 import {CardsList} from "../../pages/Cards/CardsList";
@@ -56,4 +53,4 @@ export const RoutesPage: FC = () => {
             </Routes>
         </Container>
     )
-};
+}

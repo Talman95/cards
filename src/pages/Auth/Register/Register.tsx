@@ -1,10 +1,10 @@
 import React, {FC, useEffect} from 'react';
 import {Navigate, useNavigate} from "react-router-dom";
-import {PATH} from "../../components/routes/RoutesPage";
+import {PATH} from "../../../components/routes/RoutesPage";
 import {useFormik} from "formik";
-import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
+import {useAppSelector} from "../../../hooks/hooks";
 import {Button, FormControl, FormGroup, Grid, Link, TextField, Typography} from "@mui/material";
-import {useActions} from "../../hooks/useActions";
+import {useActions} from "../../../hooks/useActions";
 
 type FormikErrorType = {
     email?: string
@@ -13,7 +13,6 @@ type FormikErrorType = {
 }
 
 export const Register: FC = () => {
-    const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const {setRegister, register} = useActions()
 
@@ -26,7 +25,7 @@ export const Register: FC = () => {
         return () => {
             setRegister(false)
         }
-    }, [dispatch])
+    }, [])
 
     const formik = useFormik({
         initialValues: {
@@ -110,4 +109,4 @@ export const Register: FC = () => {
             </Grid>
         </Grid>
     )
-};
+}

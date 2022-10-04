@@ -1,10 +1,9 @@
-import React, {FC, useEffect} from 'react';
+import React, {FC, useState} from 'react';
 import {Navigate, useParams} from "react-router-dom";
 import {FormikHelpers, useFormik} from "formik";
-import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
+import {useAppDispatch} from "../../../hooks/hooks";
 import {Button, FormControl, FormGroup, Grid, TextField, Typography} from "@mui/material";
-import {allAuthActions} from "../../store";
-import {useActions} from "../../hooks/useActions";
+import {allAuthActions} from "../../../store";
 
 type FormikErrorType = {
     password?: string
@@ -15,17 +14,10 @@ type FormikValuesType = {
 
 export const SetPassword: FC = () => {
     const dispatch = useAppDispatch()
-    const {setStatusPassword} = useActions()
 
-    const isChangedPassword = useAppSelector(state => state.auth.isChangedPassword)
+    const [isCreated, setIsCreated] = useState(false)
 
     let {token} = useParams()
-
-    useEffect(() => {
-        return () => {
-            setStatusPassword(false)
-        }
-    }, [])
 
     const formik = useFormik({
         initialValues: {
@@ -43,11 +35,13 @@ export const SetPassword: FC = () => {
                 if (action.payload?.error) {
                     formikHelpers.setFieldError('password', action.payload.error)
                 }
+            } else {
+                setIsCreated(true)
             }
         }
     })
 
-    if (isChangedPassword) {
+    if (isCreated) {
         return <Navigate to={'/login'}/>
     }
 
@@ -80,4 +74,4 @@ export const SetPassword: FC = () => {
             </Grid>
         </Grid>
     )
-};
+}

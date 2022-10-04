@@ -5,8 +5,6 @@ const {
     login,
     logout,
     register,
-    sendPassword,
-    setNewPassword,
 } = authAsyncThunks
 
 const slice = createSlice({
@@ -14,18 +12,10 @@ const slice = createSlice({
     initialState: {
         isLoggedIn: false,
         isRegistered: false,
-        isSent: false,
-        isChangedPassword: false,
     },
     reducers: {
         setRegister: (state, action: PayloadAction<boolean>) => {
             state.isRegistered = action.payload
-        },
-        setSend: (state, action: PayloadAction<boolean>) => {
-            state.isSent = action.payload
-        },
-        setStatusPassword: (state, action: PayloadAction<boolean>) => {
-            state.isChangedPassword = action.payload
         },
         setLoggedIn: (state, action: PayloadAction<boolean>) => {
             state.isLoggedIn = action.payload
@@ -40,12 +30,6 @@ const slice = createSlice({
         })
         builder.addCase(register.fulfilled, (state, action) => {
             state.isRegistered = action.payload.isRegistered
-        })
-        builder.addCase(sendPassword.fulfilled, (state, action) => {
-            state.isSent = action.payload.isSent
-        })
-        builder.addCase(setNewPassword.fulfilled, (state, action) => {
-            state.isChangedPassword = action.payload.isChangedPassword
         })
     }
 })

@@ -68,7 +68,7 @@ const register = createAsyncThunk(
         }
     })
 
-const sendPassword = createAsyncThunk<{ isSent: boolean }, string, {
+const sendPassword = createAsyncThunk<null, string, {
     rejectValue: { error: string }
 }>('auth/sendPassword',
     async (email, thunkAPI) => {
@@ -77,13 +77,13 @@ const sendPassword = createAsyncThunk<{ isSent: boolean }, string, {
             await authAPI.sendPassword(email)
             thunkAPI.dispatch(setAppStatus('idle'))
             thunkAPI.dispatch(setAppMessage('Message has been sent successfully'))
-            return {isSent: true}
+            return null
         } catch (e) {
             return handleAppError(e, thunkAPI)
         }
     })
 
-const setNewPassword = createAsyncThunk<{ isChangedPassword: true }, { password: string, token: string | undefined }, {
+const setNewPassword = createAsyncThunk<null, { password: string, token: string | undefined }, {
     rejectValue: { error: string }
 }>('auth/setNewPassword',
     async (param: { password: string, token: string | undefined }, thunkAPI) => {
@@ -92,7 +92,7 @@ const setNewPassword = createAsyncThunk<{ isChangedPassword: true }, { password:
             await authAPI.setNewPassword(param.password, param.token)
             thunkAPI.dispatch(setAppStatus('idle'))
             thunkAPI.dispatch(setAppMessage('Password has been changed successfully'))
-            return {isChangedPassword: true}
+            return null
         } catch (e) {
             return handleAppError(e, thunkAPI)
         }

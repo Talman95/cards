@@ -1,8 +1,8 @@
 import React from 'react';
 import {useFormik} from "formik";
 import {Navigate, useNavigate} from "react-router-dom";
-import {PATH} from "../../components/routes/RoutesPage";
-import {useAppSelector} from "../../hooks/hooks";
+import {PATH} from "../../../components/routes/RoutesPage";
+import {useAppSelector} from "../../../hooks/hooks";
 import {
     Button,
     Checkbox,
@@ -14,7 +14,7 @@ import {
     TextField,
     Typography
 } from "@mui/material";
-import {useActions} from "../../hooks/useActions";
+import {useActions} from "../../../hooks/useActions";
 
 type FormikErrorType = {
     email?: string
@@ -105,4 +105,4 @@ export const Login = () => {
             </Grid>
         </Grid>
     )
-};
+}
