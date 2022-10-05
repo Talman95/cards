@@ -1,4 +1,4 @@
-import {appActions as appSliceActions} from "./App/appSlice"
+import {appActions as commonActions} from "./CommonActions/App";
 import {authActions} from "./Auth/authSlice";
 import {authAsyncThunks} from "./Auth/asyncThunk";
 import {cardsAsyncThunks} from "./Cards/asyncThunk";
@@ -10,8 +10,9 @@ import {profileAsyncThunks} from "./Profile/asyncThunk";
 import {packsActions} from "./Packs/packsSlice";
 import {packsAsyncThunks} from "./Packs/asyncThunk";
 
+
 export const appActions = {
-    ...appSliceActions
+    ...commonActions,
 }
 export const allAuthActions = {
     ...authActions,

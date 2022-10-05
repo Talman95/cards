@@ -17,8 +17,6 @@ export const CardsList: FC = () => {
     const cardAnswer = useAppSelector(state => state.cards.cardAnswer)
     const cardQuestion = useAppSelector(state => state.cards.cardQuestion)
     const cardsPack_id = useAppSelector(state => state.cards.cardsPack_id)
-    const cardsPack = useAppSelector(state => state.packs.cardPacks.find(p => p._id === id))
-    const title = cardsPack?.name || ''
 
     let {id} = useParams<{ id: string }>()
 
@@ -37,6 +35,9 @@ export const CardsList: FC = () => {
             getCards(id)
         }
     }, [page, pageCount, sortCards, cardAnswer, cardQuestion])
+
+    const cardsPack = useAppSelector(state => state.packs.cardPacks.find(p => p._id === id))
+    const title = cardsPack?.name || ''
 
     if (!id) {
         return <div

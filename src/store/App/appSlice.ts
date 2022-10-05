@@ -1,5 +1,6 @@
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {createSlice} from "@reduxjs/toolkit";
 import {appActions as commonActions} from "../CommonActions/App";
+import {AlertColor} from "@mui/material";
 
 export type AppStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
@@ -10,32 +11,22 @@ const slice = createSlice({
         status: 'idle',
         error: null as string | null,
         message: null as string | null,
+        result: 'success' as AlertColor,
     },
-    reducers: {
-        setAppStatus: (state, action: PayloadAction<AppStatusType>) => {
-            state.status = action.payload
-        },
-        setAppError: (state, action: PayloadAction<string | null>) => {
-            state.error = action.payload
-        },
-        setInitialization: (state, action: PayloadAction<boolean>) => {
-            state.isInitialized = action.payload
-        },
-        setAppMessage: (state, action: PayloadAction<string | null>) => {
-            state.message = action.payload
-        }
-    },
+    reducers: {},
     extraReducers: builder => {
         builder
             .addCase(commonActions.setAppStatus, (state, action) => {
-                state.status = action.payload.status
+                state.status = action.payload
+            })
+            .addCase(commonActions.setAppMessage, (state, action) => {
+                state.message = action.payload.message
+                state.result = action.payload.result
+            })
+            .addCase(commonActions.setInitialization, (state, action) => {
+                state.isInitialized = action.payload
             })
     }
 })
 
-export const {
-    setAppStatus,
-    setAppError,
-} = slice.actions
-export const appActions = slice.actions
 export const appSlice = slice.reducer

@@ -1,9 +1,17 @@
 import {bindActionCreators} from "@reduxjs/toolkit";
 import {useAppDispatch} from "./hooks";
-import {allAuthActions, allCardsActions, allLearnActions, allPacksActions, allProfileActions} from "../store";
+import {
+    allAuthActions,
+    allCardsActions,
+    allLearnActions,
+    allPacksActions,
+    allProfileActions,
+    appActions
+} from "../store";
 
 
 const allActions = {
+    ...appActions,
     ...allAuthActions,
     ...allPacksActions,
     ...allCardsActions,

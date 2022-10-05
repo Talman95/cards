@@ -1,12 +1,12 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import {authAPI, LoginParamsType, RegisterParamsType} from "../../api/authAPI";
-import {appActions} from "../App/appSlice";
 import {handleAppError} from "../../utils/errorUtils";
 import {profileActions} from "../Profile/profileSlice";
 import {authActions} from "./authSlice";
+import {appActions} from "../CommonActions/App";
 
 const setProfile = profileActions.setProfile
-const {setAppMessage, setAppStatus, setInitialization} = appActions
+const {setAppStatus, setAppMessage, setInitialization} = appActions
 
 const login = createAsyncThunk(
     'auth/login',
@@ -61,7 +61,7 @@ const register = createAsyncThunk(
         try {
             await authAPI.register(params)
             thunkAPI.dispatch(setAppStatus('idle'))
-            thunkAPI.dispatch(setAppMessage('Registration is successful'))
+            thunkAPI.dispatch(setAppMessage({result: 'success', message: 'Registration is successful'}))
             return {isRegistered: true}
         } catch (e) {
             return handleAppError(e, thunkAPI)
@@ -76,7 +76,7 @@ const sendPassword = createAsyncThunk<null, string, {
         try {
             await authAPI.sendPassword(email)
             thunkAPI.dispatch(setAppStatus('idle'))
-            thunkAPI.dispatch(setAppMessage('Message has been sent successfully'))
+            thunkAPI.dispatch(setAppMessage({result: 'success', message: 'Message has been sent successfully'}))
             return null
         } catch (e) {
             return handleAppError(e, thunkAPI)
@@ -91,7 +91,7 @@ const setNewPassword = createAsyncThunk<null, { password: string, token: string 
         try {
             await authAPI.setNewPassword(param.password, param.token)
             thunkAPI.dispatch(setAppStatus('idle'))
-            thunkAPI.dispatch(setAppMessage('Password has been changed successfully'))
+            thunkAPI.dispatch(setAppMessage({result: "success", message: 'Password has been changed successfully'}))
             return null
         } catch (e) {
             return handleAppError(e, thunkAPI)

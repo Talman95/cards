@@ -5,12 +5,12 @@ import {AddCardType, cardsAPI, UpdateCardType} from "../../api/cardsAPI";
 import {handleAppError} from "../../utils/errorUtils";
 import {appActions} from "../CommonActions/App";
 
-const {setAppStatus} = appActions
+const {setAppStatus, setAppMessage} = appActions
 
 const getCards = createAsyncThunk(
     'cards/getCards',
     async (id: string, thunkAPI) => {
-        thunkAPI.dispatch(setAppStatus({status: 'loading'}))
+        thunkAPI.dispatch(setAppStatus('loading'))
         thunkAPI.dispatch(cardsActions.setCardsLoad(true))
         try {
             const state = thunkAPI.getState() as RootState
@@ -30,7 +30,7 @@ const getCards = createAsyncThunk(
                 cardQuestion,
                 cardAnswer,
             })
-            thunkAPI.dispatch(setAppStatus({status: 'idle'}))
+            thunkAPI.dispatch(setAppStatus('idle'))
             return res.data
         } catch (e) {
             return handleAppError(e, thunkAPI)
@@ -41,11 +41,12 @@ const getCards = createAsyncThunk(
 const addCard = createAsyncThunk(
     'cards/addCards',
     async (card: AddCardType, thunkAPI) => {
-        thunkAPI.dispatch(setAppStatus({status: 'loading'}))
+        thunkAPI.dispatch(setAppStatus('loading'))
         thunkAPI.dispatch(cardsActions.setCardsLoad(true))
         try {
             await cardsAPI.addCard(card)
             await thunkAPI.dispatch(getCards(card.cardsPack_id))
+            thunkAPI.dispatch(setAppMessage({result: 'success', message: 'New card created'}))
         } catch (e) {
             return handleAppError(e, thunkAPI)
         }
@@ -55,7 +56,7 @@ const addCard = createAsyncThunk(
 const deleteCard = createAsyncThunk(
     'cards/deleteCard',
     async (id: string, thunkAPI) => {
-        thunkAPI.dispatch(setAppStatus({status: 'loading'}))
+        thunkAPI.dispatch(setAppStatus('loading'))
         thunkAPI.dispatch(cardsActions.setCardsLoad(true))
         try {
             await cardsAPI.deleteCard(id)
@@ -64,6 +65,7 @@ const deleteCard = createAsyncThunk(
             const packId = state.cards.cardsPack_id
             if (packId) {
                 await thunkAPI.dispatch(getCards(packId))
+                thunkAPI.dispatch(setAppMessage({result: 'error', message: 'Card deleted'}))
             }
         } catch (e) {
             return thunkAPI.rejectWithValue(null)
@@ -74,7 +76,7 @@ const deleteCard = createAsyncThunk(
 const updateCard = createAsyncThunk(
     'cards/updateCard',
     async (card: UpdateCardType, thunkAPI) => {
-        thunkAPI.dispatch(setAppStatus({status: 'loading'}))
+        thunkAPI.dispatch(setAppStatus('loading'))
         thunkAPI.dispatch(cardsActions.setCardsLoad(true))
         try {
             await cardsAPI.updateCard(card)
@@ -83,6 +85,7 @@ const updateCard = createAsyncThunk(
             const packId = state.cards.cardsPack_id
             if (packId) {
                 await thunkAPI.dispatch(getCards(packId))
+                thunkAPI.dispatch(setAppMessage({result: 'success', message: 'Card updated'}))
             }
         } catch {
             return thunkAPI.rejectWithValue(null)

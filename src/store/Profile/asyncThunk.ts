@@ -1,10 +1,9 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {appActions} from "../App/appSlice";
 import {profileAPI} from "../../api/profileAPI";
 import {handleAppError} from "../../utils/errorUtils";
+import {appActions} from "../CommonActions/App";
 
-const setAppMessage = appActions.setAppMessage
-const setAppStatus = appActions.setAppStatus
+const {setAppStatus, setAppMessage} = appActions
 
 const updateProfile = createAsyncThunk(
     'profile/updateProfile',
@@ -13,7 +12,7 @@ const updateProfile = createAsyncThunk(
         try {
             const res = await profileAPI.updateProfile(param.name, param.avatar)
             thunkAPI.dispatch(setAppStatus('idle'))
-            thunkAPI.dispatch(setAppMessage('Name has been changed.'))
+            thunkAPI.dispatch(setAppMessage({result: 'success', message: 'Name has been changed.'}))
             return {profile: res.data.updatedUser}
         } catch(e) {
             return handleAppError(e, thunkAPI)

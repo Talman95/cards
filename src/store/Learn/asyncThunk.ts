@@ -1,11 +1,11 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import {cardsAPI} from "../../api/cardsAPI";
 import {handleAppError} from "../../utils/errorUtils";
-import {appActions} from "../App/appSlice";
 import {learnAPI} from "../../api/learnAPI";
 import {learnActions} from "./learnSlice";
+import {appActions} from "../CommonActions/App";
 
-const setAppStatus = appActions.setAppStatus
+const {setAppStatus, setAppMessage} = appActions
 
 const getLearnedCards = createAsyncThunk(
     'learn/getCards',
@@ -23,7 +23,7 @@ const getLearnedCards = createAsyncThunk(
 
 const updateGradeCard = createAsyncThunk(
     'learn/updateGradeCard',
-    async (param: {grade: number, card_id: string }, thunkAPI) => {
+    async (param: { grade: number, card_id: string }, thunkAPI) => {
         thunkAPI.dispatch(setAppStatus('loading'))
         try {
             const res = await learnAPI.updateGrade(param.grade, param.card_id)

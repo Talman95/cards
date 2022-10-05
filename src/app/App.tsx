@@ -2,10 +2,9 @@ import React, {useEffect} from 'react';
 import {useAppSelector} from "../hooks/hooks";
 import {Header} from "../components/header/Header";
 import {RoutesPage} from "../components/routes/RoutesPage";
-import {ErrorSnackbar} from "../components/snackbar/ErrorSnackbar/ErrorSnackbar";
 import {CircularProgress} from "@mui/material";
-import {SuccessSnackbar} from "../components/snackbar/SuccessSnackbar/SuccessSnackbar";
 import {useActions} from "../hooks/useActions";
+import {MessageSnackbar} from "../components/MessageSnackbar/MessageSnackbar";
 
 const App = () => {
     const {getAuthData} = useActions()
@@ -25,8 +24,7 @@ const App = () => {
 
     return (
         <div>
-            <SuccessSnackbar/>
-            <ErrorSnackbar/>
+            <MessageSnackbar/>
             <Header/>
             <RoutesPage/>
         </div>

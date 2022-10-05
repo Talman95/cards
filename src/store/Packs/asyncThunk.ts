@@ -1,15 +1,15 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import {RootState} from "../store";
 import {packsAPI, UpdatePackType} from "../../api/packsAPI";
-import {appActions} from "../App/appSlice";
 import {handleAppError} from "../../utils/errorUtils";
+import {appActions} from "../CommonActions/App";
 
-const setAppMessage = appActions.setAppMessage
-const setAppStatus = appActions.setAppStatus
+const {setAppStatus, setAppMessage} = appActions
 
 const getPacks = createAsyncThunk(
     'packs/getPacks',
     async (params: undefined, thunkAPI) => {
+        thunkAPI.dispatch(setAppStatus('loading'))
         try {
             const state = thunkAPI.getState() as RootState
             const {
@@ -32,6 +32,7 @@ const getPacks = createAsyncThunk(
                     {packName, min, max, sortPacks, page, pageCount}
                 )
             }
+            thunkAPI.dispatch(setAppStatus('idle'))
             return res.data
         } catch {
             return thunkAPI.rejectWithValue(null)
@@ -46,8 +47,7 @@ const addPack = createAsyncThunk(
         try {
             await packsAPI.addPack({...params})
             await thunkAPI.dispatch(getPacks())
-            thunkAPI.dispatch(setAppStatus('idle'))
-            thunkAPI.dispatch(setAppMessage('New pack created'))
+            thunkAPI.dispatch(setAppMessage({result: 'success', message: 'New pack created'}))
         } catch (e) {
             return handleAppError(e, thunkAPI)
         }
@@ -60,7 +60,7 @@ const deletePack = createAsyncThunk(
         try {
             await packsAPI.deletePack(id)
             await thunkAPI.dispatch(getPacks())
-            thunkAPI.dispatch(setAppStatus('idle'))
+            thunkAPI.dispatch(setAppMessage({result: 'error', message: 'Pack deleted'}))
         } catch (e) {
             return handleAppError(e, thunkAPI)
         }
@@ -74,8 +74,7 @@ const updatePack = createAsyncThunk(
         try {
             await packsAPI.updatePack(pack)
             await thunkAPI.dispatch(getPacks())
-            thunkAPI.dispatch(setAppStatus('idle'))
-            thunkAPI.dispatch(setAppMessage('Pack updated'))
+            thunkAPI.dispatch(setAppMessage({result: 'success', message: 'Pack updated'}))
         } catch (e) {
             return handleAppError(e, thunkAPI)
         }
