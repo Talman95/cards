@@ -15,11 +15,10 @@ const slice = createSlice({
         isLoading: false,
         cardAnswer: '',
         cardQuestion: '',
-        cardsPackName: '',
     },
     reducers: {
-        setCardsPackName: (state, action: PayloadAction<string>) => {
-            state.cardsPackName = action.payload
+        setCardsPackId: (state, action: PayloadAction<string>) => {
+            state.cardsPack_id = action.payload
         },
         removeCardsData: (state) => {
             state.cards = []
@@ -30,6 +29,7 @@ const slice = createSlice({
             state.pageCount = 10
             state.sortCards = '0updated'
             state.isLoading = false
+            state.cardsPack_id = null
         },
         setCurrentPageCards: (state, action: PayloadAction<number>) => {
             state.page = action.payload

@@ -35,58 +35,60 @@ const getCards = createAsyncThunk(
         } catch (e) {
             return handleAppError(e, thunkAPI)
         }
-    })
+    }
+)
 
 const addCard = createAsyncThunk(
     'cards/addCards',
     async (card: AddCardType, thunkAPI) => {
-        thunkAPI.dispatch(cardsActions.setCardsLoad(false))
+        thunkAPI.dispatch(setAppStatus({status: 'loading'}))
+        thunkAPI.dispatch(cardsActions.setCardsLoad(true))
         try {
             await cardsAPI.addCard(card)
-            const state = thunkAPI.getState() as RootState
-            const packId = state.cards.cardsPack_id
-
-            if (packId) {
-                await thunkAPI.dispatch(getCards(packId))
-            }
+            await thunkAPI.dispatch(getCards(card.cardsPack_id))
         } catch (e) {
             return handleAppError(e, thunkAPI)
         }
-    })
+    }
+)
 
 const deleteCard = createAsyncThunk(
     'cards/deleteCard',
     async (id: string, thunkAPI) => {
-        thunkAPI.dispatch(cardsActions.setCardsLoad(false))
+        thunkAPI.dispatch(setAppStatus({status: 'loading'}))
+        thunkAPI.dispatch(cardsActions.setCardsLoad(true))
         try {
+            await cardsAPI.deleteCard(id)
+
             const state = thunkAPI.getState() as RootState
             const packId = state.cards.cardsPack_id
-
             if (packId) {
-                await cardsAPI.deleteCard(id)
                 await thunkAPI.dispatch(getCards(packId))
             }
         } catch (e) {
             return thunkAPI.rejectWithValue(null)
         }
-    })
+    }
+)
 
 const updateCard = createAsyncThunk(
     'cards/updateCard',
     async (card: UpdateCardType, thunkAPI) => {
-        thunkAPI.dispatch(cardsActions.setCardsLoad(false))
+        thunkAPI.dispatch(setAppStatus({status: 'loading'}))
+        thunkAPI.dispatch(cardsActions.setCardsLoad(true))
         try {
+            await cardsAPI.updateCard(card)
+
             const state = thunkAPI.getState() as RootState
             const packId = state.cards.cardsPack_id
-
             if (packId) {
-                await cardsAPI.updateCard(card)
                 await thunkAPI.dispatch(getCards(packId))
             }
         } catch {
             return thunkAPI.rejectWithValue(null)
         }
-    })
+    }
+)
 
 
 export const cardsAsyncThunks = {

@@ -8,7 +8,7 @@ import {CardsListHeader} from "./CardsListHeader/CardsListHeader";
 import {useActions} from "../../hooks/useActions";
 
 export const CardsList: FC = () => {
-    const {getCards, removeCardsData} = useActions()
+    const {getCards, removeCardsData, setCardsPackId} = useActions()
 
     const cards = useAppSelector(state => state.cards.cards)
     const page = useAppSelector(state => state.cards.page)
@@ -16,10 +16,17 @@ export const CardsList: FC = () => {
     const sortCards = useAppSelector(state => state.cards.sortCards)
     const cardAnswer = useAppSelector(state => state.cards.cardAnswer)
     const cardQuestion = useAppSelector(state => state.cards.cardQuestion)
+    const cardsPack_id = useAppSelector(state => state.cards.cardsPack_id)
+    const cardsPack = useAppSelector(state => state.packs.cardPacks.find(p => p._id === id))
+    const title = cardsPack?.name || ''
 
     let {id} = useParams<{ id: string }>()
 
     useEffect(() => {
+        if (!id) return
+        if (cardsPack_id) return
+        setCardsPackId(id)
+
         return () => {
             removeCardsData()
         }
@@ -31,9 +38,6 @@ export const CardsList: FC = () => {
         }
     }, [page, pageCount, sortCards, cardAnswer, cardQuestion])
 
-    const cardsPack = useAppSelector(state => state.packs.cardPacks.find(p => p._id === id))
-    const title = cardsPack?.name || ''
-
     if (!id) {
         return <div
             style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
@@ -43,7 +47,7 @@ export const CardsList: FC = () => {
 
     return (
         <Box>
-            <CardsListHeader title={title} id={id} length={cards.length}/>
+            <CardsListHeader title={title} cardsPackId={id} length={cards.length}/>
             <SearchBlock/>
             <TableBlock length={cards.length}/>
         </Box>

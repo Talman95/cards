@@ -11,11 +11,11 @@ import {useNavigate} from "react-router-dom";
 
 type PropsType = {
     title: string
-    id: string
+    cardsPackId: string
     length: number
 }
 
-export const CardsListHeader: FC<PropsType> = ({title, id, length}) => {
+export const CardsListHeader: FC<PropsType> = ({title, cardsPackId, length}) => {
     const {addCard} = useActions()
     const navigate = useNavigate()
 
@@ -31,9 +31,7 @@ export const CardsListHeader: FC<PropsType> = ({title, id, length}) => {
         handleClose()
     }
     const navigateToPacksList = () => navigate(PATH.PACKS)
-    const learnPackHandler = () => {
-        navigate(`/learn/${id}`)
-    }
+    const learnPackHandler = () => navigate(`/learn/${cardsPackId}`)
 
     return (
         <Box style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px'}}>
@@ -53,7 +51,7 @@ export const CardsListHeader: FC<PropsType> = ({title, id, length}) => {
             }
             <BasicModal open={open} setOpen={setOpen}>
                 <AddCardModal
-                    cardsPack_id={id}
+                    cardsPack_id={cardsPackId}
                     navigateBack={handleClose}
                     addCard={addCardHandle}
                 />
