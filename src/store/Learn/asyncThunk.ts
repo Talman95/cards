@@ -5,14 +5,16 @@ import {learnAPI} from "../../api/learnAPI";
 import {learnActions} from "./learnSlice";
 import {appActions} from "../CommonActions/App";
 
-const {setAppStatus, setAppMessage} = appActions
+const {setAppStatus} = appActions
 
 const getLearnedCards = createAsyncThunk(
     'learn/getCards',
     async (cardsPack_id: string, thunkAPI) => {
+        thunkAPI.dispatch(setAppStatus('loading'))
         thunkAPI.dispatch(learnActions.setIsFetching(true))
         try {
             const res = await cardsAPI.getCards({cardsPack_id})
+            thunkAPI.dispatch(setAppStatus('idle'))
             return res.data.cards
         } catch (e) {
             thunkAPI.dispatch(learnActions.setIsFetching(false))

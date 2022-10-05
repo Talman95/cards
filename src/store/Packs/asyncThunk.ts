@@ -19,11 +19,11 @@ const getPacks = createAsyncThunk(
                 sortPacks,
                 page,
                 pageCount,
-                showPacks,
+                accessory,
             } = state.packs
             const user_id = state.profile.profile?._id
             let res;
-            if (showPacks === 'My' && user_id) {
+            if (accessory === 'my' && user_id) {
                 res = await packsAPI.getPacks(
                     {packName, min, max, sortPacks, page, pageCount, user_id}
                 )
@@ -60,7 +60,7 @@ const deletePack = createAsyncThunk(
         try {
             await packsAPI.deletePack(id)
             await thunkAPI.dispatch(getPacks())
-            thunkAPI.dispatch(setAppMessage({result: 'error', message: 'Pack deleted'}))
+            thunkAPI.dispatch(setAppMessage({result: 'error', message: 'Packs deleted'}))
         } catch (e) {
             return handleAppError(e, thunkAPI)
         }
@@ -74,7 +74,7 @@ const updatePack = createAsyncThunk(
         try {
             await packsAPI.updatePack(pack)
             await thunkAPI.dispatch(getPacks())
-            thunkAPI.dispatch(setAppMessage({result: 'success', message: 'Pack updated'}))
+            thunkAPI.dispatch(setAppMessage({result: 'success', message: 'Packs updated'}))
         } catch (e) {
             return handleAppError(e, thunkAPI)
         }

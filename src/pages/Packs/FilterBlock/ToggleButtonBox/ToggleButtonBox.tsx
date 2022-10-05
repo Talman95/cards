@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import {Box, Button, Stack, Typography} from "@mui/material";
-import {ShowPacksType} from "../../../../store/Packs/packsSlice";
+import {AccessoryType} from "../../../../store/Packs/packsSlice";
 import {useAppSelector} from "../../../../hooks/hooks";
 import {useActions} from "../../../../hooks/useActions";
 
@@ -8,9 +8,9 @@ export const ToggleButtonBox: FC = () => {
     console.log('Toggle Button')
     const {setShowPacks} = useActions()
 
-    const showPacks = useAppSelector(state => state.packs.showPacks)
+    const accessory = useAppSelector(state => state.packs.accessory)
 
-    const changeShowPacksHandler = (showPacks: ShowPacksType) => {
+    const changeShowPacksHandler = (showPacks: AccessoryType) => {
         setShowPacks(showPacks)
     }
 
@@ -19,17 +19,17 @@ export const ToggleButtonBox: FC = () => {
             <Typography variant={'body2'}>Show packs cards</Typography>
             <Stack spacing={2} direction="row">
                 <Button
-                    variant={showPacks === 'My' ? 'contained' : 'outlined'}
+                    variant={accessory === 'my' ? 'contained' : 'outlined'}
                     style={{width: '80px'}}
-                    onClick={() => changeShowPacksHandler('My')}
+                    onClick={() => changeShowPacksHandler('my')}
                     size={'small'}
                 >
                     My
                 </Button>
                 <Button
-                    variant={showPacks === 'All' ? 'contained' : 'outlined'}
+                    variant={accessory === 'all' ? 'contained' : 'outlined'}
                     style={{width: '80px'}}
-                    onClick={() => changeShowPacksHandler('All')}
+                    onClick={() => changeShowPacksHandler('all')}
                     size={'small'}
                 >
                     All

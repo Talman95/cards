@@ -133,7 +133,7 @@ export const TableInfo: FC = () => {
             </BasicModal>
             <BasicModal open={openQuestModal} setOpen={setOpenQuestModal}>
                 <QuestionModal
-                    title={'Delete Pack'}
+                    title={'Delete Packs'}
                     itemName={selectedPack ? selectedPack.name : ''}
                     itemId={selectedPack ? selectedPack._id : ''}
                     navigateBack={handleQuestClose}

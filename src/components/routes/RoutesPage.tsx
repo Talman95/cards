@@ -3,7 +3,7 @@ import {Navigate, Route, Routes} from "react-router-dom";
 import {Forgot, Login, Register, SetPassword} from "../../pages/Auth";
 import {Profile} from "../../pages/Profile/Profile";
 import {Container} from "@mui/material";
-import {PacksList} from "../../pages/Packs/PacksList";
+import {Packs} from "../../pages/Packs/Packs";
 import {CardsList} from "../../pages/Cards/CardsList";
 import {LearnList} from "../../pages/Learn/LearnList";
 import {PrivateRoutes} from "./PrivateRoutes";
@@ -30,7 +30,7 @@ export const RoutesPage: FC = () => {
     ]
     const protectedRoutes = [
         {path: PATH.PROFILE, component: <Profile/>},
-        {path: PATH.PACKS, component: <PacksList/>},
+        {path: PATH.PACKS, component: <Packs/>},
         {path: PATH.CARDS, component: <CardsList/>},
         {path: PATH.LEARN, component: <LearnList/>},
     ]

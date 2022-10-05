@@ -2,7 +2,7 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {PackType} from "../../api/packsAPI";
 import {packsAsyncThunks} from "./asyncThunk";
 
-export type ShowPacksType = 'My' | 'All'
+export type AccessoryType = 'my' | 'all'
 
 const slice = createSlice({
     name: 'packs',
@@ -15,7 +15,7 @@ const slice = createSlice({
         pageCount: 10,
         packName: '',
         sortPacks: '0updated',
-        showPacks: 'All' as ShowPacksType,
+        accessory: 'all' as AccessoryType,
     },
     reducers: {
         setCurrentPage: (state, action: PayloadAction<number>) => {
@@ -25,11 +25,9 @@ const slice = createSlice({
             state.pageCount = action.payload
             state.page = 1
         },
-        setShowPacks: (state, action: PayloadAction<ShowPacksType>) => {
-            state.showPacks = action.payload
+        setShowPacks: (state, action: PayloadAction<AccessoryType>) => {
+            state.accessory = action.payload
             state.page = 1
-            state.min = 0
-            state.max = 150
         },
         setMinMaxCount: (state, action: PayloadAction<{ min: number, max: number }>) => {
             state.min = action.payload.min
@@ -42,7 +40,7 @@ const slice = createSlice({
             state.max = 150
             state.pageCount = 10
             state.packName = ''
-            state.showPacks = 'All'
+            state.accessory = 'all'
             state.sortPacks = '0updated'
         },
         setSortPacks: (state, action: PayloadAction<string>) => {
