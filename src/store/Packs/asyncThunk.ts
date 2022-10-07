@@ -12,26 +12,17 @@ const getPacks = createAsyncThunk(
         thunkAPI.dispatch(setAppStatus('loading'))
         try {
             const state = thunkAPI.getState() as RootState
-            const {
-                packName,
-                min,
-                max,
-                sortPacks,
-                page,
-                pageCount,
-                accessory,
-            } = state.packs
-            const user_id = state.profile.profile?._id
-            let res;
-            if (accessory === 'my' && user_id) {
-                res = await packsAPI.getPacks(
-                    {packName, min, max, sortPacks, page, pageCount, user_id}
-                )
-            } else {
-                res = await packsAPI.getPacks(
-                    {packName, min, max, sortPacks, page, pageCount}
-                )
-            }
+
+            const packs = state.packs
+            const userId = state.profile.profile?._id
+
+            const res = await packsAPI.getPacks({
+                ...packs.filter,
+                page: packs.page,
+                pageCount: packs.pageCount,
+                user_id: packs.accessory === 'my' ? userId : null,
+            })
+
             thunkAPI.dispatch(setAppStatus('idle'))
             return res.data
         } catch {

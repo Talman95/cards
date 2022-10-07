@@ -5,13 +5,12 @@ import {useAppSelector} from "../../../../hooks/hooks";
 import {useActions} from "../../../../hooks/useActions";
 
 export const ToggleButtonBox: FC = () => {
-    console.log('Toggle Button')
     const {setShowPacks} = useActions()
 
     const accessory = useAppSelector(state => state.packs.accessory)
 
-    const changeShowPacksHandler = (showPacks: AccessoryType) => {
-        setShowPacks(showPacks)
+    const onChange = (param: AccessoryType) => {
+        setShowPacks({accessory: param})
     }
 
     return (
@@ -21,7 +20,7 @@ export const ToggleButtonBox: FC = () => {
                 <Button
                     variant={accessory === 'my' ? 'contained' : 'outlined'}
                     style={{width: '80px'}}
-                    onClick={() => changeShowPacksHandler('my')}
+                    onClick={() => onChange('my')}
                     size={'small'}
                 >
                     My
@@ -29,7 +28,7 @@ export const ToggleButtonBox: FC = () => {
                 <Button
                     variant={accessory === 'all' ? 'contained' : 'outlined'}
                     style={{width: '80px'}}
-                    onClick={() => changeShowPacksHandler('all')}
+                    onClick={() => onChange('all')}
                     size={'small'}
                 >
                     All

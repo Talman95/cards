@@ -1,4 +1,4 @@
-import React, {ChangeEvent, FC, memo, useEffect, useState} from 'react';
+import React, {ChangeEvent, FC, useEffect, useRef, useState} from 'react';
 import {TextField} from "@mui/material";
 import {useDebounce} from "../../hooks/useDebounce";
 
@@ -7,8 +7,7 @@ type SearchType = {
     setTitle: (title: string) => void
 }
 
-export const Search: FC<SearchType> = memo(({title, setTitle}) => {
-    console.log('Search')
+export const Search: FC<SearchType> = ({title, setTitle}) => {
     const [searchTerm, setSearchTerm] = useState(title)
 
     const changeSearchTermHandler = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -20,7 +19,15 @@ export const Search: FC<SearchType> = memo(({title, setTitle}) => {
         setSearchTerm(title)
     }, [title])
 
+    const firstRender = useRef(true)
+
     useEffect(() => {
+        if (firstRender.current) {
+            firstRender.current = false
+
+            return
+        }
+
         setTitle(searchTerm)
     }, [debouncedSearchTerm])
 
@@ -31,5 +38,5 @@ export const Search: FC<SearchType> = memo(({title, setTitle}) => {
             onChange={changeSearchTermHandler}
             fullWidth
         />
-    );
-})
+    )
+}

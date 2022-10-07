@@ -1,13 +1,13 @@
 import {api} from "./api";
 
 export type GetPacksParamsType = {
-    packName?: string
-    min?: number
-    max?: number
-    sortPacks?: string
-    page?: number
-    pageCount?: number
-    user_id?: string
+    packName: string | null
+    min: number | null
+    max: number | null
+    sortPacks: string | null
+    page: number | null
+    pageCount: number | null
+    user_id?: string | null
 }
 export type PackType = {
     cardsCount: number
@@ -47,7 +47,7 @@ export type UpdatePackType = {
 }
 
 export const packsAPI = {
-    getPacks: ({packName, min, max, sortPacks, page = 1, pageCount, user_id}: GetPacksParamsType) => {
+    getPacks: ({packName, min, max, sortPacks, page, pageCount, user_id}: GetPacksParamsType) => {
         return api.get<GetPacksType>('cards/pack', {
             params: {
                 packName,

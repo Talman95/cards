@@ -6,7 +6,6 @@ import {AddCardModal} from "./AddCardModal/AddCardModal";
 import {AddCardType} from "../../../api/cardsAPI";
 import {useActions} from "../../../hooks/useActions";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
-import {PATH} from "../../../components/routes/RoutesPage";
 import {useNavigate} from "react-router-dom";
 
 type PropsType = {
@@ -30,7 +29,7 @@ export const CardsListHeader: FC<PropsType> = ({title, cardsPackId, length}) => 
         addCard(card)
         handleClose()
     }
-    const navigateToPacksList = () => navigate(PATH.PACKS)
+    const navigateToPacksList = () => navigate(-1)
     const learnPackHandler = () => navigate(`/learn/${cardsPackId}`)
 
     return (

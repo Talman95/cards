@@ -5,6 +5,7 @@ import {useActions} from "../../../../hooks/useActions";
 
 export const ResetSettings: FC = memo(() => {
     console.log('Reset')
+
     const {setDefaultValues} = useActions()
 
     const setDefaultValuesHandler = () => {

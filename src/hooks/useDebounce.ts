@@ -1,9 +1,8 @@
-// Наш хук
 import {useEffect, useState} from "react";
 
-export const useDebounce = (value: string, delay: number) => {
+export const useDebounce = <T>(value: T, delay: number) => {
     // Состояние и сеттер для отложенного значения
-    const [debouncedValue, setDebouncedValue] = useState(value);
+    const [debouncedValue, setDebouncedValue] = useState<T>(value)
 
     useEffect(
         () => {
@@ -11,7 +10,7 @@ export const useDebounce = (value: string, delay: number) => {
             // после заданной задержки
             const handler = setTimeout(() => {
                 setDebouncedValue(value);
-            }, delay);
+            }, delay)
 
             // Вернуть функцию очистки, которая будет вызываться каждый раз, когда ...
             // ... useEffect вызван снова. useEffect будет вызван снова, только если ...
@@ -23,14 +22,14 @@ export const useDebounce = (value: string, delay: number) => {
             // ... нашего приложения в поле поиска, мы не хотим, чтобы debouncedValue...
             // ... не менялось до тех пор, пока он не прекратит печатать дольше, чем 500ms.
             return () => {
-                clearTimeout(handler);
-            };
+                clearTimeout(handler)
+            }
         },
         // Вызывается снова, только если значение изменится
         // мы так же можем добавить переменную "delay" в массива зависимостей ...
         // ... если вы собираетесь менять ее динамически.
-        [value]
-    );
+        [value, delay]
+    )
 
-    return debouncedValue;
+    return debouncedValue
 }

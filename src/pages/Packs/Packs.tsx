@@ -8,26 +8,23 @@ import {useActions} from "../../hooks/useActions";
 import {useSearchParams} from "react-router-dom";
 
 export const Packs = () => {
-    const {getPacks, setShowPacks} = useActions()
+    const {getPacks} = useActions()
 
     const [searchParams, setSearchParams] = useSearchParams()
 
-    const packName = useAppSelector(state => state.packs.packName)
-    const min = useAppSelector(state => state.packs.min)
-    const max = useAppSelector(state => state.packs.max)
-    const sortPacks = useAppSelector(state => state.packs.sortPacks)
+    const filter = useAppSelector(state => state.packs.filter)
     const page = useAppSelector(state => state.packs.page)
     const pageCount = useAppSelector(state => state.packs.pageCount)
     const accessory = useAppSelector(state => state.packs.accessory)
 
-    useEffect(() => {
-        const param = searchParams.get('accessory') || accessory
-        if (param === ('my' || 'all')) {
-            setShowPacks(param)
-        } else {
-            setShowPacks('all')
-        }
-    }, [])
+    // useEffect(() => {
+    //     const param = searchParams.get('accessory') || accessory
+    //     if (param === 'my') {
+    //         setAccessory('my')
+    //     } else {
+    //         setAccessory('all')
+    //     }
+    // }, [])
 
     useEffect(() => {
         setSearchParams({accessory: accessory})
@@ -35,7 +32,7 @@ export const Packs = () => {
 
     useEffect(() => {
         getPacks()
-    }, [packName, min, max, sortPacks, page, pageCount, accessory])
+    }, [filter, page, pageCount, accessory])
 
     return (
         <Box>

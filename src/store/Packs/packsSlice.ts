@@ -9,13 +9,17 @@ const slice = createSlice({
     initialState: {
         cardPacks: [] as PackType[],
         cardPacksTotalCount: 0,
-        max: 150,
-        min: 0,
-        page: 1,
-        pageCount: 10,
-        packName: '',
-        sortPacks: '0updated',
+        maxCardsCount: 0,
+        minCardsCount: 0,
         accessory: 'all' as AccessoryType,
+        page: 1,
+        pageCount: 5,
+        filter: {
+            packName: '',
+            min: null as null | number,
+            max: null as null | number,
+            sortPacks: null as null | string,
+        }
     },
     reducers: {
         setCurrentPage: (state, action: PayloadAction<number>) => {
@@ -25,37 +29,47 @@ const slice = createSlice({
             state.pageCount = action.payload
             state.page = 1
         },
-        setShowPacks: (state, action: PayloadAction<AccessoryType>) => {
-            state.accessory = action.payload
-            state.page = 1
-        },
         setMinMaxCount: (state, action: PayloadAction<{ min: number, max: number }>) => {
-            state.min = action.payload.min
-            state.max = action.payload.max
+            state.filter.min = action.payload.min
+            state.filter.max = action.payload.max
             state.page = 1
         },
-        setDefaultValues: (state, action: PayloadAction<undefined>) => {
-            state.page = 1
-            state.min = 0
-            state.max = 150
-            state.pageCount = 10
-            state.packName = ''
-            state.accessory = 'all'
-            state.sortPacks = '0updated'
-        },
-        setSortPacks: (state, action: PayloadAction<string>) => {
-            state.sortPacks = action.payload
+        setShowPacks: (state, action: PayloadAction<{ accessory: AccessoryType}>) => {
+            state.accessory = action.payload.accessory
+            state.filter.min = null
+            state.filter.max = null
             state.page = 1
         },
         setPackName: (state, action: PayloadAction<string>) => {
-            state.packName = action.payload
+            state.filter.packName = action.payload
             state.page = 1
+        },
+        setNewPackName: (state, action: PayloadAction<string>) => {
+            state.filter.packName = action.payload
+            state.page = 1
+        },
+        setDefaultValues: (state) => {
+            state.page = 1
+            state.pageCount = 5
+            state.filter.min = null
+            state.filter.max = null
+            state.filter.packName = ''
+            state.filter.sortPacks = null
+        },
+        setSortPacks: (state, action: PayloadAction<string>) => {
+            state.filter.sortPacks = action.payload
+            state.page = 1
+        },
+        setAccessory: (state, action: PayloadAction<AccessoryType>) => {
+            state.accessory = action.payload
         },
     },
     extraReducers: builder => {
         builder.addCase(packsAsyncThunks.getPacks.fulfilled, (state, action) => {
             state.cardPacks = action.payload.cardPacks
             state.cardPacksTotalCount = action.payload.cardPacksTotalCount
+            state.maxCardsCount = action.payload.maxCardsCount
+            state.minCardsCount = action.payload.minCardsCount
         })
     }
 })
