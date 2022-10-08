@@ -1,4 +1,4 @@
-import React, {FC, memo, useEffect, useState} from 'react';
+import React, {FC, useEffect, useRef, useState} from 'react';
 import {Box, Slider, Stack, Typography} from "@mui/material";
 import {useAppSelector} from "../../../../hooks/hooks";
 import {useActions} from "../../../../hooks/useActions";
@@ -7,16 +7,39 @@ function valuetext(value: number) {
     return `${value}°C`;
 }
 
-export const DoubleRangeCards: FC = memo(() => {
+export const DoubleRangeCards: FC = () => {
     console.log('Double Range')
     const {setMinMaxCount} = useActions()
 
     const min = useAppSelector(state => state.packs.minCardsCount)
     const max = useAppSelector(state => state.packs.maxCardsCount)
+    const filterMin = useAppSelector(state => state.packs.filter.min)
+    const filterMax = useAppSelector(state => state.packs.filter.max)
 
     const [values, setValues] = useState<number[]>([min, max])
 
+    const firstRender = useRef(true)
+
     useEffect(() => {
+        if (!filterMin && !filterMax) {
+            setValues([min, max])
+        }
+    }, [filterMin, filterMax])
+
+    useEffect(() => {
+        if (firstRender.current) {
+            if (filterMin && filterMax) {
+                setValues([filterMin, filterMax])
+            } else if (filterMin) {
+                setValues([filterMin, max])
+            } else if (filterMax) {
+                setValues([min, filterMax])
+            }
+
+            firstRender.current = false
+            return
+        }
+
         setValues([min, max])
     }, [min, max])
 
@@ -63,4 +86,4 @@ export const DoubleRangeCards: FC = memo(() => {
             </Stack>
         </Box>
     )
-})
+}

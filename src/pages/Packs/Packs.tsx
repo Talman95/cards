@@ -8,7 +8,7 @@ import {useActions} from "../../hooks/useActions";
 import {useSearchParams} from "react-router-dom";
 
 export const Packs = () => {
-    const {getPacks} = useActions()
+    const {getPacks, setAccessory} = useActions()
 
     const [searchParams, setSearchParams] = useSearchParams()
 
@@ -17,14 +17,15 @@ export const Packs = () => {
     const pageCount = useAppSelector(state => state.packs.pageCount)
     const accessory = useAppSelector(state => state.packs.accessory)
 
-    // useEffect(() => {
-    //     const param = searchParams.get('accessory') || accessory
-    //     if (param === 'my') {
-    //         setAccessory('my')
-    //     } else {
-    //         setAccessory('all')
-    //     }
-    // }, [])
+    const param = searchParams.get('accessory') || accessory
+
+    useEffect(() => {
+        if (param === 'my') {
+            setAccessory('my')
+        } else {
+            setAccessory('all')
+        }
+    }, [])
 
     useEffect(() => {
         setSearchParams({accessory: accessory})
