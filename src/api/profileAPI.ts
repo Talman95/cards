@@ -6,7 +6,7 @@ type UpdateProfileType = {
 }
 
 export const profileAPI = {
-    updateProfile: (name: string, avatar: string = 'avatar') => {
+    updateProfile: (name: string, avatar: string) => {
         return api.put<UpdateProfileType>('auth/me', {
             name,
             avatar,

@@ -2,12 +2,12 @@ import React, {ChangeEvent, FC, KeyboardEvent, useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import {useAppSelector} from "../../hooks/hooks";
 import {
-    Avatar,
     Button,
     Card,
     CardActions,
     CardContent,
     CardHeader,
+    CircularProgress,
     IconButton,
     TextField,
     Typography
@@ -16,6 +16,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import EditIcon from '@mui/icons-material/Edit';
 import {useActions} from "../../hooks/useActions";
 import {PATH} from "../../components/routes/RoutesPage";
+import {ProfileAvatar} from "./ProfileAvatar/ProfileAvatar";
 
 export const Profile: FC = () => {
     const navigate = useNavigate()
@@ -30,9 +31,7 @@ export const Profile: FC = () => {
     const changeNameHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setName(e.currentTarget.value)
     }
-    const onEditMode = () => {
-        setEditMode(true)
-    }
+    const onEditMode = () => setEditMode(true)
     const offEditMode = () => {
         updateProfile({name: name})
         setEditMode(false)
@@ -42,8 +41,13 @@ export const Profile: FC = () => {
             offEditMode()
         }
     }
-    const navigateToPacks = () => {
-        navigate(PATH.PACKS)
+    const navigateToPacks = () => navigate(PATH.PACKS)
+
+    if (!profile) {
+        return <div
+            style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
+            <CircularProgress/>
+        </div>
     }
 
     return (
@@ -56,11 +60,7 @@ export const Profile: FC = () => {
                 height: '280px',
                 justifyContent: 'space-around',
             }}>
-                <Avatar
-                    sx={{width: 100, height: 100}}
-                    alt={profile?.name}
-                    src={profile?.avatar || ''}
-                />
+                <ProfileAvatar profile={profile}/>
                 {editMode
                     ?
                     <TextField
@@ -72,7 +72,7 @@ export const Profile: FC = () => {
                     />
                     :
                     <CardActions>
-                        <Typography variant="h6" style={{
+                        <Typography variant={'h6'} style={{
                             textOverflow: 'ellipsis',
                             maxWidth: '370px',
                             whiteSpace: 'nowrap',
@@ -85,12 +85,17 @@ export const Profile: FC = () => {
                         </IconButton>
                     </CardActions>
                 }
-                <Typography color="text.secondary">{profile?.email}</Typography>
-                <Button onClick={() => navigateToPacks()}>
+                <Typography color={'text.secondary'}>
+                    Email: {profile?.email}
+                </Typography>
+                <Typography color={'text.secondary'}>
+                    Created public packs: {profile?.publicCardPacksCount}
+                </Typography>
+                <Button onClick={navigateToPacks}>
                     Packs
                 </Button>
                 <Button
-                    variant="outlined"
+                    variant={'outlined'}
                     startIcon={<LogoutIcon/>}
                     onClick={logoutHandler}
                 >

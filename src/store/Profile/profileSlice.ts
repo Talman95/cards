@@ -13,9 +13,10 @@ const slice = createSlice({
         },
     },
     extraReducers: builder => {
-        builder.addCase(profileAsyncThunks.updateProfile.fulfilled, (state, action) => {
-            state.profile = action.payload.profile
-        })
+        builder
+            .addCase(profileAsyncThunks.updateProfile.fulfilled, (state, action) => {
+                state.profile = action.payload.profile
+            })
     }
 })
 

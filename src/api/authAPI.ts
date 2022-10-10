@@ -10,7 +10,7 @@ export type RegisterParamsType = {
     password: string
 }
 export type ProfileType = {
-    avatar: string | null
+    avatar: string
     created: string
     email: string
     isAdmin: boolean
