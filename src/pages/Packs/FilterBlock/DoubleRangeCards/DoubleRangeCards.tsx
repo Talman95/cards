@@ -15,6 +15,8 @@ export const DoubleRangeCards: FC = () => {
     const max = useAppSelector(state => state.packs.maxCardsCount)
     const filterMin = useAppSelector(state => state.packs.filter.min)
     const filterMax = useAppSelector(state => state.packs.filter.max)
+    const status = useAppSelector(state => state.app.status)
+
 
     const [values, setValues] = useState<number[]>([min, max])
 
@@ -78,7 +80,7 @@ export const DoubleRangeCards: FC = () => {
                     getAriaValueText={valuetext}
                     disableSwap
                     onChangeCommitted={onMouseUpHandler}
-                    disabled={min === max}
+                    disabled={status === 'loading'}
                 />
                 <Typography style={{minWidth: '24px'}} variant={'body2'}>
                     {values[1]}

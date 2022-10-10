@@ -8,6 +8,7 @@ export const ToggleButtonBox: FC = () => {
     const {setShowPacks} = useActions()
 
     const accessory = useAppSelector(state => state.packs.accessory)
+    const status = useAppSelector(state => state.app.status)
 
     const onChange = (param: AccessoryType) => {
         setShowPacks({accessory: param})
@@ -22,6 +23,7 @@ export const ToggleButtonBox: FC = () => {
                     style={{width: '80px'}}
                     onClick={() => onChange('my')}
                     size={'small'}
+                    disabled={status === 'loading'}
                 >
                     My
                 </Button>
@@ -30,6 +32,7 @@ export const ToggleButtonBox: FC = () => {
                     style={{width: '80px'}}
                     onClick={() => onChange('all')}
                     size={'small'}
+                    disabled={status === 'loading'}
                 >
                     All
                 </Button>

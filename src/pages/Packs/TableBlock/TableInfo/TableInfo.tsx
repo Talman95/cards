@@ -21,6 +21,7 @@ export const TableInfo: FC = () => {
 
     const user_id = useAppSelector(state => state.profile.profile?._id)
     const cardPacks = useAppSelector(state => state.packs.cardPacks)
+    const status = useAppSelector(state => state.app.status)
 
     const handleAddOpen = (pack: PackType) => {
         setSelectedPack(pack)
@@ -34,6 +35,7 @@ export const TableInfo: FC = () => {
     const handleQuestClose = () => setOpenQuestModal(false)
 
     const navigateToCardsList = (id: string) => {
+        if (status === 'loading') return
         navigate(`/cards/${id}`)
     }
     const updatePackHandler = (pack: UpdatePackType) => {
@@ -101,15 +103,17 @@ export const TableInfo: FC = () => {
                             <Stack direction={'row'} alignItems={'center'} spacing={1}>
                                 <IconButton aria-label={'learn'} size={'small'}
                                             onClick={() => learnPackHandler(p._id)}
-                                            disabled={p.cardsCount === 0}>
+                                            disabled={p.cardsCount === 0 || status === 'loading'}>
                                     <SchoolIcon fontSize={'small'}/>
                                 </IconButton>
                                 <IconButton aria-label={'update'} size={'small'}
-                                            onClick={() => handleAddOpen(p)}>
+                                            onClick={() => handleAddOpen(p)}
+                                            disabled={status === 'loading'}>
                                     <EditIcon fontSize={'small'}/>
                                 </IconButton>
                                 <IconButton aria-label={'delete'} size={'small'}
-                                            onClick={() => handleQuestOpen(p)}>
+                                            onClick={() => handleQuestOpen(p)}
+                                            disabled={status === 'loading'}>
                                     <DeleteIcon fontSize={'small'}/>
                                 </IconButton>
                             </Stack>
@@ -117,7 +121,7 @@ export const TableInfo: FC = () => {
                             <Stack direction={'row'} alignItems={'flex-start'} spacing={1}>
                                 <IconButton aria-label={'delete'} size={'small'}
                                             onClick={() => learnPackHandler(p._id)}
-                                            disabled={p.cardsCount === 0}>
+                                            disabled={p.cardsCount === 0 || status === 'loading'}>
                                     <SchoolIcon fontSize={'small'}/>
                                 </IconButton>
                             </Stack>}

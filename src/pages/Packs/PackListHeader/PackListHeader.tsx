@@ -4,9 +4,12 @@ import {BasicModal} from "../../../components/modals/BasicModal";
 import {AddPackParamsType} from "../../../api/packsAPI";
 import {AddPackModal} from "./AddPackModal/AddPackModal";
 import {useActions} from "../../../hooks/useActions";
+import {useAppSelector} from "../../../hooks/hooks";
 
 export const PackListHeader: FC = () => {
     const {addPack} = useActions()
+
+    const status = useAppSelector(state => state.app.status)
 
     const [open, setOpen] = useState(false)
 
@@ -21,7 +24,11 @@ export const PackListHeader: FC = () => {
     return (
         <Box style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px'}}>
             <Typography variant={'h6'}>Packs list</Typography>
-            <Button variant={'contained'} onClick={handleOpen}>
+            <Button
+                variant={'contained'}
+                onClick={handleOpen}
+                disabled={status==='loading'}
+            >
                 Add new pack
             </Button>
             <BasicModal open={open} setOpen={setOpen}>

@@ -9,6 +9,7 @@ export const SearchBlock: FC = () => {
 
     const cardAnswer = useAppSelector(state => state.cards.cardAnswer)
     const cardQuestion = useAppSelector(state => state.cards.cardQuestion)
+    const status = useAppSelector(state => state.app.status)
 
     const setSearchQuestion = (question: string) => {
         setCardQuestion(question)
@@ -23,14 +24,22 @@ export const SearchBlock: FC = () => {
                 <Typography variant={'body2'}>
                     Search by question:
                 </Typography>
-                <Search title={cardQuestion} setTitle={setSearchQuestion}/>
+                <Search
+                    title={cardQuestion}
+                    setTitle={setSearchQuestion}
+                    blocked={status === 'loading'}
+                />
             </Box>
             <Box>
                 <Typography variant={'body2'}>
                     Search by answer:
                 </Typography>
-                <Search title={cardAnswer} setTitle={setSearchAnswer}/>
+                <Search
+                    title={cardAnswer}
+                    setTitle={setSearchAnswer}
+                    blocked={status === 'loading'}
+                />
             </Box>
         </Stack>
-    );
+    )
 }

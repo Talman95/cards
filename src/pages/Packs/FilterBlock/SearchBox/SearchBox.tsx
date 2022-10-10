@@ -7,6 +7,7 @@ import {Search} from "../../../../components/search/Search";
 export const SearchBox = () => {
     const {setPackName} = useActions()
     const packName = useAppSelector(state => state.packs.filter.packName)
+    const status = useAppSelector(state => state.app.status)
 
     const setSearchName = (searchName: string) => {
         setPackName(searchName)
@@ -15,7 +16,11 @@ export const SearchBox = () => {
     return (
         <Box style={{height: '62px', width: '300px'}}>
             <Typography variant={'body2'}>Search</Typography>
-            <Search title={packName} setTitle={setSearchName}/>
+            <Search
+                title={packName}
+                setTitle={setSearchName}
+                blocked={status === 'loading'}
+            />
         </Box>
     )
 }
