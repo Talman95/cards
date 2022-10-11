@@ -6,8 +6,8 @@ import {Search} from "../../../../components/search/Search";
 
 export const SearchBox = () => {
     const {setPackName} = useActions()
+
     const packName = useAppSelector(state => state.packs.filter.packName)
-    const status = useAppSelector(state => state.app.status)
 
     const setSearchName = (searchName: string) => {
         setPackName(searchName)
@@ -19,7 +19,6 @@ export const SearchBox = () => {
             <Search
                 title={packName}
                 setTitle={setSearchName}
-                blocked={status === 'loading'}
             />
         </Box>
     )

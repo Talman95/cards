@@ -24,6 +24,9 @@ export const TableHeader: FC = () => {
     return (
         <TableHead>
             <TableRow>
+                <TableCell align={'left'} style={{minWidth: '70px', maxWidth: '70px'}}>
+                    Cover
+                </TableCell>
                 <TableCell align={'left'} style={{minWidth: '268px', maxWidth: '268px'}}>
                     Name
                 </TableCell>

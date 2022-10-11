@@ -1,5 +1,5 @@
 import React, {FC, useState} from 'react';
-import {IconButton, Stack, TableBody, TableCell, TableRow} from "@mui/material";
+import {Avatar, IconButton, Stack, TableBody, TableCell, TableRow} from "@mui/material";
 import SchoolIcon from "@mui/icons-material/School";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -58,6 +58,14 @@ export const TableInfo: FC = () => {
                     sx={{'&:last-child td, &:last-child th': {border: 0}}}
                     hover
                 >
+                    <TableCell align={'left'}>
+                        <Avatar
+                            sx={{width: 50, height: 50}}
+                            variant={'square'}
+                            src={p.deckCover || 'Cover'}
+                            alt={'Deck cover'}
+                        />
+                    </TableCell>
                     {(p.cardsCount !== 0 || user_id === p.user_id)
                         ?
                         <TableCell component={'th'} scope={'row'} align={'left'}

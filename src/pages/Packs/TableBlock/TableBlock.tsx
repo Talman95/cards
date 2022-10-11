@@ -22,7 +22,7 @@ export const TableBlock: FC = () => {
 
     return (
         <TableContainer component={Paper}>
-            <Table sx={{width: 1000}} aria-label={'table'}>
+            <Table sx={{width: 1070}} aria-label={'table'}>
                 <TableHeader/>
                 <TableInfo/>
             </Table>

@@ -15,6 +15,7 @@ export type PackType = {
     grade: number
     more_id: string
     name: string
+    deckCover: string
     path: string
     private: boolean
     rating: number
@@ -36,13 +37,13 @@ type GetPacksType = {
 }
 export type AddPackParamsType = {
     name: string
-    deckCover?: string
-    isPrivate?: boolean
+    deckCover?: string | null
+    isPrivate?: boolean | null
 }
 export type UpdatePackType = {
     _id: string
     name?: string
-    deckCover?: string
+    deckCover?: string | null
     isPrivate?: boolean
 }
 

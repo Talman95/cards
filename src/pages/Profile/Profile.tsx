@@ -77,6 +77,7 @@ export const Profile: FC = () => {
                             maxWidth: '370px',
                             whiteSpace: 'nowrap',
                             overflow: 'hidden',
+                            marginLeft: '24px',
                         }}>
                             {profile?.name}
                         </Typography>

@@ -3,6 +3,7 @@ import {Avatar, IconButton, Stack} from '@mui/material';
 import {ProfileType} from "../../../api/authAPI";
 import {PhotoCamera} from "@mui/icons-material";
 import {useActions} from "../../../hooks/useActions";
+import {convertFileToBase64} from "../../../utils/convertFile";
 
 export const ProfileAvatar: FC<{ profile: ProfileType }> = ({profile}) => {
     const {updateProfile} = useActions()
@@ -23,24 +24,14 @@ export const ProfileAvatar: FC<{ profile: ProfileType }> = ({profile}) => {
         }
     }
 
-    const convertFileToBase64 = (file: File, callBack: (value: string) => void) => {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-            const file64 = reader.result as string
-            callBack(file64)
-        }
-        reader.readAsDataURL(file)
-    }
-
     return (
         <Stack
             direction={'row'}
             justifyContent={'center'}
             alignItems={'baseline'}
-            spacing={-4}
         >
             <Avatar
-                sx={{width: 100, height: 100}}
+                sx={{width: 100, height: 100, marginLeft: '40px'}}
                 alt={profile.name}
                 src={ava}
             />

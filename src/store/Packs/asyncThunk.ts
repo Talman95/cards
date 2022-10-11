@@ -33,7 +33,7 @@ const getPacks = createAsyncThunk(
 
 const addPack = createAsyncThunk(
     'packs/addPack',
-    async (params: { name: string, deckCover?: string, isPrivate?: boolean }, thunkAPI) => {
+    async (params: { name: string, deckCover?: string | null, isPrivate?: boolean | null }, thunkAPI) => {
         thunkAPI.dispatch(setAppStatus('loading'))
         try {
             await packsAPI.addPack({...params})
