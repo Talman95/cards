@@ -42,7 +42,7 @@ export const TableBlock: FC<{ length: number }> = ({length}) => {
             }
             {(length === 0 && !isLoading) &&
                 <Box style={{
-                    display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh'
+                    display: 'flex', justifyContent: 'center', alignItems: 'center', height: '40vh'
                 }}>
                     <Typography style={{opacity: '0.6'}}>
                         This pack is empty. Click add new card to fill this pack

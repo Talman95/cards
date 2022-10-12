@@ -22,7 +22,7 @@ export const CardsList: FC = () => {
 
     useEffect(() => {
         if (!id) return
-        if (cardsPack_id) return
+        if (cardsPack_id) return // ???
         setCardsPackId(id)
 
         return () => {
@@ -36,9 +36,6 @@ export const CardsList: FC = () => {
         }
     }, [page, pageCount, sortCards, cardAnswer, cardQuestion])
 
-    const cardsPack = useAppSelector(state => state.packs.cardPacks.find(p => p._id === id))
-    const title = cardsPack?.name || ''
-
     if (!id) {
         return <div
             style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
@@ -48,7 +45,7 @@ export const CardsList: FC = () => {
 
     return (
         <Box>
-            <CardsListHeader title={title} cardsPackId={id} length={cards.length}/>
+            <CardsListHeader cardsPackId={id} length={cards.length}/>
             <SearchBlock/>
             <TableBlock length={cards.length}/>
         </Box>

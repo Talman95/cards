@@ -8,13 +8,15 @@ const slice = createSlice({
         cards: [] as CardType[],
         cardsTotalCount: 0,
         page: 1,
-        pageCount: 10,
+        pageCount: 5,
         packUserId: '',
         sortCards: '0updated',
         cardsPack_id: null as null | string,
         isLoading: false,
         cardAnswer: '',
         cardQuestion: '',
+        packDeckCover: null as null | string,
+        packName: null as null | string,
     },
     reducers: {
         setCardsPackId: (state, action: PayloadAction<string>) => {
@@ -26,10 +28,12 @@ const slice = createSlice({
             state.cardQuestion = ''
             state.cardAnswer = ''
             state.page = 1
-            state.pageCount = 10
+            state.pageCount = 5
             state.sortCards = '0updated'
             state.isLoading = false
             state.cardsPack_id = null
+            state.packDeckCover = null
+            state.packName = null
         },
         setCurrentPageCards: (state, action: PayloadAction<number>) => {
             state.page = action.payload
@@ -59,7 +63,7 @@ const slice = createSlice({
             state.page = 1
             state.sortCards = '0updated'
             state.isLoading = false
-            state.pageCount = 10
+            state.pageCount = 5
         }
     },
     extraReducers: builder => {
@@ -67,6 +71,8 @@ const slice = createSlice({
             state.cards = action.payload.cards
             state.cardsTotalCount = action.payload.cardsTotalCount
             state.packUserId = action.payload.packUserId
+            state.packDeckCover = action.payload.packDeckCover
+            state.packName = action.payload.packName
             state.isLoading = false
         })
     }

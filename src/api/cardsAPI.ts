@@ -12,20 +12,31 @@ export type GetCardsParamsType = {
 }
 export type CardType = {
     answer: string
+    answerImg: string
     question: string
+    questionImg: string
     cardsPack_id: string
+    comments: string
     grade: number
+    more_id: string
     shots: number
     user_id: string
     created: string
     updated: string
     _id: string
+    rating: number
+    type: string
 }
 export type GetCardsResponseType = {
     cards: CardType[]
     cardsTotalCount: number
     maxGrade: number
     minGrade: number
+    packCreated: string
+    packDeckCover: string
+    packName: string
+    packPrivate: boolean
+    packUpdated: string
     page: number
     pageCount: number
     packUserId: string

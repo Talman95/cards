@@ -1,5 +1,5 @@
 import React, {FC, useState} from 'react';
-import {IconButton, Rating, Stack, TableBody, TableCell, TableRow} from "@mui/material";
+import {IconButton, Rating, Stack, TableBody, TableCell, TableRow, Typography} from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {useAppSelector} from "../../../../hooks/hooks";
@@ -50,12 +50,32 @@ export const TableInfo: FC = () => {
                     <TableCell component={'th'} scope={'row'} align={'left'}
                                style={{width: '261px', overflowWrap: 'anywhere'}}
                     >
-                        {c.question}
+                        {c.questionImg &&
+                            <img
+                            src={c.questionImg}
+                            alt={'question cover'}
+                            style={{maxWidth: 150, maxHeight: 150}}
+                        />}
+                        {(c.question !== '' && c.question !== 'no question') &&
+                            <Typography>
+                                {c.question}
+                            </Typography>
+                        }
                     </TableCell>
                     <TableCell component={'th'} scope={'row'} align={'left'}
                                style={{width: '261px', overflowWrap: 'anywhere'}}
                     >
-                        {c.answer}
+                        {c.answerImg &&
+                            <img
+                                src={c.answerImg}
+                                alt={'answer cover'}
+                                style={{maxWidth: 150, maxHeight: 150}}
+                            />}
+                        {(c.answer !== '' && c.answer !== 'no answer') &&
+                            <Typography>
+                                {c.answer}
+                            </Typography>
+                        }
                     </TableCell>
                     <TableCell align={'left'}>
                         {new Date(c.updated).toLocaleString()}
