@@ -106,9 +106,7 @@ export const TableInfo: FC = () => {
             ))}
             <BasicModal open={openUpdate} setOpen={setOpenUpdate}>
                 <UpdateCardModal
-                    cardId={selectedCard ? selectedCard._id : ''}
-                    answer={selectedCard ? selectedCard.answer : ''}
-                    question={selectedCard ? selectedCard.question : ''}
+                    card={selectedCard ? selectedCard : null}
                     navigateBack={handleUpdateClose}
                     updateCard={updateCardHandler}
                 />
@@ -123,5 +121,5 @@ export const TableInfo: FC = () => {
                 />
             </BasicModal>
         </TableBody>
-    );
+    )
 }

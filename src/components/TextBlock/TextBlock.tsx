@@ -1,4 +1,4 @@
-import React, {FC, useEffect} from 'react';
+import React, {FC} from 'react';
 import {TextField} from "@mui/material";
 
 type PropsType = {
@@ -9,13 +9,6 @@ type PropsType = {
 }
 
 export const TextBlock: FC<PropsType> = ({question, setQuestion, answer, setAnswer}) => {
-
-    useEffect(() => {
-        return () => {
-            setQuestion('')
-            setAnswer('')
-        }
-    }, [])
 
     return (
         <>

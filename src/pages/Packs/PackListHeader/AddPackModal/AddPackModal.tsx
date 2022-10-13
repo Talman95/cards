@@ -3,6 +3,7 @@ import {Box, Button, Checkbox, FormControlLabel, Grid, IconButton, Stack, TextFi
 import {AddPackParamsType} from "../../../../api/packsAPI";
 import CloseIcon from "@mui/icons-material/Close";
 import {convertFileToBase64} from "../../../../utils/convertFile";
+import {BottomNavigationButtons} from "../../../../components/BottomNavigationButtons/BottomNavigationButtons";
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -112,22 +113,7 @@ export const AddPackModal: FC<AddPackModalType> = (
                     onChange={(e) => setIsPrivate(e.currentTarget.checked)}
                 />}
             />
-            <Stack direction={'row'} spacing={2} style={{display: 'flex', justifyContent: 'space-evenly'}}>
-                <Button
-                    variant={'outlined'}
-                    onClick={navigateBack}
-                    style={{width: 150}}
-                >
-                    Cancel
-                </Button>
-                <Button
-                    variant={'contained'}
-                    onClick={clickSaveHandler}
-                    style={{width: 150}}
-                >
-                    Save
-                </Button>
-            </Stack>
+            <BottomNavigationButtons navigateBack={navigateBack} clickSave={clickSaveHandler}/>
         </Box>
-    );
+    )
 }

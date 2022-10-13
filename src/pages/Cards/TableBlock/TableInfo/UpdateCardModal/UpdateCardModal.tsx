@@ -1,19 +1,21 @@
 import React, {FC, useState} from 'react';
 import {
     Box,
-    Button,
     Divider,
     FormControl,
     Grid,
     IconButton,
     MenuItem,
     OutlinedInput,
-    Select, SelectChangeEvent, Stack,
-    TextField,
+    Select,
+    SelectChangeEvent,
     Typography
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import {UpdateCardType} from "../../../../../api/cardsAPI";
+import {CardType, UpdateCardType} from "../../../../../api/cardsAPI";
+import {TextBlock} from "../../../../../components/TextBlock/TextBlock";
+import {PictureBlock} from "../../../../../components/PictureBlock/PictureBlock";
+import {BottomNavigationButtons} from "../../../../../components/BottomNavigationButtons/BottomNavigationButtons";
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -21,7 +23,7 @@ const style = {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: 500,
-    height: 400,
+    minHeight: 300,
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
@@ -31,37 +33,48 @@ const style = {
     justifyContent: 'space-between',
 }
 
-type QuestionFormat = 'Text'
+type QuestionFormat = 'Text' | 'Picture'
 type UpdateCardModalType = {
-    cardId: string
-    question: string
-    answer: string
+    card: CardType | null
     navigateBack: () => void
     updateCard: (card: UpdateCardType) => void
 }
 
 export const UpdateCardModal: FC<UpdateCardModalType> = (
     {
-        cardId,
-        question,
-        answer,
+        card,
         navigateBack,
         updateCard,
     }) => {
     const [format, setFormat] = useState<QuestionFormat>('Text')
-    const [newQuestion, setNewQuestion] = useState(question)
-    const [newAnswer, setNewAnswer] = useState(answer)
+    const [newQuestion, setNewQuestion] = useState(card?.question || '')
+    const [newAnswer, setNewAnswer] = useState(card?.answer || '')
+    const [newQuestionImg, setNewQuestionImg] = useState<string | null>(card?.questionImg || null)
+    const [newAnswerImg, setNewAnswerImg] = useState<string | null>(card?.answerImg || null)
 
     const handleChange = (event: SelectChangeEvent) => {
         setFormat(event.target.value as QuestionFormat)
     }
     const clickSaveHandler = () => {
-        const card = {
-            _id: cardId,
-            question: newQuestion,
-            answer: newAnswer,
+        if (card) {
+            let newCard: UpdateCardType = {
+                _id: card._id,
+            }
+            if (format === 'Text') {
+                newCard = {
+                    ...newCard,
+                    question: newQuestion,
+                    answer: newAnswer,
+                }
+            } else {
+                newCard = {
+                    ...newCard,
+                    questionImg: newQuestionImg,
+                    answerImg: newAnswerImg,
+                }
+            }
+            updateCard(newCard)
         }
-        updateCard(card)
     }
 
 
@@ -85,46 +98,32 @@ export const UpdateCardModal: FC<UpdateCardModalType> = (
             </Typography>
             <FormControl fullWidth>
                 <Select
-                    labelId={'select-format'}
-                    id={'select-format'}
                     input={<OutlinedInput/>}
                     value={format}
-                    defaultValue={'Text'}
                     onChange={handleChange}
+                    size={'small'}
                 >
                     <MenuItem value={'Text'}>Text</MenuItem>
+                    <MenuItem value={'Picture'}>Picture</MenuItem>
                 </Select>
             </FormControl>
-            <TextField
-                id={newQuestion}
-                label={'Question'}
-                variant={'outlined'}
-                value={newQuestion}
-                onChange={(e) => setNewQuestion(e.currentTarget.value)}
-            />
-            <TextField
-                id={newAnswer}
-                label={'Answer'}
-                variant={'outlined'}
-                value={newAnswer}
-                onChange={(e) => setNewAnswer(e.currentTarget.value)}
-            />
-            <Stack direction={'row'} spacing={2} style={{display: 'flex', justifyContent: 'space-evenly'}}>
-                <Button
-                    variant={'outlined'}
-                    onClick={navigateBack}
-                    style={{width: 150}}
-                >
-                    Cancel
-                </Button>
-                <Button
-                    variant={'contained'}
-                    onClick={clickSaveHandler}
-                    style={{width: 150}}
-                >
-                    Save
-                </Button>
-            </Stack>
+            {format === 'Text'
+                ?
+                <TextBlock
+                    question={newQuestion}
+                    setQuestion={setNewQuestion}
+                    answer={newAnswer}
+                    setAnswer={setNewAnswer}
+                />
+                :
+                <PictureBlock
+                    question={newQuestionImg}
+                    setQuestion={setNewQuestionImg}
+                    answer={newAnswerImg}
+                    setAnswer={setNewAnswerImg}
+                />
+            }
+            <BottomNavigationButtons navigateBack={navigateBack} clickSave={clickSaveHandler}/>
         </Box>
-    );
+    )
 }

@@ -1,7 +1,7 @@
-import React, {ChangeEvent, FC, useEffect} from 'react';
-import {convertFileToBase64} from "../../../../../utils/convertFile";
+import React, {ChangeEvent, FC} from 'react';
+import {convertFileToBase64} from "../../utils/convertFile";
 import {Button, IconButton, Stack} from "@mui/material";
-import noImage from '../../../../../assets/no-image.jpg';
+import noImage from '../../assets/no-image.jpg';
 import CloseIcon from "@mui/icons-material/Close";
 
 type PropsType = {
@@ -12,13 +12,6 @@ type PropsType = {
 }
 
 export const PictureBlock: FC<PropsType> = ({question, setQuestion, answer, setAnswer}) => {
-
-    useEffect(() => {
-        return () => {
-            setQuestion(null)
-            setAnswer(null)
-        }
-    }, [])
 
     const uploadHandler = (e: ChangeEvent<HTMLInputElement>, item: string) => {
         if (e.target.files && e.target.files.length) {

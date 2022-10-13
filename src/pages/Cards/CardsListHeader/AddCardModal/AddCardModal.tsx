@@ -1,7 +1,6 @@
 import React, {FC, useState} from 'react';
 import {
     Box,
-    Button,
     Divider,
     FormControl,
     Grid,
@@ -10,13 +9,13 @@ import {
     OutlinedInput,
     Select,
     SelectChangeEvent,
-    Stack,
     Typography
 } from "@mui/material";
 import {AddCardType} from "../../../../api/cardsAPI";
 import CloseIcon from '@mui/icons-material/Close';
-import {TextBlock} from "./TextBlock/TextBlock";
-import {PictureBlock} from "./PictureBlock/PictureBlock";
+import {TextBlock} from "../../../../components/TextBlock/TextBlock";
+import {PictureBlock} from "../../../../components/PictureBlock/PictureBlock";
+import {BottomNavigationButtons} from "../../../../components/BottomNavigationButtons/BottomNavigationButtons";
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -118,26 +117,7 @@ export const AddCardModal: FC<AddCardModalType> = ({cardsPack_id, navigateBack, 
                     setAnswer={setAnswerImg}
                 />
             }
-
-            <Stack direction={'row'} spacing={2}
-                   style={{display: 'flex', justifyContent: 'space-evenly', marginTop: '8px'}}>
-                <Button
-                    variant={'outlined'}
-                    onClick={navigateBack}
-                    style={{width: 150}}
-                    size={'small'}
-                >
-                    Cancel
-                </Button>
-                <Button
-                    variant={'contained'}
-                    onClick={clickSaveHandler}
-                    style={{width: 150}}
-                    size={'small'}
-                >
-                    Save
-                </Button>
-            </Stack>
+            <BottomNavigationButtons navigateBack={navigateBack} clickSave={clickSaveHandler}/>
         </Box>
     )
 }

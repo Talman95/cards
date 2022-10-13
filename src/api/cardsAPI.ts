@@ -57,6 +57,8 @@ export type UpdateCardType = {
     question?: string
     answer?: string
     comments?: string
+    answerImg?: string | null
+    questionImg?: string | null
 }
 
 export const cardsAPI = {
