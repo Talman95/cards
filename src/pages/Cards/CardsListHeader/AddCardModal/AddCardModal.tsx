@@ -1,18 +1,22 @@
 import React, {FC, useState} from 'react';
 import {
     Box,
-    Button, Divider,
-    FormControl, Grid, IconButton,
+    Button,
+    Divider,
+    FormControl,
+    Grid,
+    IconButton,
     MenuItem,
     OutlinedInput,
     Select,
     SelectChangeEvent,
     Stack,
-    TextField,
     Typography
 } from "@mui/material";
 import {AddCardType} from "../../../../api/cardsAPI";
 import CloseIcon from '@mui/icons-material/Close';
+import {TextBlock} from "./TextBlock/TextBlock";
+import {PictureBlock} from "./PictureBlock/PictureBlock";
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -20,7 +24,7 @@ const style = {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: 500,
-    height: 400,
+    minHeight: 300,
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
@@ -30,7 +34,7 @@ const style = {
     justifyContent: 'space-between',
 }
 
-type QuestionFormat = 'Text'
+type QuestionFormat = 'Text' | 'Picture'
 type AddCardModalType = {
     cardsPack_id: string | null
     navigateBack: () => void
@@ -41,16 +45,29 @@ export const AddCardModal: FC<AddCardModalType> = ({cardsPack_id, navigateBack, 
     const [format, setFormat] = useState<QuestionFormat>('Text')
     const [question, setQuestion] = useState('')
     const [answer, setAnswer] = useState('')
+    const [questionImg, setQuestionImg] = useState<string | null>('')
+    const [answerImg, setAnswerImg] = useState<string | null>('')
 
     const handleChange = (event: SelectChangeEvent) => {
         setFormat(event.target.value as QuestionFormat)
     }
     const clickSaveHandler = () => {
         if (cardsPack_id) {
-            const card = {
+            let card: AddCardType = {
                 cardsPack_id,
-                question,
-                answer,
+            }
+            if (format === 'Text') {
+                card = {
+                    ...card,
+                    question,
+                    answer,
+                }
+            } else {
+                card = {
+                    ...card,
+                    questionImg,
+                    answerImg,
+                }
             }
             addCard(card)
         }
@@ -76,36 +93,39 @@ export const AddCardModal: FC<AddCardModalType> = ({cardsPack_id, navigateBack, 
             </Typography>
             <FormControl fullWidth>
                 <Select
-                    labelId={'select-format'}
-                    id={'select-format'}
                     input={<OutlinedInput/>}
                     value={format}
-                    defaultValue={'Text'}
-                    label={'Age'}
                     onChange={handleChange}
+                    size={'small'}
                 >
                     <MenuItem value={'Text'}>Text</MenuItem>
+                    <MenuItem value={'Picture'}>Picture</MenuItem>
                 </Select>
             </FormControl>
-            <TextField
-                id={question}
-                label={'Question'}
-                variant={'outlined'}
-                value={question}
-                onChange={(e) => setQuestion(e.currentTarget.value)}
-            />
-            <TextField
-                id={answer}
-                label={'Answer'}
-                variant={'outlined'}
-                value={answer}
-                onChange={(e) => setAnswer(e.currentTarget.value)}
-            />
-            <Stack direction={'row'} spacing={2} style={{display: 'flex', justifyContent: 'space-evenly'}}>
+            {format === 'Text'
+                ?
+                <TextBlock
+                    question={question}
+                    setQuestion={setQuestion}
+                    answer={answer}
+                    setAnswer={setAnswer}
+                />
+                :
+                <PictureBlock
+                    question={questionImg}
+                    setQuestion={setQuestionImg}
+                    answer={answerImg}
+                    setAnswer={setAnswerImg}
+                />
+            }
+
+            <Stack direction={'row'} spacing={2}
+                   style={{display: 'flex', justifyContent: 'space-evenly', marginTop: '8px'}}>
                 <Button
                     variant={'outlined'}
                     onClick={navigateBack}
                     style={{width: 150}}
+                    size={'small'}
                 >
                     Cancel
                 </Button>
@@ -113,10 +133,11 @@ export const AddCardModal: FC<AddCardModalType> = ({cardsPack_id, navigateBack, 
                     variant={'contained'}
                     onClick={clickSaveHandler}
                     style={{width: 150}}
+                    size={'small'}
                 >
                     Save
                 </Button>
             </Stack>
         </Box>
-    );
+    )
 }

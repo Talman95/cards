@@ -43,12 +43,12 @@ export type GetCardsResponseType = {
 }
 export type AddCardType = {
     cardsPack_id: string
-    question: string
-    answer: string
+    question?: string
+    answer?: string
     grade?: number
     shots?: number
-    answerImg?: string //"url or base 64"
-    questionImg?: string //"url or base 64"
+    answerImg?: string | null
+    questionImg?: string | null
     questionVideo?: string //"url or base 64"
     answerVideo?: string //"url or base 64"
 }
