@@ -5,10 +5,9 @@ import {useDebounce} from "../../hooks/useDebounce";
 type SearchType = {
     title: string
     setTitle: (title: string) => void
-    blocked?: boolean
 }
 
-export const Search: FC<SearchType> = ({title, setTitle, blocked}) => {
+export const Search: FC<SearchType> = ({title, setTitle}) => {
     const [searchTerm, setSearchTerm] = useState(title)
 
     const changeSearchTermHandler = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -38,7 +37,6 @@ export const Search: FC<SearchType> = ({title, setTitle, blocked}) => {
             value={searchTerm}
             onChange={changeSearchTermHandler}
             fullWidth
-            disabled={blocked}
         />
     )
 }

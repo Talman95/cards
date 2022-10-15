@@ -138,7 +138,10 @@ export const TableInfo: FC = () => {
             ))}
             <BasicModal open={openAddModal} setOpen={setOpenAddModal}>
                 <UpdatePackModal
-                    pack={selectedPack}
+                    pack_id={selectedPack?._id || ''}
+                    packName={selectedPack?.name || ''}
+                    deckCover={selectedPack?.deckCover || null}
+                    packIsPrivate={!!selectedPack?.private}
                     navigateBack={handleAddClose}
                     saveData={updatePackHandler}
                 />

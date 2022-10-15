@@ -1,5 +1,5 @@
 import React, {ChangeEvent, FC, useState} from 'react';
-import {PackType, UpdatePackType} from "../../../../../api/packsAPI";
+import {UpdatePackType} from "../../../../../api/packsAPI";
 import {Box, Button, Checkbox, FormControlLabel, Grid, IconButton, Stack, TextField, Typography} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import {convertFileToBase64} from "../../../../../utils/convertFile";
@@ -19,25 +19,24 @@ const style = {
 }
 
 type UpdatePackModalType = {
-    pack: PackType | null
+    pack_id: string
+    packName: string
+    deckCover: string | null
+    packIsPrivate: boolean
     navigateBack: () => void
     saveData: (data: UpdatePackType) => void
 }
 
 export const UpdatePackModal: FC<UpdatePackModalType> = (
     {
-        pack,
+        packName, deckCover, packIsPrivate, pack_id,
         navigateBack,
         saveData,
     }
 ) => {
-    const [name, setName] = useState(pack?.name)
-    const [cover, setCover] = useState<string | null>(pack?.deckCover || null)
-    const [isPrivate, setIsPrivate] = useState(pack?.private)
-
-    if (!pack) {
-        return <div>!</div>
-    }
+    const [name, setName] = useState(packName)
+    const [cover, setCover] = useState(deckCover)
+    const [isPrivate, setIsPrivate] = useState(packIsPrivate)
 
     const uploadHandler = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length) {
@@ -56,7 +55,7 @@ export const UpdatePackModal: FC<UpdatePackModalType> = (
     }
     const clickSaveHandler = () => {
         const updatedPack = {
-            _id: pack._id,
+            _id: pack_id,
             name,
             deckCover: cover,
             isPrivate,
