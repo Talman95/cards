@@ -8,7 +8,7 @@ import {appActions} from "../CommonActions/App";
 const setProfile = profileActions.setProfile
 const {setAppStatus, setAppMessage, setInitialization} = appActions
 
-const login = createAsyncThunk(
+export const login = createAsyncThunk(
     'auth/login',
     async (params: LoginParamsType, thunkAPI) => {
         thunkAPI.dispatch(setAppStatus('loading'))
