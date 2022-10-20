@@ -15,7 +15,7 @@ import {
 import LogoutIcon from '@mui/icons-material/Logout';
 import EditIcon from '@mui/icons-material/Edit';
 import {useActions} from "../../hooks/useActions";
-import {PATH} from "../../components/routes/RoutesPage";
+import {PATH} from "../../routes/RoutesPage";
 import {ProfileAvatar} from "./ProfileAvatar/ProfileAvatar";
 
 export const Profile: FC = () => {

@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {useAppSelector} from "../hooks/hooks";
-import {Header} from "../components/header/Header";
-import {RoutesPage} from "../components/routes/RoutesPage";
+import {Header} from "../components/Header/Header";
+import {RoutesPage} from "../routes/RoutesPage";
 import {CircularProgress} from "@mui/material";
 import {useActions} from "../hooks/useActions";
 import {MessageSnackbar} from "../components/MessageSnackbar/MessageSnackbar";

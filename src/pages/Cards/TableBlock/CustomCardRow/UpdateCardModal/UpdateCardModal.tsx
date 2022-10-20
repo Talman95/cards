@@ -35,7 +35,7 @@ const style = {
 
 type QuestionFormat = 'Text' | 'Picture'
 type UpdateCardModalType = {
-    card: CardType | null
+    card: CardType
     navigateBack: () => void
     updateCard: (card: UpdateCardType) => void
 }
@@ -46,6 +46,7 @@ export const UpdateCardModal: FC<UpdateCardModalType> = (
         navigateBack,
         updateCard,
     }) => {
+
     const [format, setFormat] = useState<QuestionFormat>('Text')
     const [newQuestion, setNewQuestion] = useState(card?.question || '')
     const [newAnswer, setNewAnswer] = useState(card?.answer || '')
@@ -56,25 +57,23 @@ export const UpdateCardModal: FC<UpdateCardModalType> = (
         setFormat(event.target.value as QuestionFormat)
     }
     const clickSaveHandler = () => {
-        if (card) {
-            let newCard: UpdateCardType = {
-                _id: card._id,
-            }
-            if (format === 'Text') {
-                newCard = {
-                    ...newCard,
-                    question: newQuestion,
-                    answer: newAnswer,
-                }
-            } else {
-                newCard = {
-                    ...newCard,
-                    questionImg: newQuestionImg,
-                    answerImg: newAnswerImg,
-                }
-            }
-            updateCard(newCard)
+        let newCard: UpdateCardType = {
+            _id: card._id,
         }
+        if (format === 'Text') {
+            newCard = {
+                ...newCard,
+                question: newQuestion,
+                answer: newAnswer,
+            }
+        } else {
+            newCard = {
+                ...newCard,
+                questionImg: newQuestionImg,
+                answerImg: newAnswerImg,
+            }
+        }
+        updateCard(newCard)
     }
 
 

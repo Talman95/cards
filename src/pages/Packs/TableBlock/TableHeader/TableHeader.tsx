@@ -66,5 +66,5 @@ export const TableHeader: FC = () => {
                 </TableCell>
             </TableRow>
         </TableHead>
-    );
+    )
 }

@@ -1,11 +1,11 @@
 import React, {FC} from 'react';
 import {Navigate, Route, Routes} from "react-router-dom";
-import {Forgot, Login, Register, SetPassword} from "../../pages/Auth";
-import {Profile} from "../../pages/Profile/Profile";
+import {Forgot, Login, Register, SetPassword} from "../pages/Auth";
+import {Profile} from "../pages/Profile/Profile";
 import {Container} from "@mui/material";
-import {Packs} from "../../pages/Packs/Packs";
-import {CardsList} from "../../pages/Cards/CardsList";
-import {LearnList} from "../../pages/Learn/LearnList";
+import {Packs} from "../pages/Packs/Packs";
+import {CardsList} from "../pages/Cards/CardsList";
+import {LearnList} from "../pages/Learn/LearnList";
 import {PrivateRoutes} from "./PrivateRoutes";
 
 export const PATH = {

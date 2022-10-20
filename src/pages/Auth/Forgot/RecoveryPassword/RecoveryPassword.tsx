@@ -3,7 +3,7 @@ import {Button, FormControl, FormGroup, Grid, Link, TextField, Typography} from 
 import {FormikHelpers, useFormik} from "formik";
 import {allAuthActions} from "../../../../store";
 import {useAppDispatch} from "../../../../hooks/hooks";
-import {PATH} from "../../../../components/routes/RoutesPage";
+import {PATH} from "../../../../routes/RoutesPage";
 import {useNavigate} from "react-router-dom";
 
 type ForgotErrorsType = {

@@ -1,6 +1,6 @@
 import React, {ChangeEvent, FC, MouseEvent} from 'react';
-import {Box, Paper, Table, TableContainer, TablePagination, Typography} from "@mui/material";
-import {TableInfo} from "./TableInfo/TableInfo";
+import {Box, Paper, Table, TableBody, TableContainer, TablePagination, Typography} from "@mui/material";
+import {CustomCardRow} from "./CustomCardRow/CustomCardRow";
 import {useAppSelector} from "../../../hooks/hooks";
 import {TableHeader} from "./TableHeader/TableHeader";
 import {useActions} from "../../../hooks/useActions";
@@ -12,6 +12,7 @@ export const TableBlock: FC<{ length: number }> = ({length}) => {
     const pageCount = useAppSelector(state => state.cards.pageCount)
     const cardsTotalCount = useAppSelector(state => state.cards.cardsTotalCount)
     const isLoading = useAppSelector(state => state.cards.isLoading)
+    const cards = useAppSelector(state => state.cards.cards)
 
     const handleChangePage = (event: MouseEvent<HTMLButtonElement> | null, page: number) => {
         const currentPage = page + 1
@@ -26,7 +27,11 @@ export const TableBlock: FC<{ length: number }> = ({length}) => {
             <Table sx={{width: 1000}} aria-label={'table'}>
                 <TableHeader/>
                 {length !== 0 &&
-                    <TableInfo/>
+                    <TableBody>
+                        {cards.map((c) => (
+                            <CustomCardRow key={c._id} c={c}/>
+                        ))}
+                    </TableBody>
                 }
             </Table>
             {length !== 0 &&

@@ -4,7 +4,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import {useAppSelector} from "../../hooks/hooks";
 import {useNavigate} from "react-router-dom";
 import {useActions} from "../../hooks/useActions";
-import {PATH} from "../routes/RoutesPage";
+import {PATH} from "../../routes/RoutesPage";
 
 export const Header = () => {
     const navigate = useNavigate()

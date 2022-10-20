@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import {Box, Stack, Typography} from "@mui/material";
-import {Search} from "../../../components/search/Search";
+import {Search} from "../../../components/Search/Search";
 import {useAppSelector} from "../../../hooks/hooks";
 import {useActions} from "../../../hooks/useActions";
 

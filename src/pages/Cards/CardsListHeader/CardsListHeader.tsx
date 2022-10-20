@@ -1,7 +1,7 @@
 import React, {FC, useState} from 'react';
 import {Box, Button, IconButton, styled, Tooltip, tooltipClasses, TooltipProps, Typography} from "@mui/material";
 import {useAppSelector} from "../../../hooks/hooks";
-import {BasicModal} from "../../../components/modals/BasicModal";
+import {BasicModal} from "../../../components/Modals/BasicModal";
 import {AddCardModal} from "./AddCardModal/AddCardModal";
 import {AddCardType} from "../../../api/cardsAPI";
 import {useActions} from "../../../hooks/useActions";
@@ -9,10 +9,10 @@ import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import {useNavigate} from "react-router-dom";
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import {ActionMenu} from "./ActionMenu/ActionMenu";
-import {UpdatePackModal} from "../../Packs/TableBlock/TableInfo/UpdatePackModal/UpdatePackModal";
+import {UpdatePackModal} from "../../Packs/TableBlock/CustomPackRow/UpdatePackModal/UpdatePackModal";
 import {UpdatePackType} from "../../../api/packsAPI";
-import {QuestionModal} from "../../../components/modals/QuestionModal";
-import {PATH} from "../../../components/routes/RoutesPage";
+import {QuestionModal} from "../../../components/Modals/QuestionModal";
+import {PATH} from "../../../routes/RoutesPage";
 
 type PropsType = {
     cardsPackId: string

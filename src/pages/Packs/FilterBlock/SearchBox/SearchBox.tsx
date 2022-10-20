@@ -2,7 +2,7 @@ import React from 'react';
 import {useActions} from "../../../../hooks/useActions";
 import {useAppSelector} from "../../../../hooks/hooks";
 import {Box, Typography} from "@mui/material";
-import {Search} from "../../../../components/search/Search";
+import {Search} from "../../../../components/Search/Search";
 
 export const SearchBox = () => {
     const {setPackName} = useActions()

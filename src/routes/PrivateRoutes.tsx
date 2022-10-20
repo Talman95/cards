@@ -1,5 +1,5 @@
 import {Navigate, Outlet} from 'react-router-dom'
-import {useAppSelector} from "../../hooks/hooks";
+import {useAppSelector} from "../hooks/hooks";
 import {PATH} from './RoutesPage'
 
 

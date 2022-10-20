@@ -1,7 +1,7 @@
 import React from 'react';
 import {useFormik} from "formik";
 import {Navigate, useNavigate} from "react-router-dom";
-import {PATH} from "../../../components/routes/RoutesPage";
+import {PATH} from "../../../routes/RoutesPage";
 import {useAppSelector} from "../../../hooks/hooks";
 import {
     Button,

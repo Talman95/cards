@@ -2,7 +2,7 @@ import React, {FC, useEffect, useState} from 'react';
 import {Box, Button, Card, CardActions, CardContent, CircularProgress, IconButton, Typography} from "@mui/material";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import {useNavigate, useParams} from "react-router-dom";
-import {PATH} from "../../components/routes/RoutesPage";
+import {PATH} from "../../routes/RoutesPage";
 import {useAppSelector} from "../../hooks/hooks";
 import {getCard} from "../../utils/smartRandom";
 import {CardType} from "../../api/cardsAPI";

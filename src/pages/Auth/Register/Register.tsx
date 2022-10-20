@@ -1,6 +1,6 @@
 import React, {FC, useEffect} from 'react';
 import {Navigate, useNavigate} from "react-router-dom";
-import {PATH} from "../../../components/routes/RoutesPage";
+import {PATH} from "../../../routes/RoutesPage";
 import {useFormik} from "formik";
 import {useAppSelector} from "../../../hooks/hooks";
 import {Button, FormControl, FormGroup, Grid, Link, TextField, Typography} from "@mui/material";
