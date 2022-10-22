@@ -5,10 +5,9 @@ import {
     allCardsActions,
     allLearnActions,
     allPacksActions,
-    allProfileActions,
+    allProfileActions, allUsersActions,
     appActions
 } from "../store";
-
 
 const allActions = {
     ...appActions,
@@ -17,6 +16,7 @@ const allActions = {
     ...allCardsActions,
     ...allLearnActions,
     ...allProfileActions,
+    ...allUsersActions,
 }
 
 export const useActions = () => {

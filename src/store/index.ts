@@ -9,6 +9,7 @@ import {profileActions} from "./Profile/profileSlice";
 import {profileAsyncThunks} from "./Profile/asyncThunk";
 import {packsActions} from "./Packs/packsSlice";
 import {packsAsyncThunks} from "./Packs/asyncThunk";
+import {usersAsyncThunk} from "./Users/asyncThunk";
 
 
 export const appActions = {
@@ -33,4 +34,7 @@ export const allLearnActions = {
 export const allProfileActions = {
     ...profileActions,
     ...profileAsyncThunks,
+}
+export const allUsersActions = {
+    ...usersAsyncThunk,
 }

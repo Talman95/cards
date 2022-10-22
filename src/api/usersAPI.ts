@@ -1,10 +1,10 @@
 import {api} from "./api";
 
-type GetUsersParams = {
-    userName?: string
-    min?: number
-    max?: number
-    sortUsers?: string
+export type GetUsersParams = {
+    userName?: string | null
+    min?: number | null
+    max?: number | null
+    sortUsers?: string | null
     page?: number
     pageCount?: number
 }

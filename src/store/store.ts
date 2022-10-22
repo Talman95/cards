@@ -6,6 +6,7 @@ import {appSlice} from "./App/appSlice";
 import {packsSlice} from "./Packs/packsSlice";
 import {cardsSlice} from "./Cards/cardsSlice";
 import {learnSlice} from "./Learn/learnSlice";
+import {usersSlice} from "./Users/usersSlice";
 
 const rootReducers = combineReducers({
     app: appSlice,
@@ -14,6 +15,7 @@ const rootReducers = combineReducers({
     packs: packsSlice,
     cards: cardsSlice,
     learn: learnSlice,
+    users: usersSlice,
 })
 
 export const store = configureStore({
