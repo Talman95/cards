@@ -18,6 +18,7 @@ export const CustomPackRow: FC<{ pack: PackType }> = ({pack}) => {
 
     const [openAdd, setOpenAdd] = useState(false)
     const [openDelete, setOpenDelete] = useState(false)
+    const [packCover, setPackCover] = useState(pack.deckCover)
 
     const user_id = useAppSelector(state => state.profile.profile?._id)
     const status = useAppSelector(state => state.app.status)
@@ -43,6 +44,9 @@ export const CustomPackRow: FC<{ pack: PackType }> = ({pack}) => {
     const learnPackHandler = (id: string) => {
         navigate(`/learn/${id}`)
     }
+    const handleError = () => {
+        setPackCover(noImage)
+    }
 
     return (
         <TableRow
@@ -51,9 +55,10 @@ export const CustomPackRow: FC<{ pack: PackType }> = ({pack}) => {
         >
             <TableCell align={'left'}>
                 <img
-                    src={pack.deckCover || noImage}
+                    src={packCover || noImage}
                     alt={'deck cover'}
                     style={{width: 50, height: 50}}
+                    onError={handleError}
                 />
             </TableCell>
             {(pack.cardsCount !== 0 || user_id === pack.user_id)

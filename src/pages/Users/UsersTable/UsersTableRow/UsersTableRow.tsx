@@ -1,8 +1,10 @@
 import React, {FC} from 'react';
 import {Avatar, TableCell, TableRow} from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import {UserType} from "../../../../api/usersAPI";
+import {blue} from '@mui/material/colors';
 
-export const UsersTableRow: FC<{ user: any }> = ({user}) => {
+export const UsersTableRow: FC<{ user: UserType }> = ({user}) => {
     return (
         <TableRow
             sx={{'&:last-child td, &:last-child th': {border: 0}}}
@@ -10,9 +12,9 @@ export const UsersTableRow: FC<{ user: any }> = ({user}) => {
         >
             <TableCell align={'left'} style={{width: '100px'}}>
                 <Avatar
-                    sx={{width: 60, height: 60}}
-                    alt={'user'}
-                    src={user.avatar}
+                    sx={{width: 60, height: 60, bgcolor: blue[500]}}
+                    alt={user.name}
+                    src={user.avatar || ''}
                 />
             </TableCell>
             <TableCell component={'th'} scope={'row'} align={'left'}
