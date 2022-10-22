@@ -34,6 +34,10 @@ export const Header = () => {
         navigate(PATH.PACKS)
         handleClose()
     }
+    const navigateToUsersLPage = () => {
+        navigate(PATH.USERS)
+        handleClose()
+    }
 
     return (
         <Box sx={{flexGrow: 1}}>
@@ -91,7 +95,8 @@ export const Header = () => {
                                 onClose={handleClose}
                             >
                                 <MenuItem onClick={navigateToProfile}>Profile</MenuItem>
-                                <MenuItem onClick={navigateToPacksList}>Packs list</MenuItem>
+                                <MenuItem onClick={navigateToPacksList}>Packs</MenuItem>
+                                <MenuItem onClick={navigateToUsersLPage}>Users</MenuItem>
                                 <MenuItem onClick={logoutHandler}>Log out</MenuItem>
                             </Menu>
                         </div>

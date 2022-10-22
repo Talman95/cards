@@ -7,6 +7,7 @@ import {Packs} from "../pages/Packs/Packs";
 import {CardsList} from "../pages/Cards/CardsList";
 import {LearnList} from "../pages/Learn/LearnList";
 import {PrivateRoutes} from "./PrivateRoutes";
+import {Users} from "../pages/Users/Users";
 
 export const PATH = {
     LOGIN: '/login',
@@ -18,6 +19,7 @@ export const PATH = {
     PACKS: '/packs',
     CARDS: '/cards/:id',
     LEARN: '/learn/:cardsPack_id',
+    USERS: '/users',
 }
 
 export const RoutesPage: FC = () => {
@@ -33,6 +35,7 @@ export const RoutesPage: FC = () => {
         {path: PATH.PACKS, component: <Packs/>},
         {path: PATH.CARDS, component: <CardsList/>},
         {path: PATH.LEARN, component: <LearnList/>},
+        {path: PATH.USERS, component: <Users/>},
     ]
 
 
