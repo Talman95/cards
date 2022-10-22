@@ -10,7 +10,7 @@ export const UsersTable = () => {
             <Table>
                 <UsersTableHeader/>
                 <TableBody>
-                    {users.map((u: any) => (
+                    {[].map((u: any) => (
                         <UsersTableRow key={u._id} user={u}/>
                     ))}
                 </TableBody>
