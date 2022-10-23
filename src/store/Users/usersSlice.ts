@@ -30,6 +30,10 @@ const slice = createSlice({
             state.filter.userName = action.payload
             state.filter.page = 1
         },
+        setMinMaxUsersCount: (state, action: PayloadAction<{ min: number, max: number }>) => {
+            state.filter.min = action.payload.min
+            state.filter.max = action.payload.max
+        }
     },
     extraReducers: builder => {
         builder

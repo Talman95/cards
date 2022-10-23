@@ -29,7 +29,7 @@ const slice = createSlice({
             state.pageCount = action.payload
             state.page = 1
         },
-        setMinMaxCount: (state, action: PayloadAction<{ min: number, max: number }>) => {
+        setMinMaxPacksCount: (state, action: PayloadAction<{ min: number, max: number }>) => {
             state.filter.min = action.payload.min
             state.filter.max = action.payload.max
             state.page = 1
