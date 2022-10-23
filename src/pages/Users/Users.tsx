@@ -4,6 +4,7 @@ import {UsersTable} from "./UsersTable/UsersTable";
 import {UsersHeader} from "./UsersHeader/UsersHeader";
 import {useActions} from "../../hooks/useActions";
 import {useAppSelector} from "../../hooks/hooks";
+import {UsersFilter} from "./UsersFilter/UsersFilter";
 
 export const Users = () => {
     const {getUsers} = useActions()
@@ -17,6 +18,7 @@ export const Users = () => {
     return (
         <Box>
             <UsersHeader/>
+            <UsersFilter/>
             <UsersTable/>
         </Box>
     )

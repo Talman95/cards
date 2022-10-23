@@ -10,7 +10,7 @@ const slice = createSlice({
         minPublicCardPacksCount: 0,
         usersTotalCount: 0,
         filter: {
-            userName: null as null | string,
+            userName: '',
             page: 1,
             pageCount: 5,
             sortUsers: null as null | string,
@@ -24,6 +24,10 @@ const slice = createSlice({
         },
         setUsersPageCount: (state, action: PayloadAction<number>) => {
             state.filter.pageCount = action.payload
+            state.filter.page = 1
+        },
+        setSearchUserName: (state, action: PayloadAction<string>) => {
+            state.filter.userName = action.payload
             state.filter.page = 1
         },
     },

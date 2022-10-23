@@ -1,7 +1,7 @@
 import {api} from "./api";
 
 export type GetUsersParams = {
-    userName?: string | null
+    userName?: string
     min?: number | null
     max?: number | null
     sortUsers?: string | null
