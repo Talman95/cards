@@ -1,6 +1,5 @@
 import React, {FC, useState} from 'react';
 import {
-    Box,
     Divider,
     FormControl,
     Grid,
@@ -16,22 +15,6 @@ import CloseIcon from '@mui/icons-material/Close';
 import {TextBlock} from "../../../../components/TextBlock/TextBlock";
 import {PictureBlock} from "../../../../components/PictureBlock/PictureBlock";
 import {BottomNavigationButtons} from "../../../../components/BottomNavigationButtons/BottomNavigationButtons";
-
-const style = {
-    position: 'absolute' as 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 500,
-    minHeight: 300,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-}
 
 type QuestionFormat = 'Text' | 'Picture'
 type AddCardModalType = {
@@ -73,7 +56,7 @@ export const AddCardModal: FC<AddCardModalType> = ({cardsPack_id, navigateBack, 
     }
 
     return (
-        <Box sx={style}>
+        <>
             <Grid container alignItems={'center'}>
                 <Grid item xs>
                     <Typography id={'title'} variant={'h6'} component={'h2'}>
@@ -118,6 +101,6 @@ export const AddCardModal: FC<AddCardModalType> = ({cardsPack_id, navigateBack, 
                 />
             }
             <BottomNavigationButtons navigateBack={navigateBack} clickSave={clickSaveHandler}/>
-        </Box>
+        </>
     )
 }

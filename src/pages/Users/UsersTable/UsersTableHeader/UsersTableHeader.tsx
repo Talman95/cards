@@ -17,7 +17,7 @@ export const UsersTableHeader: FC = () => {
                 Last Updated
             </TableCell>
             <TableCell align={'left'} style={{width: '250px'}}>
-                Created by
+                Created
             </TableCell>
             <TableCell align={'left'} style={{width: '100px'}}>
                 Verified

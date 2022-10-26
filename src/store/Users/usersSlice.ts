@@ -17,6 +17,8 @@ const slice = createSlice({
             min: null as null | number,
             max: null as null | number,
         },
+        viewedUser: null as null | UserType,
+        userIsLoading: false,
     },
     reducers: {
         setUsersPage: (state, action: PayloadAction<number>) => {
@@ -33,6 +35,9 @@ const slice = createSlice({
         setMinMaxUsersCount: (state, action: PayloadAction<{ min: number, max: number }>) => {
             state.filter.min = action.payload.min
             state.filter.max = action.payload.max
+        },
+        removeUsersData: (state) => {
+            state.viewedUser = null
         }
     },
     extraReducers: builder => {
@@ -42,6 +47,13 @@ const slice = createSlice({
                 state.maxPublicCardPacksCount = action.payload.maxPublicCardPacksCount
                 state.minPublicCardPacksCount = action.payload.minPublicCardPacksCount
                 state.usersTotalCount = action.payload.usersTotalCount
+            })
+            .addCase(usersAsyncThunk.getUserData.pending, (state) => {
+                state.userIsLoading = true
+            })
+            .addCase(usersAsyncThunk.getUserData.fulfilled, (state, action) => {
+                state.viewedUser = action.payload.user
+                state.userIsLoading = false
             })
     }
 })

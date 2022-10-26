@@ -34,4 +34,7 @@ export const usersAPI = {
             params
         })
     },
+    getUserData: (id: string) => {
+        return api.get<{user: UserType}>(`social/user?id=${id}`)
+    },
 }

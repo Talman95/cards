@@ -1,22 +1,9 @@
 import React, {ChangeEvent, FC, useState} from 'react';
-import {Box, Button, Checkbox, FormControlLabel, Grid, IconButton, Stack, TextField, Typography} from "@mui/material";
+import {Button, Checkbox, FormControlLabel, Grid, IconButton, Stack, TextField, Typography} from "@mui/material";
 import {AddPackParamsType} from "../../../../api/packsAPI";
 import CloseIcon from "@mui/icons-material/Close";
 import {convertFileToBase64} from "../../../../utils/convertFile";
 import {BottomNavigationButtons} from "../../../../components/BottomNavigationButtons/BottomNavigationButtons";
-
-const style = {
-    position: 'absolute' as 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 500,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-    display: 'grid',
-}
 
 type AddPackModalType = {
     navigateBack: () => void
@@ -59,7 +46,7 @@ export const AddPackModal: FC<AddPackModalType> = (
     }
 
     return (
-        <Box sx={style}>
+        <>
             <Grid container alignItems={'center'}>
                 <Grid item xs>
                     <Typography id={'title'} variant={'h6'} component={'h2'}>
@@ -114,6 +101,6 @@ export const AddPackModal: FC<AddPackModalType> = (
                 />}
             />
             <BottomNavigationButtons navigateBack={navigateBack} clickSave={clickSaveHandler}/>
-        </Box>
+        </>
     )
 }

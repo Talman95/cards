@@ -11,6 +11,7 @@ import {UpdatePackModal} from "./UpdatePackModal/UpdatePackModal";
 import {QuestionModal} from "../../../../components/Modals/QuestionModal";
 import {useActions} from "../../../../hooks/useActions";
 import noImage from '../../../../assets/no-image.jpg';
+import {ViewedUser} from "../../../Users/ViewedUser/ViewedUser";
 
 export const CustomPackRow: FC<{ pack: PackType }> = ({pack}) => {
     const navigate = useNavigate()
@@ -18,6 +19,7 @@ export const CustomPackRow: FC<{ pack: PackType }> = ({pack}) => {
 
     const [openAdd, setOpenAdd] = useState(false)
     const [openDelete, setOpenDelete] = useState(false)
+    const [userModal, setUserModal] = useState(false)
     const [packCover, setPackCover] = useState(pack.deckCover)
 
     const user_id = useAppSelector(state => state.profile.profile?._id)
@@ -28,6 +30,12 @@ export const CustomPackRow: FC<{ pack: PackType }> = ({pack}) => {
 
     const handleOpenDeleteModal = () => setOpenDelete(true)
     const handleCloseDeleteModal = () => setOpenDelete(false)
+
+    const handleOpenUserModal = () => {
+        if (status === 'loading') return
+        setUserModal(true)
+    }
+    const handleCloseUserModal = () => setUserModal(false)
 
     const navigateToCardsList = (id: string) => {
         if (status === 'loading') return
@@ -92,7 +100,9 @@ export const CustomPackRow: FC<{ pack: PackType }> = ({pack}) => {
                 {new Date(pack.updated).toLocaleString()}
             </TableCell>
             <TableCell component={'th'} scope={'row'} align={'left'}
+                       onClick={handleOpenUserModal}
                        style={{
+                           cursor: 'pointer',
                            maxWidth: '180px',
                            textOverflow: 'ellipsis',
                            whiteSpace: 'nowrap',
@@ -146,6 +156,9 @@ export const CustomPackRow: FC<{ pack: PackType }> = ({pack}) => {
                         navigateBack={handleCloseDeleteModal}
                         deleteItem={deletePackHandler}
                     />
+                </BasicModal>
+                <BasicModal open={userModal} setOpen={setUserModal}>
+                    <ViewedUser id={pack.user_id} navigateBack={handleCloseUserModal}/>
                 </BasicModal>
             </TableCell>
         </TableRow>

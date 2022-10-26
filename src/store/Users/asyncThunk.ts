@@ -16,6 +16,17 @@ const getUsers = createAsyncThunk(
             const res = await usersAPI.getUsers(filter)
             thunkAPI.dispatch(setAppStatus('idle'))
             return res.data
+        } catch (e) {
+            return handleAppError(e, thunkAPI)
+        }
+    })
+
+const getUserData = createAsyncThunk(
+    'users/getUserData',
+    async (id: string, thunkAPI) => {
+        try{
+            const res = await usersAPI.getUserData(id)
+            return {user: res.data.user}
         } catch(e) {
             return handleAppError(e, thunkAPI)
         }
@@ -23,4 +34,5 @@ const getUsers = createAsyncThunk(
 
 export const usersAsyncThunk = {
     getUsers,
+    getUserData,
 }
