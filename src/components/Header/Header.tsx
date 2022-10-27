@@ -102,7 +102,8 @@ export const Header = () => {
                         </div>
                     )}
                 </Toolbar>
-                {status === 'loading' && <LinearProgress/>}
+                {status === 'loading' &&
+                    <LinearProgress sx={{ position: 'absolute', top: '69px', left: 0, right: 0 }}/>}
             </AppBar>
         </Box>
     )

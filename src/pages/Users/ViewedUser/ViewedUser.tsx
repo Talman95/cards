@@ -33,7 +33,7 @@ export const ViewedUser: FC<PropsType> = ({id, navigateBack}) => {
 
     return (
         <Box style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
-            <Box style={{width: '100%', display: 'flex', justifyContent: 'flex-end'}}>
+            <Box style={{position: 'absolute', top: '30px', right: '15px'}}>
                 <IconButton onClick={navigateBack}>
                     <CloseIcon/>
                 </IconButton>
