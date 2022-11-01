@@ -5,11 +5,13 @@ import {RoutesPage} from "../routes/RoutesPage";
 import {CircularProgress} from "@mui/material";
 import {useActions} from "../hooks/useActions";
 import {MessageSnackbar} from "../components/MessageSnackbar/MessageSnackbar";
+import {Chat} from "../components/Chat/Chat";
 
 const App = () => {
     const {getAuthData} = useActions()
 
     const isInitialized = useAppSelector(state => state.app.isInitialized)
+    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
 
     useEffect(() => {
         getAuthData()
@@ -27,6 +29,7 @@ const App = () => {
             <MessageSnackbar/>
             <Header/>
             <RoutesPage/>
+            {isLoggedIn && <Chat/>}
         </div>
     )
 }

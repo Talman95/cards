@@ -7,6 +7,7 @@ import {packsSlice} from "./Packs/packsSlice";
 import {cardsSlice} from "./Cards/cardsSlice";
 import {learnSlice} from "./Learn/learnSlice";
 import {usersSlice} from "./Users/usersSlice";
+import {chatSlice} from "./Chat/chatSlice";
 
 const rootReducers = combineReducers({
     app: appSlice,
@@ -16,6 +17,7 @@ const rootReducers = combineReducers({
     cards: cardsSlice,
     learn: learnSlice,
     users: usersSlice,
+    chat: chatSlice,
 })
 
 export const store = configureStore({

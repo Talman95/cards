@@ -11,6 +11,7 @@ import {packsActions} from "./Packs/packsSlice";
 import {packsAsyncThunks} from "./Packs/asyncThunk";
 import {usersAsyncThunk} from "./Users/asyncThunk";
 import {usersActions} from "./Users/usersSlice";
+import {chatAsyncThunks} from "./Chat/asyncThunk";
 
 
 export const appActions = {
@@ -39,4 +40,8 @@ export const allProfileActions = {
 export const allUsersActions = {
     ...usersActions,
     ...usersAsyncThunk,
+}
+export const allChatActions = {
+    // ...usersActions,
+    ...chatAsyncThunks,
 }

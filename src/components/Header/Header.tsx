@@ -42,7 +42,7 @@ export const Header = () => {
     return (
         <Box sx={{flexGrow: 1}}>
             <AppBar position={'static'}>
-                <Toolbar>
+                <Toolbar style={{height: '69px'}}>
                     <IconButton
                         size={'large'}
                         edge={'start'}
@@ -103,7 +103,7 @@ export const Header = () => {
                     )}
                 </Toolbar>
                 {status === 'loading' &&
-                    <LinearProgress sx={{ position: 'absolute', top: '69px', left: 0, right: 0 }}/>}
+                    <LinearProgress sx={{position: 'absolute', top: '69px', left: 0, right: 0}}/>}
             </AppBar>
         </Box>
     )
