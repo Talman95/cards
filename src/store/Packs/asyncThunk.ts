@@ -8,19 +8,20 @@ const {setAppStatus, setAppMessage} = appActions
 
 const getPacks = createAsyncThunk(
     'packs/getPacks',
-    async (params: undefined, thunkAPI) => {
+    async (id: string | null, thunkAPI) => {
         thunkAPI.dispatch(setAppStatus('loading'))
         try {
             const state = thunkAPI.getState() as RootState
-
             const packs = state.packs
             const userId = state.profile.profile?._id
+
+            if (!userId) return
 
             const res = await packsAPI.getPacks({
                 ...packs.filter,
                 page: packs.page,
                 pageCount: packs.pageCount,
-                user_id: packs.accessory === 'my' ? userId : null,
+                user_id: id === userId ? userId : id,
             })
 
             thunkAPI.dispatch(setAppStatus('idle'))
@@ -36,8 +37,11 @@ const addPack = createAsyncThunk(
     async (params: { name: string, deckCover?: string | null, isPrivate?: boolean | null }, thunkAPI) => {
         thunkAPI.dispatch(setAppStatus('loading'))
         try {
+            const state = thunkAPI.getState() as RootState
+            const paramUserId = state.packs.paramUserId
+
             await packsAPI.addPack({...params})
-            await thunkAPI.dispatch(getPacks())
+            await thunkAPI.dispatch(getPacks(paramUserId))
             thunkAPI.dispatch(setAppMessage({result: 'success', message: 'New pack created'}))
         } catch (e) {
             return handleAppError(e, thunkAPI)
@@ -49,8 +53,11 @@ const deletePack = createAsyncThunk(
     async (id: string, thunkAPI) => {
         thunkAPI.dispatch(setAppStatus('loading'))
         try {
+            const state = thunkAPI.getState() as RootState
+            const paramUserId = state.packs.paramUserId
+
             await packsAPI.deletePack(id)
-            await thunkAPI.dispatch(getPacks())
+            await thunkAPI.dispatch(getPacks(paramUserId))
             thunkAPI.dispatch(setAppMessage({result: 'error', message: 'Packs deleted'}))
         } catch (e) {
             return handleAppError(e, thunkAPI)
@@ -63,8 +70,11 @@ const updatePack = createAsyncThunk(
     async (pack: UpdatePackType, thunkAPI) => {
         thunkAPI.dispatch(setAppStatus('loading'))
         try {
+            const state = thunkAPI.getState() as RootState
+            const paramUserId = state.packs.paramUserId
+
             await packsAPI.updatePack(pack)
-            await thunkAPI.dispatch(getPacks())
+            await thunkAPI.dispatch(getPacks(paramUserId))
             thunkAPI.dispatch(setAppMessage({result: 'success', message: 'Packs updated'}))
         } catch (e) {
             return handleAppError(e, thunkAPI)

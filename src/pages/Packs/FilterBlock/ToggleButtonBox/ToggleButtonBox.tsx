@@ -1,36 +1,35 @@
 import React, {FC} from 'react';
 import {Box, Button, Stack, Typography} from "@mui/material";
-import {AccessoryType} from "../../../../store/Packs/packsSlice";
 import {useAppSelector} from "../../../../hooks/hooks";
-import {useActions} from "../../../../hooks/useActions";
 
-export const ToggleButtonBox: FC = () => {
-    const {setShowPacks} = useActions()
+type PropsType = {
+    onMyPacksClick: () => void
+    onAllPacksClick: () => void
+}
 
-    const accessory = useAppSelector(state => state.packs.accessory)
+export const ToggleButtonBox: FC<PropsType> = ({onMyPacksClick, onAllPacksClick}) => {
+
     const status = useAppSelector(state => state.app.status)
-
-    const onChange = (param: AccessoryType) => {
-        setShowPacks({accessory: param})
-    }
+    const id = useAppSelector(state => state.profile.profile?._id)
+    const paramUserId = useAppSelector(state => state.packs.paramUserId)
 
     return (
         <Box style={{height: '62px', display: 'grid'}}>
             <Typography variant={'body2'}>Show packs cards</Typography>
             <Stack spacing={2} direction="row">
                 <Button
-                    variant={accessory === 'my' ? 'contained' : 'outlined'}
+                    variant={id === paramUserId ? 'contained' : 'outlined'}
                     style={{width: '80px'}}
-                    onClick={() => onChange('my')}
+                    onClick={onMyPacksClick}
                     size={'small'}
                     disabled={status === 'loading'}
                 >
                     My
                 </Button>
                 <Button
-                    variant={accessory === 'all' ? 'contained' : 'outlined'}
+                    variant={paramUserId === null ? 'contained' : 'outlined'}
                     style={{width: '80px'}}
-                    onClick={() => onChange('all')}
+                    onClick={onAllPacksClick}
                     size={'small'}
                     disabled={status === 'loading'}
                 >

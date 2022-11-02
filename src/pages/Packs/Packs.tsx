@@ -8,37 +8,34 @@ import {useActions} from "../../hooks/useActions";
 import {useSearchParams} from "react-router-dom";
 
 export const Packs = () => {
-    const {getPacks, setAccessory} = useActions()
+    const {getPacks, setParamUserId} = useActions()
 
     const [searchParams, setSearchParams] = useSearchParams()
 
     const filter = useAppSelector(state => state.packs.filter)
     const page = useAppSelector(state => state.packs.page)
     const pageCount = useAppSelector(state => state.packs.pageCount)
-    const accessory = useAppSelector(state => state.packs.accessory)
-
-    const param = searchParams.get('accessory') || accessory
+    const userId = useAppSelector(state => state.profile.profile?._id)
 
     useEffect(() => {
-        if (param === 'my') {
-            setAccessory('my')
-        } else {
-            setAccessory('all')
-        }
-    }, [])
+        const paramId = searchParams.get('id')
+        setParamUserId(paramId)
+        getPacks(paramId)
+    },[filter, page, pageCount, searchParams])
 
-    useEffect(() => {
-        setSearchParams({accessory: accessory})
-    }, [accessory])
-
-    useEffect(() => {
-        getPacks()
-    }, [filter, page, pageCount, accessory])
+    const onMyPacksClick = () => {
+        if (!userId) return
+        setSearchParams({id: userId})
+    }
+    const onAllPacksClick = () => {
+        searchParams.delete('id')
+        setSearchParams(searchParams)
+    }
 
     return (
         <Box>
             <PackListHeader/>
-            <FilterBlock/>
+            <FilterBlock onAllPacksClick={onAllPacksClick} onMyPacksClick={onMyPacksClick}/>
             <TableBlock/>
         </Box>
     )

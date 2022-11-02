@@ -11,9 +11,9 @@ const slice = createSlice({
         cardPacksTotalCount: 0,
         maxCardsCount: 0,
         minCardsCount: 0,
-        accessory: 'all' as AccessoryType,
         page: 1,
         pageCount: 5,
+        paramUserId: null as null | string,
         filter: {
             packName: '',
             min: null as null | number,
@@ -32,12 +32,6 @@ const slice = createSlice({
         setMinMaxPacksCount: (state, action: PayloadAction<{ min: number, max: number }>) => {
             state.filter.min = action.payload.min
             state.filter.max = action.payload.max
-            state.page = 1
-        },
-        setShowPacks: (state, action: PayloadAction<{ accessory: AccessoryType}>) => {
-            state.accessory = action.payload.accessory
-            state.filter.min = null
-            state.filter.max = null
             state.page = 1
         },
         setPackName: (state, action: PayloadAction<string>) => {
@@ -60,16 +54,18 @@ const slice = createSlice({
             state.filter.sortPacks = action.payload
             state.page = 1
         },
-        setAccessory: (state, action: PayloadAction<AccessoryType>) => {
-            state.accessory = action.payload
+        setParamUserId: (state, action: PayloadAction<string | null>) => {
+            state.paramUserId = action.payload
         },
     },
     extraReducers: builder => {
         builder.addCase(packsAsyncThunks.getPacks.fulfilled, (state, action) => {
-            state.cardPacks = action.payload.cardPacks
-            state.cardPacksTotalCount = action.payload.cardPacksTotalCount
-            state.maxCardsCount = action.payload.maxCardsCount
-            state.minCardsCount = action.payload.minCardsCount
+            if (action.payload) {
+                state.cardPacks = action.payload.cardPacks
+                state.cardPacksTotalCount = action.payload.cardPacksTotalCount
+                state.maxCardsCount = action.payload.maxCardsCount
+                state.minCardsCount = action.payload.minCardsCount
+            }
         })
     }
 })
