@@ -8,7 +8,7 @@ import {useActions} from "../../hooks/useActions";
 import {useSearchParams} from "react-router-dom";
 
 export const Packs = () => {
-    const {getPacks, setParamUserId} = useActions()
+    const {getPacks, setParamUserId, setCurrentPage} = useActions()
 
     const [searchParams, setSearchParams] = useSearchParams()
 
@@ -26,10 +26,12 @@ export const Packs = () => {
     const onMyPacksClick = () => {
         if (!userId) return
         setSearchParams({id: userId})
+        setCurrentPage(1)
     }
     const onAllPacksClick = () => {
         searchParams.delete('id')
         setSearchParams(searchParams)
+        setCurrentPage(1)
     }
 
     return (

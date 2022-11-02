@@ -4,6 +4,7 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import {useActions} from "../../../hooks/useActions";
 import {useAppSelector} from "../../../hooks/hooks";
 import CloseIcon from "@mui/icons-material/Close";
+import {useNavigate} from "react-router-dom";
 
 type PropsType = {
     id: string
@@ -12,6 +13,8 @@ type PropsType = {
 
 export const ViewedUser: FC<PropsType> = ({id, navigateBack}) => {
     const {getUserData, removeUsersData} = useActions()
+
+    const navigate = useNavigate()
 
     const user = useAppSelector(state => state.users.viewedUser)
 
@@ -24,6 +27,10 @@ export const ViewedUser: FC<PropsType> = ({id, navigateBack}) => {
             removeUsersData()
         }
     }, [])
+
+    const onDisplayUserPackClick = () => {
+        navigate('/packs?id=' + id)
+    }
 
     if (!user) {
         return <Box sx={{display: 'flex', justifyContent: 'center'}}>
@@ -65,7 +72,7 @@ export const ViewedUser: FC<PropsType> = ({id, navigateBack}) => {
                     Last updated: {new Date(user.updated).toLocaleString()}
                 </Typography>
             </Typography>
-            <Typography color={'text.secondary'}>
+            <Typography color={'text.secondary'} style={{cursor: 'pointer'}} onClick={onDisplayUserPackClick}>
                 Created public packs: {user.publicCardPacksCount}
             </Typography>
             <Typography color={'text.secondary'} style={{alignItems: 'center'}}>
