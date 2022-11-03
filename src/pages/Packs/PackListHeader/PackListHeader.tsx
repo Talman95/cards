@@ -1,6 +1,6 @@
 import React, {FC, useState} from 'react';
 import {Box, Button, Typography} from "@mui/material";
-import {BasicModal} from "../../../components/Modals/BasicModal";
+import {BasicModal} from "../../../components/BasicModal/BasicModal";
 import {AddPackParamsType} from "../../../api/packsAPI";
 import {AddPackModal} from "./AddPackModal/AddPackModal";
 import {useActions} from "../../../hooks/useActions";

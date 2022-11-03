@@ -4,8 +4,8 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {useAppSelector} from "../../../../hooks/hooks";
 import {CardType, UpdateCardType} from "../../../../api/cardsAPI";
-import {BasicModal} from "../../../../components/Modals/BasicModal";
-import {QuestionModal} from "../../../../components/Modals/QuestionModal";
+import {BasicModal} from "../../../../components/BasicModal/BasicModal";
+import {QuestionModal} from "../../../../components/QuestionModal/QuestionModal";
 import {UpdateCardModal} from "./UpdateCardModal/UpdateCardModal";
 import {useActions} from "../../../../hooks/useActions";
 

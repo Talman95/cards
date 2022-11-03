@@ -12,6 +12,7 @@ import {packsAsyncThunks} from "./Packs/asyncThunk";
 import {usersAsyncThunk} from "./Users/asyncThunk";
 import {usersActions} from "./Users/usersSlice";
 import {chatAsyncThunks} from "./Chat/asyncThunk";
+import {modalActions} from "./Modal/modalSlice";
 
 
 export const appActions = {
@@ -44,4 +45,7 @@ export const allUsersActions = {
 export const allChatActions = {
     // ...usersActions,
     ...chatAsyncThunks,
+}
+export const allModalActions = {
+    ...modalActions,
 }

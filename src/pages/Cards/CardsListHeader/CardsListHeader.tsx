@@ -1,7 +1,7 @@
 import React, {FC, useState} from 'react';
 import {Box, Button, IconButton, styled, Tooltip, tooltipClasses, TooltipProps, Typography} from "@mui/material";
 import {useAppSelector} from "../../../hooks/hooks";
-import {BasicModal} from "../../../components/Modals/BasicModal";
+import {BasicModal} from "../../../components/BasicModal/BasicModal";
 import {AddCardModal} from "./AddCardModal/AddCardModal";
 import {AddCardType} from "../../../api/cardsAPI";
 import {useActions} from "../../../hooks/useActions";
@@ -11,7 +11,7 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import {ActionMenu} from "./ActionMenu/ActionMenu";
 import {UpdatePackModal} from "../../Packs/TableBlock/CustomPackRow/UpdatePackModal/UpdatePackModal";
 import {UpdatePackType} from "../../../api/packsAPI";
-import {QuestionModal} from "../../../components/Modals/QuestionModal";
+import {QuestionModal} from "../../../components/QuestionModal/QuestionModal";
 import {PATH} from "../../../routes/RoutesPage";
 
 type PropsType = {

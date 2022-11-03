@@ -3,7 +3,7 @@ import {useAppDispatch} from "./hooks";
 import {
     allAuthActions,
     allCardsActions, allChatActions,
-    allLearnActions,
+    allLearnActions, allModalActions,
     allPacksActions,
     allProfileActions, allUsersActions,
     appActions
@@ -18,6 +18,7 @@ const allActions = {
     ...allProfileActions,
     ...allUsersActions,
     ...allChatActions,
+    ...allModalActions,
 }
 
 export const useActions = () => {

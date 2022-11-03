@@ -6,9 +6,10 @@ import {CircularProgress} from "@mui/material";
 import {useActions} from "../hooks/useActions";
 import {MessageSnackbar} from "../components/MessageSnackbar/MessageSnackbar";
 import {Chat} from "../components/Chat/Chat";
+import {Modals} from "../pages/Modals/Modals";
 
 const App = () => {
-    const {getAuthData} = useActions()
+    const {getAuthData, setModalOpen} = useActions()
 
     const isInitialized = useAppSelector(state => state.app.isInitialized)
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
@@ -28,8 +29,10 @@ const App = () => {
         <div>
             <MessageSnackbar/>
             <Header/>
+            <button onClick={() => setModalOpen('Packs or somesthing else')}>Hello</button>
             <RoutesPage/>
             {isLoggedIn && <Chat/>}
+            <Modals/>
         </div>
     )
 }

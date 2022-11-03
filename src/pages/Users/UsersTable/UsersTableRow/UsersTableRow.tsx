@@ -3,7 +3,7 @@ import {Avatar, TableCell, TableRow} from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import {UserType} from "../../../../api/usersAPI";
 import {blue} from '@mui/material/colors';
-import {BasicModal} from "../../../../components/Modals/BasicModal";
+import {BasicModal} from "../../../../components/BasicModal/BasicModal";
 import {ViewedUser} from "../../ViewedUser/ViewedUser";
 import {useAppSelector} from "../../../../hooks/hooks";
 
