@@ -7,6 +7,7 @@ import {useActions} from "../hooks/useActions";
 import {MessageSnackbar} from "../components/MessageSnackbar/MessageSnackbar";
 import {Chat} from "../components/Chat/Chat";
 import {Modals} from "../pages/Modals/Modals";
+import {modalTypes} from "../enums/modalTypes";
 
 const App = () => {
     const {getAuthData, setModalOpen} = useActions()
@@ -29,7 +30,8 @@ const App = () => {
         <div>
             <MessageSnackbar/>
             <Header/>
-            <button onClick={() => setModalOpen('Packs or somesthing else')}>Hello</button>
+            <button onClick={() => setModalOpen(modalTypes.ADD_PACK)}>Add</button>
+            <button onClick={() => setModalOpen(modalTypes.UPDATE_PACK)}>Update</button>
             <RoutesPage/>
             {isLoggedIn && <Chat/>}
             <Modals/>
