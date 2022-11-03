@@ -1,24 +1,23 @@
-import React, {FC, useState} from 'react';
+import React, {FC} from 'react';
 import {Box, Button, Typography} from "@mui/material";
-import {BasicModal} from "../../../components/BasicModal/BasicModal";
-import {AddPackParamsType} from "../../../api/packsAPI";
-import {AddPackModal} from "./AddPackModal/AddPackModal";
 import {useActions} from "../../../hooks/useActions";
 import {useAppSelector} from "../../../hooks/hooks";
+import {modalType} from "../../../enums/modalType";
 
 export const PackListHeader: FC = () => {
-    const {addPack} = useActions()
+    const {setModalOpen} = useActions()
 
     const status = useAppSelector(state => state.app.status)
 
-    const [open, setOpen] = useState(false)
-
-    const handleOpen = () => setOpen(true)
-    const handleClose = () => setOpen(false)
-
-    const addPackHandler = (pack: AddPackParamsType) => {
-        addPack(pack)
-        handleClose()
+    const onAddPackClick = () => {
+        setModalOpen({
+            type: modalType.ADD_PACK,
+            data: {
+                name: '',
+                deckCover: null,
+                isPrivate: false,
+            }
+        })
     }
 
     return (
@@ -26,17 +25,11 @@ export const PackListHeader: FC = () => {
             <Typography variant={'h6'}>Packs list</Typography>
             <Button
                 variant={'contained'}
-                onClick={handleOpen}
-                disabled={status==='loading'}
+                onClick={onAddPackClick}
+                disabled={status === 'loading'}
             >
                 Add new pack
             </Button>
-            <BasicModal open={open} setOpen={setOpen}>
-                <AddPackModal
-                    navigateBack={handleClose}
-                    saveData={addPackHandler}
-                />
-            </BasicModal>
         </Box>
     )
 }

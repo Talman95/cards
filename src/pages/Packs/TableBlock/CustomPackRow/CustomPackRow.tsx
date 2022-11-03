@@ -3,30 +3,26 @@ import {IconButton, Stack, TableCell, TableRow} from "@mui/material";
 import SchoolIcon from "@mui/icons-material/School";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import {PackType, UpdatePackType} from "../../../../api/packsAPI";
+import {PackType} from "../../../../api/packsAPI";
 import {useAppSelector} from "../../../../hooks/hooks";
 import {useNavigate} from "react-router-dom";
 import {BasicModal} from "../../../../components/BasicModal/BasicModal";
-import {UpdatePackModal} from "./UpdatePackModal/UpdatePackModal";
 import {QuestionModal} from "../../../../components/QuestionModal/QuestionModal";
 import {useActions} from "../../../../hooks/useActions";
 import noImage from '../../../../assets/no-image.jpg';
 import {ViewedUser} from "../../../Users/ViewedUser/ViewedUser";
+import {modalType} from "../../../../enums/modalType";
 
 export const CustomPackRow: FC<{ pack: PackType }> = ({pack}) => {
     const navigate = useNavigate()
-    const {deletePack, updatePack} = useActions()
+    const {deletePack, setModalOpen} = useActions()
 
-    const [openAdd, setOpenAdd] = useState(false)
     const [openDelete, setOpenDelete] = useState(false)
     const [userModal, setUserModal] = useState(false)
     const [packCover, setPackCover] = useState(pack.deckCover)
 
     const user_id = useAppSelector(state => state.profile.profile?._id)
     const status = useAppSelector(state => state.app.status)
-
-    const handleOpenAddModal = () => setOpenAdd(true)
-    const handleCloseAddModal = () => setOpenAdd(false)
 
     const handleOpenDeleteModal = () => setOpenDelete(true)
     const handleCloseDeleteModal = () => setOpenDelete(false)
@@ -41,9 +37,16 @@ export const CustomPackRow: FC<{ pack: PackType }> = ({pack}) => {
         if (status === 'loading') return
         navigate(`/cards/${id}`)
     }
-    const updatePackHandler = (pack: UpdatePackType) => {
-        updatePack(pack)
-        handleCloseAddModal()
+    const onUpdatePackClick = () => {
+        setModalOpen({
+            type: modalType.UPDATE_PACK,
+            data: {
+                _id: pack._id,
+                name: pack.name,
+                deckCover: pack.deckCover,
+                isPrivate: pack.private,
+            }
+        })
     }
     const deletePackHandler = (id: string) => {
         deletePack(id)
@@ -120,7 +123,7 @@ export const CustomPackRow: FC<{ pack: PackType }> = ({pack}) => {
                             <SchoolIcon fontSize={'small'}/>
                         </IconButton>
                         <IconButton aria-label={'update'} size={'small'}
-                                    onClick={handleOpenAddModal}
+                                    onClick={onUpdatePackClick}
                                     disabled={status === 'loading'}>
                             <EditIcon fontSize={'small'}/>
                         </IconButton>
@@ -138,16 +141,6 @@ export const CustomPackRow: FC<{ pack: PackType }> = ({pack}) => {
                             <SchoolIcon fontSize={'small'}/>
                         </IconButton>
                     </Stack>}
-                <BasicModal open={openAdd} setOpen={setOpenAdd}>
-                    <UpdatePackModal
-                        pack_id={pack._id}
-                        packName={pack.name}
-                        deckCover={pack.deckCover}
-                        packIsPrivate={pack.private}
-                        navigateBack={handleCloseAddModal}
-                        saveData={updatePackHandler}
-                    />
-                </BasicModal>
                 <BasicModal open={openDelete} setOpen={setOpenDelete}>
                     <QuestionModal
                         title={'Delete Packs'}

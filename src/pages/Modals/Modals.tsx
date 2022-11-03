@@ -4,11 +4,13 @@ import {MyBasicModal} from "../../components/MyBasicModal/MyBasicModal";
 import {modalWatcher} from "../../utils/modalWatcher";
 
 export const Modals = () => {
-    const modalType = useAppSelector(state => state.modal.modalType)
+    const type = useAppSelector(state => state.modal.type)
 
     return (
-        <MyBasicModal modalType={modalType}>
-            <div>{modalWatcher(modalType)}</div>
+        <MyBasicModal type={type}>
+            <>
+                {modalWatcher(type)}
+            </>
         </MyBasicModal>
     )
 }
