@@ -22,7 +22,7 @@ export const ActionMenu: FC<PropsType> = ({blocked, showUpdateModal, showDeleteM
         closeTooltip()
         navigate('/learn/' + cardsPack_id)
     }
-    const handleOnUpdateClick = () => {
+    const onUpdatePackClick = () => {
         closeTooltip()
         showUpdateModal()
     }
@@ -40,7 +40,7 @@ export const ActionMenu: FC<PropsType> = ({blocked, showUpdateModal, showDeleteM
                 <SchoolIcon fontSize={'small'}/>
             </IconButton>
             <IconButton size={'small'}
-                        onClick={handleOnUpdateClick}
+                        onClick={onUpdatePackClick}
             >
                 <EditIcon fontSize={'small'}/>
             </IconButton>

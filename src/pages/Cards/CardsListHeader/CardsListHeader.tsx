@@ -1,18 +1,17 @@
 import React, {FC, useState} from 'react';
 import {Box, Button, IconButton, styled, Tooltip, tooltipClasses, TooltipProps, Typography} from "@mui/material";
 import {useAppSelector} from "../../../hooks/hooks";
-import {BasicModal} from "../../../components/BasicModal/BasicModal";
-import {AddCardModal} from "./AddCardModal/AddCardModal";
+import {BasicModal} from "../../../components/BasicModalOld/BasicModal";
 import {AddCardType} from "../../../api/cardsAPI";
 import {useActions} from "../../../hooks/useActions";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import {useNavigate} from "react-router-dom";
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import {ActionMenu} from "./ActionMenu/ActionMenu";
-import {UpdatePackModal} from "../../Packs/TableBlock/CustomPackRow/UpdatePackModal/UpdatePackModal";
 import {UpdatePackType} from "../../../api/packsAPI";
 import {QuestionModal} from "../../../components/QuestionModal/QuestionModal";
 import {PATH} from "../../../routes/RoutesPage";
+import {modalType} from "../../../enums/modalType";
 
 type PropsType = {
     cardsPackId: string
@@ -20,7 +19,7 @@ type PropsType = {
 }
 
 export const CardsListHeader: FC<PropsType> = ({cardsPackId, length}) => {
-    const {addCard, updatePack, deletePack, getCards} = useActions()
+    const {deletePack, setModalOpen} = useActions()
     const navigate = useNavigate()
 
     const packUserId = useAppSelector(state => state.cards.packUserId)
@@ -33,30 +32,38 @@ export const CardsListHeader: FC<PropsType> = ({cardsPackId, length}) => {
     const packIsPrivate = pack?.private
     const isUserPack: boolean = packUserId === userId
 
-
-    const [openAddCard, setOpenAddCard] = useState(false)
-    const [updateModal, setUpdateModal] = useState(false)
     const [deleteModal, setDeleteModal] = useState(false)
     const [openTooltip, setOpenTooltip] = useState(false)
 
-    const handleAddCardOpen = () => setOpenAddCard(true)
-    const handleAddCardClose = () => setOpenAddCard(false)
-    const addCardHandle = (card: AddCardType) => {
-        addCard(card)
-        handleAddCardClose()
+    const onAddCardClick = () => {
+        setModalOpen({
+            type: modalType.ADD_CARD,
+            data: {
+                cardsPack_id: cardsPackId,
+                question: '',
+                answer: '',
+            } as AddCardType
+        })
     }
-    const handleOpenUpdate = () => setUpdateModal(true)
-    const updatePackHandler = async (pack: UpdatePackType) => {
-        setUpdateModal(false)
-        await updatePack(pack)
-        getCards(cardsPackId)
+    const onUpdatePackClick = () => {
+        setModalOpen({
+            type: modalType.UPDATE_PACK,
+            data: {
+                _id: cardsPackId,
+                name: packName,
+                deckCover: packDeckCover,
+                isPrivate: packIsPrivate,
+            } as UpdatePackType
+        })
     }
+
     const deletePackHandler = async () => {
         setDeleteModal(false)
         await deletePack(cardsPackId)
         navigate(PATH.PACKS)
     }
     const handleOpenDelete = () => setDeleteModal(true)
+
     const handleCloseTooltip = () => setOpenTooltip(false)
     const navigateToPacksList = () => navigate(-1)
     const learnPackHandler = () => navigate('/learn/' + cardsPackId)
@@ -76,7 +83,7 @@ export const CardsListHeader: FC<PropsType> = ({cardsPackId, length}) => {
                     {(isUserPack && !isLoading) &&
                         <CustomTooltip
                             title={<ActionMenu blocked={!isUserPack || length === 0}
-                                               showUpdateModal={handleOpenUpdate}
+                                               showUpdateModal={onUpdatePackClick}
                                                showDeleteModal={handleOpenDelete}
                                                closeTooltip={handleCloseTooltip}
                             />}
@@ -91,7 +98,7 @@ export const CardsListHeader: FC<PropsType> = ({cardsPackId, length}) => {
                 </Box>
                 {isUserPack
                     ?
-                    <Button variant={'contained'} onClick={handleAddCardOpen} disabled={status === 'loading'}>
+                    <Button variant={'contained'} onClick={onAddCardClick} disabled={status === 'loading'}>
                         Add new card
                     </Button>
                     :
@@ -110,23 +117,6 @@ export const CardsListHeader: FC<PropsType> = ({cardsPackId, length}) => {
                     />
                 </Box>
             }
-            <BasicModal open={openAddCard} setOpen={setOpenAddCard}>
-                <AddCardModal
-                    cardsPack_id={cardsPackId}
-                    navigateBack={handleAddCardClose}
-                    addCard={addCardHandle}
-                />
-            </BasicModal>
-            <BasicModal open={updateModal} setOpen={handleOpenUpdate}>
-                <UpdatePackModal
-                    pack_id={cardsPackId}
-                    packName={packName || ''}
-                    deckCover={packDeckCover}
-                    packIsPrivate={!!packIsPrivate}
-                    navigateBack={() => setUpdateModal(false)}
-                    saveData={updatePackHandler}
-                />
-            </BasicModal>
             <BasicModal open={deleteModal} setOpen={() => setDeleteModal(false)}>
                 <QuestionModal
                     title={'Delete Packs'}

@@ -29,7 +29,7 @@ export const TableBlock: FC<{ length: number }> = ({length}) => {
                 {length !== 0 &&
                     <TableBody>
                         {cards.map((c) => (
-                            <CustomCardRow key={c._id} c={c}/>
+                            <CustomCardRow key={c._id} card={c}/>
                         ))}
                     </TableBody>
                 }

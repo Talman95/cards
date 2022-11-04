@@ -6,7 +6,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import {PackType} from "../../../../api/packsAPI";
 import {useAppSelector} from "../../../../hooks/hooks";
 import {useNavigate} from "react-router-dom";
-import {BasicModal} from "../../../../components/BasicModal/BasicModal";
+import {BasicModal} from "../../../../components/BasicModalOld/BasicModal";
 import {QuestionModal} from "../../../../components/QuestionModal/QuestionModal";
 import {useActions} from "../../../../hooks/useActions";
 import noImage from '../../../../assets/no-image.jpg';

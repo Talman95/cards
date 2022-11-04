@@ -19,6 +19,7 @@ export const TextBlock: FC<PropsType> = ({question, setQuestion, answer, setAnsw
                 value={question}
                 onChange={(e) => setQuestion(e.currentTarget.value)}
                 size={'small'}
+                style={{margin: '10px 0'}}
             />
             <TextField
                 id={answer}

@@ -1,10 +1,11 @@
 import React, {FC} from 'react';
 import Modal from '@mui/material/Modal';
-import {Box} from "@mui/material";
+import {Box, Grid, IconButton, Typography} from "@mui/material";
+import {useActions} from "../../hooks/useActions";
+import CloseIcon from "@mui/icons-material/Close";
 
-type ModalPropsType = {
-    open: boolean
-    setOpen: (show: boolean) => void
+type PropsType = {
+    type: null | string
     children: JSX.Element
 }
 
@@ -22,23 +23,31 @@ const style = {
     flexDirection: 'column',
 }
 
-export const BasicModal: FC<ModalPropsType> = (
-    {
-        open,
-        setOpen,
-        children
-    }) => {
+export const BasicModal: FC<PropsType> = ({type, children}) => {
+    const {setModalClose} = useActions()
 
-    const handleClose = () => setOpen(false)
+    const onCloseClick = () => {
+        setModalClose()
+    }
 
     return (
         <Modal
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
+            open={!!type}
+            onClose={onCloseClick}
         >
             <Box sx={style}>
+                <Grid container alignItems={'center'} style={{marginBottom: '10px'}}>
+                    <Grid item xs>
+                        <Typography id={'title'} variant={'h6'} component={'h2'}>
+                            {type}
+                        </Typography>
+                    </Grid>
+                    <Grid item>
+                        <IconButton onClick={onCloseClick}>
+                            <CloseIcon/>
+                        </IconButton>
+                    </Grid>
+                </Grid>
                 {children}
             </Box>
         </Modal>
