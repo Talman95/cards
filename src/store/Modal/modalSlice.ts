@@ -24,8 +24,14 @@ const slice = createSlice({
 export const modalSlice = slice.reducer
 export const modalActions = slice.actions
 
+export type DeleteModalType = {
+    id: string
+    title: string
+}
+
 export type ModalDateType =
     | AddPackParamsType
     | UpdatePackType
     | AddCardType
     | UpdateCardType
+    | DeleteModalType

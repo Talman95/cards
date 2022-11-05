@@ -1,18 +1,15 @@
-import React, {FC, useState} from 'react';
+import React, {FC} from 'react';
 import {IconButton, Rating, Stack, TableCell, TableRow, Typography} from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {useAppSelector} from "../../../../hooks/hooks";
 import {CardType, UpdateCardType} from "../../../../api/cardsAPI";
-import {BasicModal} from "../../../../components/BasicModalOld/BasicModal";
-import {QuestionModal} from "../../../../components/QuestionModal/QuestionModal";
 import {useActions} from "../../../../hooks/useActions";
 import {modalType} from "../../../../enums/modalType";
+import {DeleteModalType} from "../../../../store/Modal/modalSlice";
 
 export const CustomCardRow: FC<{card: CardType}> = ({card}) => {
-    const {deleteCard, setModalOpen} = useActions()
-
-    const [openDelete, setOpenDelete] = useState(false)
+    const {setModalOpen} = useActions()
 
     const userId = useAppSelector(state => state.profile.profile?._id)
 
@@ -29,11 +26,14 @@ export const CustomCardRow: FC<{card: CardType}> = ({card}) => {
         })
     }
 
-    const handleOpenDeleteModal = () => setOpenDelete(true)
-    const handleCloseDeleteModal = () => setOpenDelete(false)
-    const handleDeleteCard = (id: string) => {
-        deleteCard(id)
-        handleCloseDeleteModal()
+    const onDeleteCardClick = () => {
+        setModalOpen({
+            type: modalType.DELETE_CARD,
+            data: {
+                id: card._id,
+                title: card.question,
+            } as DeleteModalType
+        })
     }
 
     return (
@@ -91,19 +91,10 @@ export const CustomCardRow: FC<{card: CardType}> = ({card}) => {
                             <EditIcon fontSize={'small'}/>
                         </IconButton>
                         <IconButton aria-label={'delete'} size={'small'}
-                                    onClick={handleOpenDeleteModal}>
+                                    onClick={onDeleteCardClick}>
                             <DeleteIcon fontSize={'small'}/>
                         </IconButton>
                     </Stack>
-                    <BasicModal open={openDelete} setOpen={setOpenDelete}>
-                        <QuestionModal
-                            title={'Delete Card'}
-                            itemName={card.question}
-                            itemId={card._id}
-                            navigateBack={handleCloseDeleteModal}
-                            deleteItem={handleDeleteCard}
-                        />
-                    </BasicModal>
                 </TableCell>
             }
         </TableRow>

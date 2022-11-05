@@ -7,25 +7,22 @@ import {PackType} from "../../../../api/packsAPI";
 import {useAppSelector} from "../../../../hooks/hooks";
 import {useNavigate} from "react-router-dom";
 import {BasicModal} from "../../../../components/BasicModalOld/BasicModal";
-import {QuestionModal} from "../../../../components/QuestionModal/QuestionModal";
 import {useActions} from "../../../../hooks/useActions";
 import noImage from '../../../../assets/no-image.jpg';
 import {ViewedUser} from "../../../Users/ViewedUser/ViewedUser";
 import {modalType} from "../../../../enums/modalType";
+import {DeleteModalType} from "../../../../store/Modal/modalSlice";
 
 export const CustomPackRow: FC<{ pack: PackType }> = ({pack}) => {
     const navigate = useNavigate()
-    const {deletePack, setModalOpen} = useActions()
 
-    const [openDelete, setOpenDelete] = useState(false)
+    const {setModalOpen} = useActions()
+
     const [userModal, setUserModal] = useState(false)
     const [packCover, setPackCover] = useState(pack.deckCover)
 
     const user_id = useAppSelector(state => state.profile.profile?._id)
     const status = useAppSelector(state => state.app.status)
-
-    const handleOpenDeleteModal = () => setOpenDelete(true)
-    const handleCloseDeleteModal = () => setOpenDelete(false)
 
     const handleOpenUserModal = () => {
         if (status === 'loading') return
@@ -37,6 +34,7 @@ export const CustomPackRow: FC<{ pack: PackType }> = ({pack}) => {
         if (status === 'loading') return
         navigate(`/cards/${id}`)
     }
+
     const onUpdatePackClick = () => {
         setModalOpen({
             type: modalType.UPDATE_PACK,
@@ -48,11 +46,18 @@ export const CustomPackRow: FC<{ pack: PackType }> = ({pack}) => {
             }
         })
     }
-    const deletePackHandler = (id: string) => {
-        deletePack(id)
-        handleCloseDeleteModal()
+
+    const onDeletePackClick = () => {
+        setModalOpen({
+            type: modalType.DELETE_PACK,
+            data: {
+                id: pack._id,
+                title: pack.name,
+            } as DeleteModalType
+        })
     }
-    const learnPackHandler = (id: string) => {
+
+    const onLearnPackClick = (id: string) => {
         navigate(`/learn/${id}`)
     }
     const handleError = () => {
@@ -118,7 +123,7 @@ export const CustomPackRow: FC<{ pack: PackType }> = ({pack}) => {
                     ?
                     <Stack direction={'row'} alignItems={'center'} spacing={1}>
                         <IconButton aria-label={'learn'} size={'small'}
-                                    onClick={() => learnPackHandler(pack._id)}
+                                    onClick={() => onLearnPackClick(pack._id)}
                                     disabled={pack.cardsCount === 0 || status === 'loading'}>
                             <SchoolIcon fontSize={'small'}/>
                         </IconButton>
@@ -128,7 +133,7 @@ export const CustomPackRow: FC<{ pack: PackType }> = ({pack}) => {
                             <EditIcon fontSize={'small'}/>
                         </IconButton>
                         <IconButton aria-label={'delete'} size={'small'}
-                                    onClick={handleOpenDeleteModal}
+                                    onClick={onDeletePackClick}
                                     disabled={status === 'loading'}>
                             <DeleteIcon fontSize={'small'}/>
                         </IconButton>
@@ -136,20 +141,11 @@ export const CustomPackRow: FC<{ pack: PackType }> = ({pack}) => {
                     :
                     <Stack direction={'row'} alignItems={'flex-start'} spacing={1}>
                         <IconButton aria-label={'delete'} size={'small'}
-                                    onClick={() => learnPackHandler(pack._id)}
+                                    onClick={() => onLearnPackClick(pack._id)}
                                     disabled={pack.cardsCount === 0 || status === 'loading'}>
                             <SchoolIcon fontSize={'small'}/>
                         </IconButton>
                     </Stack>}
-                <BasicModal open={openDelete} setOpen={setOpenDelete}>
-                    <QuestionModal
-                        title={'Delete Packs'}
-                        itemName={pack.name}
-                        itemId={pack._id}
-                        navigateBack={handleCloseDeleteModal}
-                        deleteItem={deletePackHandler}
-                    />
-                </BasicModal>
                 <BasicModal open={userModal} setOpen={setUserModal}>
                     <ViewedUser id={pack.user_id} navigateBack={handleCloseUserModal}/>
                 </BasicModal>

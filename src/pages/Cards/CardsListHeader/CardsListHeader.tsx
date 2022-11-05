@@ -1,7 +1,6 @@
 import React, {FC, useState} from 'react';
 import {Box, Button, IconButton, styled, Tooltip, tooltipClasses, TooltipProps, Typography} from "@mui/material";
 import {useAppSelector} from "../../../hooks/hooks";
-import {BasicModal} from "../../../components/BasicModalOld/BasicModal";
 import {AddCardType} from "../../../api/cardsAPI";
 import {useActions} from "../../../hooks/useActions";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
@@ -9,9 +8,8 @@ import {useNavigate} from "react-router-dom";
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import {ActionMenu} from "./ActionMenu/ActionMenu";
 import {UpdatePackType} from "../../../api/packsAPI";
-import {QuestionModal} from "../../../components/QuestionModal/QuestionModal";
-import {PATH} from "../../../routes/RoutesPage";
 import {modalType} from "../../../enums/modalType";
+import {DeleteModalType} from "../../../store/Modal/modalSlice";
 
 type PropsType = {
     cardsPackId: string
@@ -19,7 +17,7 @@ type PropsType = {
 }
 
 export const CardsListHeader: FC<PropsType> = ({cardsPackId, length}) => {
-    const {deletePack, setModalOpen} = useActions()
+    const {setModalOpen} = useActions()
     const navigate = useNavigate()
 
     const packUserId = useAppSelector(state => state.cards.packUserId)
@@ -32,7 +30,6 @@ export const CardsListHeader: FC<PropsType> = ({cardsPackId, length}) => {
     const packIsPrivate = pack?.private
     const isUserPack: boolean = packUserId === userId
 
-    const [deleteModal, setDeleteModal] = useState(false)
     const [openTooltip, setOpenTooltip] = useState(false)
 
     const onAddCardClick = () => {
@@ -56,13 +53,15 @@ export const CardsListHeader: FC<PropsType> = ({cardsPackId, length}) => {
             } as UpdatePackType
         })
     }
-
-    const deletePackHandler = async () => {
-        setDeleteModal(false)
-        await deletePack(cardsPackId)
-        navigate(PATH.PACKS)
+    const onDeletePackClick = () => {
+        setModalOpen({
+            type: modalType.DELETE_PACK,
+            data: {
+                id: cardsPackId,
+                title: packName || '',
+            } as DeleteModalType
+        })
     }
-    const handleOpenDelete = () => setDeleteModal(true)
 
     const handleCloseTooltip = () => setOpenTooltip(false)
     const navigateToPacksList = () => navigate(-1)
@@ -84,7 +83,7 @@ export const CardsListHeader: FC<PropsType> = ({cardsPackId, length}) => {
                         <CustomTooltip
                             title={<ActionMenu blocked={!isUserPack || length === 0}
                                                showUpdateModal={onUpdatePackClick}
-                                               showDeleteModal={handleOpenDelete}
+                                               showDeleteModal={onDeletePackClick}
                                                closeTooltip={handleCloseTooltip}
                             />}
                             open={openTooltip}
@@ -117,15 +116,6 @@ export const CardsListHeader: FC<PropsType> = ({cardsPackId, length}) => {
                     />
                 </Box>
             }
-            <BasicModal open={deleteModal} setOpen={() => setDeleteModal(false)}>
-                <QuestionModal
-                    title={'Delete Packs'}
-                    itemName={packName || ''}
-                    itemId={cardsPackId}
-                    navigateBack={() => setDeleteModal(false)}
-                    deleteItem={deletePackHandler}
-                />
-            </BasicModal>
         </Box>
     )
 }

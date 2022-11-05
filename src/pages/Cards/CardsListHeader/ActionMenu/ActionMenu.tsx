@@ -13,12 +13,17 @@ type PropsType = {
     closeTooltip: () => void
 }
 
-export const ActionMenu: FC<PropsType> = ({blocked, showUpdateModal, showDeleteModal, closeTooltip}) => {
+export const ActionMenu: FC<PropsType> = (
+    {
+        blocked, showUpdateModal,
+        showDeleteModal, closeTooltip,
+    }) => {
+
     const navigate = useNavigate()
 
     const cardsPack_id = useAppSelector(state => state.cards.cardsPack_id)
 
-    const handleOnLearnClick = () => {
+    const onLearnPackClick = () => {
         closeTooltip()
         navigate('/learn/' + cardsPack_id)
     }
@@ -26,7 +31,7 @@ export const ActionMenu: FC<PropsType> = ({blocked, showUpdateModal, showDeleteM
         closeTooltip()
         showUpdateModal()
     }
-    const handleOnDeleteClick = () => {
+    const onDeletePackClick = () => {
         closeTooltip()
         showDeleteModal()
     }
@@ -34,7 +39,7 @@ export const ActionMenu: FC<PropsType> = ({blocked, showUpdateModal, showDeleteM
     return (
         <Stack direction={'column'} alignItems={'flex-start'} justifyContent={'center'} spacing={1}>
             <IconButton size={'small'}
-                        onClick={handleOnLearnClick}
+                        onClick={onLearnPackClick}
                         disabled={blocked}
             >
                 <SchoolIcon fontSize={'small'}/>
@@ -45,7 +50,7 @@ export const ActionMenu: FC<PropsType> = ({blocked, showUpdateModal, showDeleteM
                 <EditIcon fontSize={'small'}/>
             </IconButton>
             <IconButton size={'small'}
-                        onClick={handleOnDeleteClick}
+                        onClick={onDeletePackClick}
             >
                 <DeleteIcon fontSize={'small'}/>
             </IconButton>
