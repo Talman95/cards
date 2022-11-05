@@ -6,32 +6,24 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import {PackType} from "../../../../api/packsAPI";
 import {useAppSelector} from "../../../../hooks/hooks";
 import {useNavigate} from "react-router-dom";
-import {BasicModal} from "../../../../components/BasicModalOld/BasicModal";
 import {useActions} from "../../../../hooks/useActions";
 import noImage from '../../../../assets/no-image.jpg';
-import {ViewedUser} from "../../../Users/ViewedUser/ViewedUser";
 import {modalType} from "../../../../enums/modalType";
-import {DeleteModalType} from "../../../../store/Modal/modalSlice";
+import {DeleteModalType, ShowUserModalType} from "../../../../store/Modal/modalSlice";
 
 export const CustomPackRow: FC<{ pack: PackType }> = ({pack}) => {
     const navigate = useNavigate()
 
     const {setModalOpen} = useActions()
 
-    const [userModal, setUserModal] = useState(false)
     const [packCover, setPackCover] = useState(pack.deckCover)
 
     const user_id = useAppSelector(state => state.profile.profile?._id)
     const status = useAppSelector(state => state.app.status)
 
-    const handleOpenUserModal = () => {
-        if (status === 'loading') return
-        setUserModal(true)
-    }
-    const handleCloseUserModal = () => setUserModal(false)
-
     const navigateToCardsList = (id: string) => {
         if (status === 'loading') return
+
         navigate(`/cards/${id}`)
     }
 
@@ -54,6 +46,17 @@ export const CustomPackRow: FC<{ pack: PackType }> = ({pack}) => {
                 id: pack._id,
                 title: pack.name,
             } as DeleteModalType
+        })
+    }
+
+    const onShowUserModalClick = () => {
+        if (status === 'loading') return
+
+        setModalOpen({
+            type: modalType.SHOW_USER,
+            data: {
+                id: pack.user_id
+            } as ShowUserModalType
         })
     }
 
@@ -108,7 +111,7 @@ export const CustomPackRow: FC<{ pack: PackType }> = ({pack}) => {
                 {new Date(pack.updated).toLocaleString()}
             </TableCell>
             <TableCell component={'th'} scope={'row'} align={'left'}
-                       onClick={handleOpenUserModal}
+                       onClick={onShowUserModalClick}
                        style={{
                            cursor: 'pointer',
                            maxWidth: '180px',
@@ -146,9 +149,6 @@ export const CustomPackRow: FC<{ pack: PackType }> = ({pack}) => {
                             <SchoolIcon fontSize={'small'}/>
                         </IconButton>
                     </Stack>}
-                <BasicModal open={userModal} setOpen={setUserModal}>
-                    <ViewedUser id={pack.user_id} navigateBack={handleCloseUserModal}/>
-                </BasicModal>
             </TableCell>
         </TableRow>
     )

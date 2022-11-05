@@ -5,4 +5,5 @@ export enum modalType {
     UPDATE_CARD = 'Update Card',
     DELETE_PACK = 'Delete Pack',
     DELETE_CARD = 'Delete Card',
+    SHOW_USER = 'User Information',
 }

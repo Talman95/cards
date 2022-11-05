@@ -28,6 +28,9 @@ export type DeleteModalType = {
     id: string
     title: string
 }
+export type ShowUserModalType = {
+    id: string
+}
 
 export type ModalDateType =
     | AddPackParamsType
@@ -35,3 +38,4 @@ export type ModalDateType =
     | AddCardType
     | UpdateCardType
     | DeleteModalType
+    | ShowUserModalType

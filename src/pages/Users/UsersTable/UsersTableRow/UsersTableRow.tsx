@@ -1,23 +1,28 @@
-import React, {FC, useState} from 'react';
+import React, {FC} from 'react';
 import {Avatar, TableCell, TableRow} from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import {UserType} from "../../../../api/usersAPI";
 import {blue} from '@mui/material/colors';
-import {BasicModal} from "../../../../components/BasicModalOld/BasicModal";
-import {ViewedUser} from "../../ViewedUser/ViewedUser";
 import {useAppSelector} from "../../../../hooks/hooks";
+import {modalType} from "../../../../enums/modalType";
+import {ShowUserModalType} from "../../../../store/Modal/modalSlice";
+import {useActions} from "../../../../hooks/useActions";
 
 export const UsersTableRow: FC<{ user: UserType }> = ({user}) => {
-    const [userModal, setUserModal] = useState(false)
+
+    const {setModalOpen} = useActions()
 
     const status = useAppSelector(state => state.app.status)
 
-    const handleOpenUserModal = () => {
+    const onShowUserModalClick = () => {
         if (status === 'loading') return
-        setUserModal(true)
-    }
-    const handleCloseUserModal = () => {
-        setUserModal(false)
+
+        setModalOpen({
+            type: modalType.SHOW_USER,
+            data: {
+                id: user._id
+            } as ShowUserModalType
+        })
     }
 
     return (
@@ -26,7 +31,7 @@ export const UsersTableRow: FC<{ user: UserType }> = ({user}) => {
             hover
         >
             <TableCell align={'left'} style={{width: '100px', cursor: 'pointer'}}
-                       onClick={handleOpenUserModal}>
+                       onClick={onShowUserModalClick}>
                 <Avatar
                     sx={{width: 60, height: 60, bgcolor: blue[500]}}
                     alt={user.name}
@@ -34,7 +39,7 @@ export const UsersTableRow: FC<{ user: UserType }> = ({user}) => {
                 />
             </TableCell>
             <TableCell component={'th'} scope={'row'} align={'left'}
-                       onClick={handleOpenUserModal}
+                       onClick={onShowUserModalClick}
                        style={{
                            cursor: 'pointer',
                            maxWidth: '268px',
@@ -57,9 +62,6 @@ export const UsersTableRow: FC<{ user: UserType }> = ({user}) => {
                 {user.verified &&
                     <CheckCircleIcon fontSize={'small'} color={'primary'}/>}
             </TableCell>
-            <BasicModal open={userModal} setOpen={setUserModal}>
-                <ViewedUser id={user._id} navigateBack={handleCloseUserModal}/>
-            </BasicModal>
         </TableRow>
     )
 }
