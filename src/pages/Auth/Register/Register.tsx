@@ -1,10 +1,10 @@
 import React, {FC, useEffect} from 'react';
 import {Navigate, useNavigate} from "react-router-dom";
-import {PATH} from "../../../routes/RoutesPage";
 import {useFormik} from "formik";
 import {useAppSelector} from "../../../hooks/hooks";
 import {Button, FormControl, FormGroup, Grid, Link, TextField, Typography} from "@mui/material";
 import {useActions} from "../../../hooks/useActions";
+import {path} from "../../../enums/path";
 
 type FormikErrorType = {
     email?: string
@@ -19,7 +19,7 @@ export const Register: FC = () => {
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
     const isRegistered = useAppSelector(state => state.auth.isRegistered)
 
-    const navigateToLogin = () => navigate(PATH.LOGIN)
+    const navigateToLogin = () => navigate(path.LOGIN)
 
     useEffect(() => {
         return () => {
@@ -56,10 +56,10 @@ export const Register: FC = () => {
     })
 
     if (isRegistered) {
-        return <Navigate to={PATH.LOGIN}/>
+        return <Navigate to={path.LOGIN}/>
     }
     if (isLoggedIn) {
-        return <Navigate to={PATH.PROFILE}/>
+        return <Navigate to={path.PROFILE}/>
     }
 
     return (

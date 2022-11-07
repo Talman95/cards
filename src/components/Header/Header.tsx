@@ -4,7 +4,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import {useAppSelector} from "../../hooks/hooks";
 import {useNavigate} from "react-router-dom";
 import {useActions} from "../../hooks/useActions";
-import {PATH} from "../../routes/RoutesPage";
+import {path} from "../../enums/path";
 
 export const Header = () => {
     const navigate = useNavigate()
@@ -23,15 +23,15 @@ export const Header = () => {
         setAnchorEl(null)
     }
     const navigateToProfile = () => {
-        navigate(PATH.PROFILE)
+        navigate(path.PROFILE)
         handleClose()
     }
     const navigateToPacksList = () => {
-        navigate(PATH.PACKS)
+        navigate(path.PACKS)
         handleClose()
     }
     const navigateToUsersPage = () => {
-        navigate(PATH.USERS)
+        navigate(path.USERS)
         handleClose()
     }
     const handleLogout = () => {

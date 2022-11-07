@@ -1,17 +1,16 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {appActions as commonActions} from "../CommonActions/App";
-import {AlertColor} from "@mui/material";
-
-export type AppStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
+import {appStatus} from "../../enums/appStatus";
+import {SnackbarStatus} from "../../enums/snackbarStatus";
 
 const slice = createSlice({
     name: 'app',
     initialState: {
         isInitialized: false,
-        status: 'idle',
+        status: appStatus.IDLE,
         error: null as string | null,
         message: null as string | null,
-        result: 'success' as AlertColor,
+        result: SnackbarStatus.SUCCESS as SnackbarStatus,
     },
     reducers: {},
     extraReducers: builder => {

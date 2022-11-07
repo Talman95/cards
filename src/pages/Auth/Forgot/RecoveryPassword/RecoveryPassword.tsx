@@ -3,8 +3,8 @@ import {Button, FormControl, FormGroup, Grid, Link, TextField, Typography} from 
 import {FormikHelpers, useFormik} from "formik";
 import {allAuthActions} from "../../../../store";
 import {useAppDispatch} from "../../../../hooks/hooks";
-import {PATH} from "../../../../routes/RoutesPage";
 import {useNavigate} from "react-router-dom";
+import {path} from "../../../../enums/path";
 
 type ForgotErrorsType = {
     email?: string
@@ -21,7 +21,7 @@ export const RecoveryPassword: FC<PropsType> = ({toSend, setEmail}) => {
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
 
-    const navigateToLogin = () => navigate(PATH.LOGIN)
+    const navigateToLogin = () => navigate(path.LOGIN)
 
     const formik = useFormik({
         initialValues: {

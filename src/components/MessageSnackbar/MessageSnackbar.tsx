@@ -3,7 +3,7 @@ import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, {AlertProps} from '@mui/material/Alert';
 import {useAppSelector} from "../../hooks/hooks";
 import {useActions} from "../../hooks/useActions";
-import {AlertColor} from "@mui/material";
+import {SnackbarStatus} from "../../enums/snackbarStatus";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
@@ -16,7 +16,7 @@ export const MessageSnackbar: FC = () => {
     const {setAppMessage} = useActions()
 
     const message = useAppSelector(state => state.app.message)
-    const result: AlertColor = useAppSelector(state => state.app.result)
+    const result: SnackbarStatus = useAppSelector(state => state.app.result)
 
     const isOpen = message !== null
 

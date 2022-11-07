@@ -5,6 +5,8 @@ import {AxiosError, AxiosResponse} from "axios";
 import {profileActions} from "../Profile/profileSlice";
 import {appActions} from "../CommonActions/App";
 import {authAsyncThunks} from "./asyncThunk";
+import {appStatus} from "../../enums/appStatus";
+import {SnackbarStatus} from "../../enums/snackbarStatus";
 
 describe('authSlice', () => {
     let state: {
@@ -100,9 +102,9 @@ describe('asyncThunk', () => {
 
             expect(calls).toHaveLength(5)
             expect(calls[0][0].type).toBe('auth/login/pending')
-            expect(dispatch).toHaveBeenNthCalledWith(2, appActions.setAppStatus('loading'))
+            expect(dispatch).toHaveBeenNthCalledWith(2, appActions.setAppStatus(appStatus.LOADING))
             expect(dispatch).toHaveBeenNthCalledWith(3, profileActions.setProfile({profile: result.data}))
-            expect(dispatch).toHaveBeenNthCalledWith(4, appActions.setAppStatus('idle'))
+            expect(dispatch).toHaveBeenNthCalledWith(4, appActions.setAppStatus(appStatus.IDLE))
             expect(calls[4][0].type).toBe('auth/login/fulfilled')
             expect(calls[4][0].payload).toStrictEqual({login: true})
         })
@@ -125,9 +127,9 @@ describe('asyncThunk', () => {
 
         expect(calls).toHaveLength(5)
         expect(calls[0][0].type).toBe('auth/login/pending')
-        expect(dispatch).toHaveBeenNthCalledWith(2, appActions.setAppStatus('loading'))
-        expect(dispatch).toHaveBeenNthCalledWith(3, appActions.setAppMessage({result: 'error', message: errorMessage}))
-        expect(dispatch).toHaveBeenNthCalledWith(4, appActions.setAppStatus('failed'))
+        expect(dispatch).toHaveBeenNthCalledWith(2, appActions.setAppStatus(appStatus.LOADING))
+        expect(dispatch).toHaveBeenNthCalledWith(3, appActions.setAppMessage({result: SnackbarStatus.ERROR, message: errorMessage}))
+        expect(dispatch).toHaveBeenNthCalledWith(4, appActions.setAppStatus(appStatus.FAILED))
         expect(calls[4][0].type).toBe('auth/login/rejected')
         expect(calls[4][0].payload).toStrictEqual({error: errorMessage})
     })

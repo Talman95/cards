@@ -3,13 +3,15 @@ import {RootState} from "../store";
 import {packsAPI, UpdatePackType} from "../../api/packsAPI";
 import {handleAppError} from "../../utils/errorUtils";
 import {appActions} from "../CommonActions/App";
+import {appStatus} from "../../enums/appStatus";
+import {SnackbarStatus} from "../../enums/snackbarStatus";
 
 const {setAppStatus, setAppMessage} = appActions
 
 const getPacks = createAsyncThunk(
     'packs/getPacks',
     async (id: string | null, thunkAPI) => {
-        thunkAPI.dispatch(setAppStatus('loading'))
+        thunkAPI.dispatch(setAppStatus(appStatus.LOADING))
         try {
             const state = thunkAPI.getState() as RootState
             const packs = state.packs
@@ -24,7 +26,7 @@ const getPacks = createAsyncThunk(
                 user_id: id === userId ? userId : id,
             })
 
-            thunkAPI.dispatch(setAppStatus('idle'))
+            thunkAPI.dispatch(setAppStatus(appStatus.IDLE))
             return res.data
         } catch {
             return thunkAPI.rejectWithValue(null)
@@ -35,14 +37,14 @@ const getPacks = createAsyncThunk(
 const addPack = createAsyncThunk(
     'packs/addPack',
     async (params: { name: string, deckCover?: string | null, isPrivate?: boolean | null }, thunkAPI) => {
-        thunkAPI.dispatch(setAppStatus('loading'))
+        thunkAPI.dispatch(setAppStatus(appStatus.LOADING))
         try {
             const state = thunkAPI.getState() as RootState
             const paramUserId = state.packs.paramUserId
 
             await packsAPI.addPack({...params})
             await thunkAPI.dispatch(getPacks(paramUserId))
-            thunkAPI.dispatch(setAppMessage({result: 'success', message: 'New pack created'}))
+            thunkAPI.dispatch(setAppMessage({result: SnackbarStatus.SUCCESS, message: 'New pack created'}))
         } catch (e) {
             return handleAppError(e, thunkAPI)
         }
@@ -51,14 +53,14 @@ const addPack = createAsyncThunk(
 const deletePack = createAsyncThunk(
     'packs/deletePack',
     async (id: string, thunkAPI) => {
-        thunkAPI.dispatch(setAppStatus('loading'))
+        thunkAPI.dispatch(setAppStatus(appStatus.LOADING))
         try {
             const state = thunkAPI.getState() as RootState
             const paramUserId = state.packs.paramUserId
 
             await packsAPI.deletePack(id)
             await thunkAPI.dispatch(getPacks(paramUserId))
-            thunkAPI.dispatch(setAppMessage({result: 'error', message: 'Packs deleted'}))
+            thunkAPI.dispatch(setAppMessage({result: SnackbarStatus.ERROR, message: 'Packs deleted'}))
         } catch (e) {
             return handleAppError(e, thunkAPI)
         }
@@ -68,14 +70,14 @@ const deletePack = createAsyncThunk(
 const updatePack = createAsyncThunk(
     'pack/updatePack',
     async (pack: UpdatePackType, thunkAPI) => {
-        thunkAPI.dispatch(setAppStatus('loading'))
+        thunkAPI.dispatch(setAppStatus(appStatus.LOADING))
         try {
             const state = thunkAPI.getState() as RootState
             const paramUserId = state.packs.paramUserId
 
             await packsAPI.updatePack(pack)
             await thunkAPI.dispatch(getPacks(paramUserId))
-            thunkAPI.dispatch(setAppMessage({result: 'success', message: 'Packs updated'}))
+            thunkAPI.dispatch(setAppMessage({result: SnackbarStatus.SUCCESS, message: 'Packs updated'}))
         } catch (e) {
             return handleAppError(e, thunkAPI)
         }

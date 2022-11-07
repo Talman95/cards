@@ -3,18 +3,19 @@ import {RootState} from "../store";
 import {usersAPI} from "../../api/usersAPI";
 import {appActions} from "../CommonActions/App";
 import {handleAppError} from "../../utils/errorUtils";
+import {appStatus} from "../../enums/appStatus";
 
 const {setAppStatus} = appActions
 
 const getUsers = createAsyncThunk(
     'users/getUsers',
     async (param: undefined, thunkAPI) => {
-        thunkAPI.dispatch(setAppStatus('loading'))
+        thunkAPI.dispatch(setAppStatus(appStatus.LOADING))
         try {
             const state = thunkAPI.getState() as RootState
             const filter = {...state.users.filter}
             const res = await usersAPI.getUsers(filter)
-            thunkAPI.dispatch(setAppStatus('idle'))
+            thunkAPI.dispatch(setAppStatus(appStatus.IDLE))
             return res.data
         } catch (e) {
             return handleAppError(e, thunkAPI)

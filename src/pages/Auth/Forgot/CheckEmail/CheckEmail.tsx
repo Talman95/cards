@@ -1,12 +1,12 @@
 import React, {FC} from 'react';
 import {Button, FormGroup, Grid, Typography} from "@mui/material";
 import {useNavigate} from "react-router-dom";
-import {PATH} from "../../../../routes/RoutesPage";
+import {path} from "../../../../enums/path";
 
 export const CheckEmail: FC<{email: string}> = ({email}) => {
     const navigate = useNavigate()
 
-    const navigateToLogin = () => navigate(PATH.LOGIN)
+    const navigateToLogin = () => navigate(path.LOGIN)
 
     return (
         <Grid item justifyContent={'center'}>

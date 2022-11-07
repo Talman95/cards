@@ -4,6 +4,7 @@ import {FormikHelpers, useFormik} from "formik";
 import {useAppDispatch} from "../../../hooks/hooks";
 import {Button, FormControl, FormGroup, Grid, TextField, Typography} from "@mui/material";
 import {allAuthActions} from "../../../store";
+import {path} from "../../../enums/path";
 
 type FormikErrorType = {
     password?: string
@@ -42,7 +43,7 @@ export const SetPassword: FC = () => {
     })
 
     if (isCreated) {
-        return <Navigate to={'/login'}/>
+        return <Navigate to={path.LOGIN}/>
     }
 
     return (

@@ -1,7 +1,6 @@
 import React from 'react';
 import {useFormik} from "formik";
 import {Navigate, useNavigate} from "react-router-dom";
-import {PATH} from "../../../routes/RoutesPage";
 import {useAppSelector} from "../../../hooks/hooks";
 import {
     Button,
@@ -15,6 +14,7 @@ import {
     Typography
 } from "@mui/material";
 import {useActions} from "../../../hooks/useActions";
+import {path} from "../../../enums/path";
 
 type FormikErrorType = {
     email?: string
@@ -28,8 +28,8 @@ export const Login = () => {
 
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
 
-    const navigateToRegister = () => navigate(PATH.REGISTER)
-    const navigateToForgot = () => navigate(PATH.FORGOT_PASSWORD)
+    const navigateToRegister = () => navigate(path.REGISTER)
+    const navigateToForgot = () => navigate(path.FORGOT_PASSWORD)
 
     const formik = useFormik({
         initialValues: {
@@ -55,7 +55,7 @@ export const Login = () => {
     })
 
     if (isLoggedIn) {
-        return <Navigate to={'/profile'}/>
+        return <Navigate to={path.PROFILE}/>
     }
 
     return (

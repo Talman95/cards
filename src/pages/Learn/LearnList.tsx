@@ -2,12 +2,12 @@ import React, {FC, useEffect, useState} from 'react';
 import {Box, Button, Card, CardActions, CardContent, CircularProgress, IconButton, Typography} from "@mui/material";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import {useNavigate, useParams} from "react-router-dom";
-import {PATH} from "../../routes/RoutesPage";
 import {useAppSelector} from "../../hooks/hooks";
 import {getCard} from "../../utils/smartRandom";
 import {CardType} from "../../api/cardsAPI";
 import {CheckboxBlock} from "./CheckboxBlock/CheckboxBlock";
 import {useActions} from "../../hooks/useActions";
+import {path} from "../../enums/path";
 
 export const LearnList: FC = () => {
     const navigate = useNavigate()
@@ -52,7 +52,7 @@ export const LearnList: FC = () => {
     const handleChangeGrade = (grade: number) => {
         setGrade(grade)
     }
-    const navigateToPacksList = () => navigate(PATH.PACKS)
+    const navigateToPacksList = () => navigate(path.PACKS)
 
     if (!currentCard || isFetching) {
         return <div
@@ -115,5 +115,5 @@ export const LearnList: FC = () => {
                 }
             </Card>
         </Box>
-    );
+    )
 }

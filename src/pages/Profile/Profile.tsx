@@ -15,8 +15,8 @@ import {
 import LogoutIcon from '@mui/icons-material/Logout';
 import EditIcon from '@mui/icons-material/Edit';
 import {useActions} from "../../hooks/useActions";
-import {PATH} from "../../routes/RoutesPage";
 import {ProfileAvatar} from "./ProfileAvatar/ProfileAvatar";
+import {path} from "../../enums/path";
 
 export const Profile: FC = () => {
     const navigate = useNavigate()
@@ -41,7 +41,7 @@ export const Profile: FC = () => {
             offEditMode()
         }
     }
-    const navigateToPacks = () => navigate(PATH.PACKS)
+    const navigateToPacks = () => navigate(path.PACKS)
 
     if (!profile) {
         return <div

@@ -3,13 +3,15 @@ import {profileAPI} from "../../api/profileAPI";
 import {handleAppError} from "../../utils/errorUtils";
 import {appActions} from "../CommonActions/App";
 import {RootState} from "../store";
+import {appStatus} from "../../enums/appStatus";
+import {SnackbarStatus} from "../../enums/snackbarStatus";
 
 const {setAppStatus, setAppMessage} = appActions
 
 const updateProfile = createAsyncThunk(
     'profile/updateAvatarProfile',
     async (param: {name?: string, avatar?: string}, thunkAPI) => {
-        thunkAPI.dispatch(setAppStatus('loading'))
+        thunkAPI.dispatch(setAppStatus(appStatus.LOADING))
         try {
             const state = thunkAPI.getState() as RootState
             const profile = state.profile.profile
@@ -19,8 +21,8 @@ const updateProfile = createAsyncThunk(
             const newAvatar = param.avatar || profile.avatar
 
             const res = await profileAPI.updateProfile(newName, newAvatar)
-            thunkAPI.dispatch(setAppStatus('idle'))
-            thunkAPI.dispatch(setAppMessage({result: 'success', message: 'Profile updated'}))
+            thunkAPI.dispatch(setAppStatus(appStatus.IDLE))
+            thunkAPI.dispatch(setAppMessage({result: SnackbarStatus.SUCCESS, message: 'Profile updated'}))
             return {profile: res.data.updatedUser}
         } catch (e) {
             return handleAppError(e, thunkAPI)

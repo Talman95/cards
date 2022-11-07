@@ -4,6 +4,7 @@ import {useAppSelector} from "../../../hooks/hooks";
 import {Grid} from "@mui/material";
 import {CheckEmail} from "./CheckEmail/CheckEmail";
 import {RecoveryPassword} from "./RecoveryPassword/RecoveryPassword";
+import {path} from "../../../enums/path";
 
 export const Forgot: FC = () => {
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
@@ -15,7 +16,7 @@ export const Forgot: FC = () => {
     const handleSetEmail = (email: string) => setEmail(email)
 
     if (isLoggedIn) {
-        return <Navigate to={'/profile'}/>
+        return <Navigate to={path.PROFILE}/>
     }
 
     return (
