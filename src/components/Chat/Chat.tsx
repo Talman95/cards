@@ -3,7 +3,7 @@ import {useAppSelector} from "../../hooks/hooks";
 import {useActions} from "../../hooks/useActions";
 import {Badge, IconButton} from "@mui/material";
 import MessageIcon from '@mui/icons-material/Message';
-import {ChatModal} from "./ChatModal";
+import {ChatModal} from "./ChatModal/ChatModal";
 
 export const Chat = () => {
     const [isVisible, setIsVisible] = useState(false)

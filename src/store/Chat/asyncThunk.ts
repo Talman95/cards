@@ -7,7 +7,7 @@ const {initMessagesHandler, newMessageSendHandler} = chatActions
 
 export const createConnection = createAsyncThunk(
     'chat/createConnection',
-    (undefined, { dispatch, getState }) => {
+    (undefined: undefined, { dispatch, getState }) => {
         const state = getState() as RootState
         if (state.profile.profile) {
 
@@ -15,20 +15,27 @@ export const createConnection = createAsyncThunk(
         chatAPI.createConnection(_id, name, null)
         chatAPI.subscribe(
             messages => {
-                dispatch(initMessagesHandler(messages));
+                dispatch(initMessagesHandler(messages))
             },
             message => {
-                dispatch(newMessageSendHandler(message));
+                dispatch(newMessageSendHandler(message))
             },
         )
         }
     }
 )
+
+export const sentMessage = createAsyncThunk('chat/sentMessage', (message: string) => {
+    chatAPI.sentMessage(message)
+})
+
+
 export const destroyConnection = createAsyncThunk('chat/destroyConnection', () => {
-    chatAPI.destroyConnection();
-});
+    chatAPI.destroyConnection()
+})
 
 export const chatAsyncThunks = {
     createConnection,
+    sentMessage,
     destroyConnection,
 }
