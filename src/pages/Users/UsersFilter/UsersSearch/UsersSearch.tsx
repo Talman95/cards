@@ -1,18 +1,20 @@
-import React from 'react';
-import {Search} from "../../../../components/Search/Search";
-import {Box, Typography} from "@mui/material";
-import {useActions} from "../../../../hooks/useActions";
-import {useAppSelector} from "../../../../hooks/hooks";
+import React, { FC } from 'react';
 
-export const UsersSearch = () => {
-    const {setSearchUserName} = useActions()
+import { Box, Typography } from '@mui/material';
 
-    const userName = useAppSelector(state => state.users.filter.userName)
+import { Search } from '../../../../components/Search/Search';
+import { useAppSelector } from '../../../../hooks/hooks';
+import { useActions } from '../../../../hooks/useActions';
 
-    return (
-        <Box style={{height: '62px', width: '300px'}}>
-            <Typography variant={'body2'}>Search user</Typography>
-            <Search title={userName} setTitle={setSearchUserName}/>
-        </Box>
-    )
-}
+export const UsersSearch: FC = () => {
+  const { setSearchUserName } = useActions();
+
+  const userName = useAppSelector(state => state.users.filter.userName);
+
+  return (
+    <Box style={{ height: '62px', width: '300px' }}>
+      <Typography variant="body2">Search user</Typography>
+      <Search title={userName} setTitle={setSearchUserName} />
+    </Box>
+  );
+};

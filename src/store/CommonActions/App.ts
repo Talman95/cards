@@ -1,13 +1,16 @@
-import {createAction} from "@reduxjs/toolkit";
-import {appStatus} from "../../enums/appStatus";
-import {SnackbarStatus} from "../../enums/snackbarStatus";
+import { createAction } from '@reduxjs/toolkit';
 
-const setAppStatus = createAction<appStatus>('appActions/setAppStatus')
-const setAppMessage = createAction<{ result: SnackbarStatus, message: string | null }>('appActions/setAppMessage')
-const setInitialization = createAction<boolean>('appActions/setInitialization')
+import { appStatus } from '../../enums/appStatus';
+import { SnackbarStatus } from '../../enums/snackbarStatus';
+
+const setAppStatus = createAction<appStatus>('appActions/setAppStatus');
+const setAppMessage = createAction<{ result: SnackbarStatus; message: string | null }>(
+  'appActions/setAppMessage',
+);
+const setInitialization = createAction<boolean>('appActions/setInitialization');
 
 export const appActions = {
-    setAppStatus,
-    setAppMessage,
-    setInitialization,
-}
+  setAppStatus,
+  setAppMessage,
+  setInitialization,
+};

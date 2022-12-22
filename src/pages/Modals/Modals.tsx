@@ -1,16 +1,15 @@
-import React from 'react';
-import {useAppSelector} from "../../hooks/hooks";
-import {BasicModal} from "../../components/BasicModal/BasicModal";
-import {modalWatcher} from "../../utils/modalWatcher";
+import React, { FC } from 'react';
 
-export const Modals = () => {
-    const type = useAppSelector(state => state.modal.type)
+import { BasicModal } from '../../components/BasicModal/BasicModal';
+import { useAppSelector } from '../../hooks/hooks';
+import { modalWatcher } from '../../utils/modalWatcher';
 
-    return (
-        <BasicModal type={type}>
-            <>
-                {modalWatcher(type)}
-            </>
-        </BasicModal>
-    )
-}
+export const Modals: FC = () => {
+  const type = useAppSelector(state => state.modal.type);
+
+  return (
+    <BasicModal type={type}>
+      <>{modalWatcher(type)}</>
+    </BasicModal>
+  );
+};

@@ -1,46 +1,55 @@
-import React, {useEffect, useState} from 'react';
-import {useAppSelector} from "../../hooks/hooks";
-import {useActions} from "../../hooks/useActions";
-import {Badge, IconButton} from "@mui/material";
+import React, { FC, useEffect, useState } from 'react';
+
 import MessageIcon from '@mui/icons-material/Message';
-import {ChatModal} from "./ChatModal/ChatModal";
+import { Badge, IconButton } from '@mui/material';
 
-export const Chat = () => {
-    const [isVisible, setIsVisible] = useState(false)
+import { useAppSelector } from '../../hooks/hooks';
+import { useActions } from '../../hooks/useActions';
 
-    const {createConnection, destroyConnection} = useActions()
+import { ChatModal } from './ChatModal/ChatModal';
 
-    const messages = useAppSelector(state => state.chat.messages)
+export const Chat: FC = () => {
+  const [isVisible, setIsVisible] = useState(false);
 
-    useEffect(() => {
-        createConnection()
+  const { createConnection, destroyConnection } = useActions();
 
-        return () => {
-            destroyConnection()
-        }
-    }, [])
+  const messages = useAppSelector(state => state.chat.messages);
 
-    const onMessageButtonClick = () => {
-        setIsVisible(true)
-    }
-    const onCloseButtonClick = () => {
-        setIsVisible(false)
-    }
+  useEffect(() => {
+    createConnection();
 
-    return (
-        <>
-            {isVisible
-                ?
-                <ChatModal onCloseButtonClick={onCloseButtonClick} messages={messages}/>
-                :
-                <IconButton onClick={onMessageButtonClick} size={'large'}
-                            style={{position: 'absolute', bottom: '10px', right: '50px', cursor: 'pointer'}}>
-                    <Badge badgeContent={4} color={'primary'}>
-                        <MessageIcon fontSize="inherit"/>
-                    </Badge>
-                </IconButton>
-            }
-        </>
-    )
-}
+    return () => {
+      destroyConnection();
+    };
+  }, []);
 
+  const onMessageButtonClick = (): void => {
+    setIsVisible(true);
+  };
+  const onCloseButtonClick = (): void => {
+    setIsVisible(false);
+  };
+
+  return (
+    <div>
+      {isVisible ? (
+        <ChatModal onCloseButtonClick={onCloseButtonClick} messages={messages} />
+      ) : (
+        <IconButton
+          onClick={onMessageButtonClick}
+          size="large"
+          style={{
+            position: 'absolute',
+            bottom: '10px',
+            right: '50px',
+            cursor: 'pointer',
+          }}
+        >
+          <Badge badgeContent={4} color="primary">
+            <MessageIcon fontSize="inherit" />
+          </Badge>
+        </IconButton>
+      )}
+    </div>
+  );
+};

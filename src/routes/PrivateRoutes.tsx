@@ -1,12 +1,12 @@
-import {Navigate, Outlet} from 'react-router-dom'
-import {useAppSelector} from "../hooks/hooks";
-import {path} from "../enums/path";
+import { ReactElement } from 'react';
 
+import { Navigate, Outlet } from 'react-router-dom';
 
-export const PrivateRoutes = () => {
-    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
+import { path } from '../enums/path';
+import { useAppSelector } from '../hooks/hooks';
 
-    return (
-        isLoggedIn ? <Outlet/> : <Navigate to={path.LOGIN}/>
-    )
-}
+export const PrivateRoutes = (): ReactElement => {
+  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
+
+  return isLoggedIn ? <Outlet /> : <Navigate to={path.LOGIN} />;
+};

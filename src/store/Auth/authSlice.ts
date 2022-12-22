@@ -1,38 +1,33 @@
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {authAsyncThunks} from "./asyncThunk";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-const {
-    login,
-    logout,
-    register,
-} = authAsyncThunks
+import { login, logout, register } from './asyncThunk';
 
 const slice = createSlice({
-    name: 'auth',
-    initialState: {
-        isLoggedIn: false,
-        isRegistered: false,
+  name: 'auth',
+  initialState: {
+    isLoggedIn: false,
+    isRegistered: false,
+  },
+  reducers: {
+    setRegister: (state, action: PayloadAction<boolean>) => {
+      state.isRegistered = action.payload;
     },
-    reducers: {
-        setRegister: (state, action: PayloadAction<boolean>) => {
-            state.isRegistered = action.payload
-        },
-        setLoggedIn: (state, action: PayloadAction<boolean>) => {
-            state.isLoggedIn = action.payload
-        }
+    setLoggedIn: (state, action: PayloadAction<boolean>) => {
+      state.isLoggedIn = action.payload;
     },
-    extraReducers: (builder) => {
-        builder.addCase(login.fulfilled, (state, action) => {
-            state.isLoggedIn = action.payload.login
-        })
-        builder.addCase(logout.fulfilled, (state, action) => {
-            state.isLoggedIn = action.payload.login
-        })
-        builder.addCase(register.fulfilled, (state, action) => {
-            state.isRegistered = action.payload.isRegistered
-        })
-    }
-})
+  },
+  extraReducers: builder => {
+    builder.addCase(login.fulfilled, (state, action) => {
+      state.isLoggedIn = action.payload.login;
+    });
+    builder.addCase(logout.fulfilled, (state, action) => {
+      state.isLoggedIn = action.payload.login;
+    });
+    builder.addCase(register.fulfilled, (state, action) => {
+      state.isRegistered = action.payload.isRegistered;
+    });
+  },
+});
 
-export const authSlice = slice.reducer
-export const authActions = slice.actions
+export const authSlice = slice.reducer;
+export const authActions = slice.actions;

@@ -1,25 +1,28 @@
-import React, {useEffect} from 'react';
-import {Box} from "@mui/material";
-import {UsersTable} from "./UsersTable/UsersTable";
-import {UsersHeader} from "./UsersHeader/UsersHeader";
-import {useActions} from "../../hooks/useActions";
-import {useAppSelector} from "../../hooks/hooks";
-import {UsersFilter} from "./UsersFilter/UsersFilter";
+import React, { FC, useEffect } from 'react';
 
-export const Users = () => {
-    const {getUsers} = useActions()
+import { Box } from '@mui/material';
 
-    const filter = useAppSelector(state => state.users.filter)
+import { useAppSelector } from '../../hooks/hooks';
+import { useActions } from '../../hooks/useActions';
 
-    useEffect(() => {
-        getUsers()
-    }, [filter])
+import { UsersFilter } from './UsersFilter/UsersFilter';
+import { UsersHeader } from './UsersHeader/UsersHeader';
+import { UsersTable } from './UsersTable/UsersTable';
 
-    return (
-        <Box>
-            <UsersHeader/>
-            <UsersFilter/>
-            <UsersTable/>
-        </Box>
-    )
-}
+export const Users: FC = () => {
+  const { getUsers } = useActions();
+
+  const filter = useAppSelector(state => state.users.filter);
+
+  useEffect(() => {
+    getUsers();
+  }, [filter]);
+
+  return (
+    <Box>
+      <UsersHeader />
+      <UsersFilter />
+      <UsersTable />
+    </Box>
+  );
+};

@@ -1,10 +1,11 @@
-import React from 'react';
-import {Box, Typography} from "@mui/material";
+import React, { FC } from 'react';
 
-export const UsersHeader = () => {
-    return (
-        <Box>
-            <Typography variant={'h6'}>Users</Typography>
-        </Box>
-    )
-}
+import { Box, Typography } from '@mui/material';
+
+export const UsersHeader: FC = () => {
+  return (
+    <Box>
+      <Typography variant="h6">Users</Typography>
+    </Box>
+  );
+};

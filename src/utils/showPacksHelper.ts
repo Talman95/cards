@@ -1,10 +1,9 @@
-import {AccessoryType} from "../store/Packs/packsSlice";
+import { AccessoryType } from '../store/Packs/packsSlice';
 
-export const showPacksHelper = (param: string): {accessory: AccessoryType} => {
+export const showPacksHelper = (param: string): { accessory: AccessoryType } => {
+  if (param === 'my') {
+    return { accessory: 'my' };
+  }
 
-    if (param === 'my') {
-        return {accessory: 'my'}
-    } else {
-        return {accessory: 'all'}
-    }
-}
+  return { accessory: 'all' };
+};

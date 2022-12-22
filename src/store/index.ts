@@ -1,51 +1,50 @@
-import {appActions as commonActions} from "./CommonActions/App";
-import {authActions} from "./Auth/authSlice";
-import {authAsyncThunks} from "./Auth/asyncThunk";
-import {cardsAsyncThunks} from "./Cards/asyncThunk";
-import {cardsActions} from "./Cards/cardsSlice";
-import {learnActions} from "./Learn/learnSlice";
-import {learnAsyncThunks} from "./Learn/asyncThunk";
-import {profileActions} from "./Profile/profileSlice";
-import {profileAsyncThunks} from "./Profile/asyncThunk";
-import {packsActions} from "./Packs/packsSlice";
-import {packsAsyncThunks} from "./Packs/asyncThunk";
-import {usersAsyncThunk} from "./Users/asyncThunk";
-import {usersActions} from "./Users/usersSlice";
-import {chatAsyncThunks} from "./Chat/asyncThunk";
-import {modalActions} from "./Modal/modalSlice";
-
+import { authAsyncThunks } from './Auth/asyncThunk';
+import { authActions } from './Auth/authSlice';
+import { cardsAsyncThunks } from './Cards/asyncThunk';
+import { cardsActions } from './Cards/cardsSlice';
+import { chatAsyncThunks } from './Chat/asyncThunk';
+import { appActions as commonActions } from './CommonActions/App';
+import { learnAsyncThunks } from './Learn/asyncThunk';
+import { learnActions } from './Learn/learnSlice';
+import { modalActions } from './Modal/modalSlice';
+import { packsAsyncThunks } from './Packs/asyncThunk';
+import { packsActions } from './Packs/packsSlice';
+import { profileAsyncThunks } from './Profile/asyncThunk';
+import { profileActions } from './Profile/profileSlice';
+import { usersAsyncThunk } from './Users/asyncThunk';
+import { usersActions } from './Users/usersSlice';
 
 export const appActions = {
-    ...commonActions,
-}
+  ...commonActions,
+};
 export const allAuthActions = {
-    ...authActions,
-    ...authAsyncThunks,
-}
+  ...authActions,
+  ...authAsyncThunks,
+};
 export const allPacksActions = {
-    ...packsActions,
-    ...packsAsyncThunks,
-}
+  ...packsActions,
+  ...packsAsyncThunks,
+};
 export const allCardsActions = {
-    ...cardsActions,
-    ...cardsAsyncThunks,
-}
+  ...cardsActions,
+  ...cardsAsyncThunks,
+};
 export const allLearnActions = {
-    ...learnActions,
-    ...learnAsyncThunks,
-}
+  ...learnActions,
+  ...learnAsyncThunks,
+};
 export const allProfileActions = {
-    ...profileActions,
-    ...profileAsyncThunks,
-}
+  ...profileActions,
+  ...profileAsyncThunks,
+};
 export const allUsersActions = {
-    ...usersActions,
-    ...usersAsyncThunk,
-}
+  ...usersActions,
+  ...usersAsyncThunk,
+};
 export const allChatActions = {
-    // ...usersActions,
-    ...chatAsyncThunks,
-}
+  // ...usersActions,
+  ...chatAsyncThunks,
+};
 export const allModalActions = {
-    ...modalActions,
-}
+  ...modalActions,
+};

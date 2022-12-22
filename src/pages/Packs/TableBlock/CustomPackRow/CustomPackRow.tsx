@@ -1,155 +1,173 @@
-import React, {FC, useState} from 'react';
-import {IconButton, Stack, TableCell, TableRow} from "@mui/material";
-import SchoolIcon from "@mui/icons-material/School";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
-import {PackType} from "../../../../api/packsAPI";
-import {useAppSelector} from "../../../../hooks/hooks";
-import {useNavigate} from "react-router-dom";
-import {useActions} from "../../../../hooks/useActions";
+import React, { FC, useState } from 'react';
+
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import SchoolIcon from '@mui/icons-material/School';
+import { IconButton, Stack, TableCell, TableRow } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+
+import { PackType } from '../../../../api/packsAPI';
 import noImage from '../../../../assets/no-image.jpg';
-import {modalType} from "../../../../enums/modalType";
-import {DeleteModalType, ShowUserModalType} from "../../../../store/Modal/modalSlice";
+import { modalType } from '../../../../enums/modalType';
+import { useAppSelector } from '../../../../hooks/hooks';
+import { useActions } from '../../../../hooks/useActions';
+import { DeleteModalType, ShowUserModalType } from '../../../../store/Modal/modalSlice';
 
-export const CustomPackRow: FC<{ pack: PackType }> = ({pack}) => {
-    const navigate = useNavigate()
+export const CustomPackRow: FC<{ pack: PackType }> = ({ pack }) => {
+  const navigate = useNavigate();
 
-    const {setModalOpen} = useActions()
+  const { setModalOpen } = useActions();
 
-    const [packCover, setPackCover] = useState(pack.deckCover)
+  const [packCover, setPackCover] = useState(pack.deckCover);
 
-    const user_id = useAppSelector(state => state.profile.profile?._id)
-    const status = useAppSelector(state => state.app.status)
+  const user_id = useAppSelector(state => state.profile.profile?._id);
+  const status = useAppSelector(state => state.app.status);
 
-    const navigateToCardsList = (id: string) => {
-        if (status === 'loading') return
+  const navigateToCardsList = (id: string): void => {
+    if (status === 'loading') return;
 
-        navigate(`/cards/${id}`)
-    }
+    navigate(`/cards/${id}`);
+  };
 
-    const onUpdatePackClick = () => {
-        setModalOpen({
-            type: modalType.UPDATE_PACK,
-            data: {
-                _id: pack._id,
-                name: pack.name,
-                deckCover: pack.deckCover,
-                isPrivate: pack.private,
-            }
-        })
-    }
+  const onUpdatePackClick = (): void => {
+    setModalOpen({
+      type: modalType.UPDATE_PACK,
+      data: {
+        _id: pack._id,
+        name: pack.name,
+        deckCover: pack.deckCover,
+        isPrivate: pack.private,
+      },
+    });
+  };
 
-    const onDeletePackClick = () => {
-        setModalOpen({
-            type: modalType.DELETE_PACK,
-            data: {
-                id: pack._id,
-                title: pack.name,
-            } as DeleteModalType
-        })
-    }
+  const onDeletePackClick = (): void => {
+    setModalOpen({
+      type: modalType.DELETE_PACK,
+      data: {
+        id: pack._id,
+        title: pack.name,
+      } as DeleteModalType,
+    });
+  };
 
-    const onShowUserModalClick = () => {
-        if (status === 'loading') return
+  const onShowUserModalClick = (): void => {
+    if (status === 'loading') return;
 
-        setModalOpen({
-            type: modalType.SHOW_USER,
-            data: {
-                id: pack.user_id
-            } as ShowUserModalType
-        })
-    }
+    setModalOpen({
+      type: modalType.SHOW_USER,
+      data: {
+        id: pack.user_id,
+      } as ShowUserModalType,
+    });
+  };
 
-    const onLearnPackClick = (id: string) => {
-        navigate(`/learn/${id}`)
-    }
-    const handleError = () => {
-        setPackCover(noImage)
-    }
+  const onLearnPackClick = (id: string): void => {
+    navigate(`/learn/${id}`);
+  };
+  const handleError = (): void => {
+    setPackCover(noImage);
+  };
 
-    return (
-        <TableRow
-            sx={{'&:last-child td, &:last-child th': {border: 0}}}
-            hover
+  return (
+    <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }} hover>
+      <TableCell align="left">
+        <img
+          src={packCover || noImage}
+          alt="deck cover"
+          style={{ width: 50, height: 50 }}
+          onError={handleError}
+        />
+      </TableCell>
+      {pack.cardsCount !== 0 || user_id === pack.user_id ? (
+        <TableCell
+          component="th"
+          scope="row"
+          align="left"
+          onClick={() => navigateToCardsList(pack._id)}
+          style={{
+            cursor: 'pointer',
+            maxWidth: '268px',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+          }}
         >
-            <TableCell align={'left'}>
-                <img
-                    src={packCover || noImage}
-                    alt={'deck cover'}
-                    style={{width: 50, height: 50}}
-                    onError={handleError}
-                />
-            </TableCell>
-            {(pack.cardsCount !== 0 || user_id === pack.user_id)
-                ?
-                <TableCell component={'th'} scope={'row'} align={'left'}
-                           onClick={() => navigateToCardsList(pack._id)}
-                           style={{
-                               cursor: 'pointer',
-                               maxWidth: '268px',
-                               textOverflow: 'ellipsis',
-                               whiteSpace: 'nowrap',
-                               overflow: 'hidden',
-                           }}>
-                    {pack.name}
-                </TableCell>
-                :
-                <TableCell component={'th'} scope={'row'} align={'left'}
-                           style={{
-                               maxWidth: '268px',
-                               textOverflow: 'ellipsis',
-                               whiteSpace: 'nowrap',
-                               overflow: 'hidden',
-                           }}>
-                    {pack.name}
-                </TableCell>
-            }
-            <TableCell align={'left'}>
-                {pack.cardsCount}
-            </TableCell>
-            <TableCell align={'left'}>
-                {new Date(pack.updated).toLocaleString()}
-            </TableCell>
-            <TableCell component={'th'} scope={'row'} align={'left'}
-                       onClick={onShowUserModalClick}
-                       style={{
-                           cursor: 'pointer',
-                           maxWidth: '180px',
-                           textOverflow: 'ellipsis',
-                           whiteSpace: 'nowrap',
-                           overflow: 'hidden',
-                       }}>
-                {pack.user_name}
-            </TableCell>
-            <TableCell align={'left'}>
-                {user_id === pack.user_id
-                    ?
-                    <Stack direction={'row'} alignItems={'center'} spacing={1}>
-                        <IconButton aria-label={'learn'} size={'small'}
-                                    onClick={() => onLearnPackClick(pack._id)}
-                                    disabled={pack.cardsCount === 0 || status === 'loading'}>
-                            <SchoolIcon fontSize={'small'}/>
-                        </IconButton>
-                        <IconButton aria-label={'update'} size={'small'}
-                                    onClick={onUpdatePackClick}
-                                    disabled={status === 'loading'}>
-                            <EditIcon fontSize={'small'}/>
-                        </IconButton>
-                        <IconButton aria-label={'delete'} size={'small'}
-                                    onClick={onDeletePackClick}
-                                    disabled={status === 'loading'}>
-                            <DeleteIcon fontSize={'small'}/>
-                        </IconButton>
-                    </Stack>
-                    :
-                    <Stack direction={'row'} alignItems={'flex-start'} spacing={1}>
-                        <IconButton aria-label={'delete'} size={'small'}
-                                    onClick={() => onLearnPackClick(pack._id)}
-                                    disabled={pack.cardsCount === 0 || status === 'loading'}>
-                            <SchoolIcon fontSize={'small'}/>
-                        </IconButton>
-                    </Stack>}
-            </TableCell>
-        </TableRow>
-    )
-}
+          {pack.name}
+        </TableCell>
+      ) : (
+        <TableCell
+          component="th"
+          scope="row"
+          align="left"
+          style={{
+            maxWidth: '268px',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+          }}
+        >
+          {pack.name}
+        </TableCell>
+      )}
+      <TableCell align="left">{pack.cardsCount}</TableCell>
+      <TableCell align="left">{new Date(pack.updated).toLocaleString()}</TableCell>
+      <TableCell
+        component="th"
+        scope="row"
+        align="left"
+        onClick={onShowUserModalClick}
+        style={{
+          cursor: 'pointer',
+          maxWidth: '180px',
+          textOverflow: 'ellipsis',
+          whiteSpace: 'nowrap',
+          overflow: 'hidden',
+        }}
+      >
+        {pack.user_name}
+      </TableCell>
+      <TableCell align="left">
+        {user_id === pack.user_id ? (
+          <Stack direction="row" alignItems="center" spacing={1}>
+            <IconButton
+              aria-label="learn"
+              size="small"
+              onClick={() => onLearnPackClick(pack._id)}
+              disabled={pack.cardsCount === 0 || status === 'loading'}
+            >
+              <SchoolIcon fontSize="small" />
+            </IconButton>
+            <IconButton
+              aria-label="update"
+              size="small"
+              onClick={onUpdatePackClick}
+              disabled={status === 'loading'}
+            >
+              <EditIcon fontSize="small" />
+            </IconButton>
+            <IconButton
+              aria-label="delete"
+              size="small"
+              onClick={onDeletePackClick}
+              disabled={status === 'loading'}
+            >
+              <DeleteIcon fontSize="small" />
+            </IconButton>
+          </Stack>
+        ) : (
+          <Stack direction="row" alignItems="flex-start" spacing={1}>
+            <IconButton
+              aria-label="delete"
+              size="small"
+              onClick={() => onLearnPackClick(pack._id)}
+              disabled={pack.cardsCount === 0 || status === 'loading'}
+            >
+              <SchoolIcon fontSize="small" />
+            </IconButton>
+          </Stack>
+        )}
+      </TableCell>
+    </TableRow>
+  );
+};

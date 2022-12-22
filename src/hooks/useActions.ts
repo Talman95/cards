@@ -1,28 +1,33 @@
-import {bindActionCreators} from "@reduxjs/toolkit";
-import {useAppDispatch} from "./hooks";
+import { bindActionCreators } from '@reduxjs/toolkit';
+
 import {
-    allAuthActions,
-    allCardsActions, allChatActions,
-    allLearnActions, allModalActions,
-    allPacksActions,
-    allProfileActions, allUsersActions,
-    appActions
-} from "../store";
+  allAuthActions,
+  allCardsActions,
+  allChatActions,
+  allLearnActions,
+  allModalActions,
+  allPacksActions,
+  allProfileActions,
+  allUsersActions,
+  appActions,
+} from '../store';
+
+import { useAppDispatch } from './hooks';
 
 const allActions = {
-    ...appActions,
-    ...allAuthActions,
-    ...allPacksActions,
-    ...allCardsActions,
-    ...allLearnActions,
-    ...allProfileActions,
-    ...allUsersActions,
-    ...allChatActions,
-    ...allModalActions,
-}
+  ...appActions,
+  ...allAuthActions,
+  ...allPacksActions,
+  ...allCardsActions,
+  ...allLearnActions,
+  ...allProfileActions,
+  ...allUsersActions,
+  ...allChatActions,
+  ...allModalActions,
+};
 
-export const useActions = () => {
-    const dispatch = useAppDispatch()
+export const useActions = (): any => {
+  const dispatch = useAppDispatch();
 
-    return bindActionCreators(allActions, dispatch)
-}
+  return bindActionCreators(allActions, dispatch);
+};
