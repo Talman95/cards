@@ -4,11 +4,11 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { Avatar, TableCell, TableRow } from '@mui/material';
 import { blue } from '@mui/material/colors';
 
-import { UserType } from '../../../../api/usersAPI';
 import { modalType } from '../../../../enums/modalType';
 import { useAppSelector } from '../../../../hooks/hooks';
 import { useActions } from '../../../../hooks/useActions';
 import { ShowUserModalType } from '../../../../store/Modal/modalSlice';
+import { UserType } from '../../../../types';
 
 const BLUE_COLOR = 500;
 

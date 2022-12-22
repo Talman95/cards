@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { packsAPI, UpdatePackType } from '../../api/packsAPI';
+import { packsAPI, UpdatePackType } from '../../api';
 import { appStatus } from '../../enums/appStatus';
 import { SnackbarStatus } from '../../enums/snackbarStatus';
 import { handleAppError } from '../../utils/errorUtils';

@@ -13,10 +13,10 @@ import {
 } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { CardType } from '../../api/cardsAPI';
 import { path } from '../../enums/path';
 import { useAppSelector } from '../../hooks/hooks';
 import { useActions } from '../../hooks/useActions';
+import { CardType } from '../../types';
 import { getCard } from '../../utils/smartRandom';
 
 import { CheckboxBlock } from './CheckboxBlock/CheckboxBlock';

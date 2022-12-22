@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { MessageType } from '../../api/chatAPI';
+import { MessageType } from '../../types';
 
 const slice = createSlice({
   name: 'chat',

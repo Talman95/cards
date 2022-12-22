@@ -14,8 +14,7 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-import { AddCardType } from '../../../api/cardsAPI';
-import { UpdatePackType } from '../../../api/packsAPI';
+import { AddCardType, UpdatePackType } from '../../../api';
 import { modalType } from '../../../enums/modalType';
 import { useAppSelector } from '../../../hooks/hooks';
 import { useActions } from '../../../hooks/useActions';

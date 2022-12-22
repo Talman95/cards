@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { authAPI, LoginParamsType, RegisterParamsType } from '../../api/authAPI';
+import { authAPI, LoginParamsType, RegisterParamsType } from '../../api';
 import { appStatus } from '../../enums/appStatus';
 import { SnackbarStatus } from '../../enums/snackbarStatus';
 import { handleAppError } from '../../utils/errorUtils';

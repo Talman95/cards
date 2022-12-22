@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { usersAPI } from '../../api/usersAPI';
+import { usersAPI } from '../../api';
 import { appStatus } from '../../enums/appStatus';
 import { handleAppError } from '../../utils/errorUtils';
 import { appActions } from '../CommonActions/App';

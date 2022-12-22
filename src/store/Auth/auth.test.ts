@@ -1,9 +1,10 @@
 import { AsyncThunkAction } from '@reduxjs/toolkit';
 import { AxiosError, AxiosResponse } from 'axios';
 
-import { authAPI, LoginParamsType, ProfileType } from '../../api/authAPI';
+import { authAPI, LoginParamsType } from '../../api';
 import { appStatus } from '../../enums/appStatus';
 import { SnackbarStatus } from '../../enums/snackbarStatus';
+import { ProfileType } from '../../types';
 import { appActions } from '../CommonActions/App';
 import { profileActions } from '../Profile/profileSlice';
 

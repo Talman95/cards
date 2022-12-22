@@ -1,14 +1,6 @@
 import socketIo from 'socket.io-client';
 
-export type MessageType = {
-  _id: string;
-  message: string;
-  user: {
-    _id: string;
-    name: string;
-    avatar: string | null;
-  };
-};
+import { MessageType } from '../../types';
 
 export const chatAPI = {
   socket: null as null | any,
@@ -21,7 +13,7 @@ export const chatAPI = {
   },
 
   subscribe(
-    initMessagesHandler: (massages: Array<MessageType>) => void,
+    initMessagesHandler: (massages: MessageType[]) => void,
     newMessageSendHandler: (message: MessageType) => void,
   ) {
     this.socket?.on('init-messages-published', initMessagesHandler);

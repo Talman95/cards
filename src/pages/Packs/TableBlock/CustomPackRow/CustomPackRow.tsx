@@ -6,12 +6,12 @@ import SchoolIcon from '@mui/icons-material/School';
 import { IconButton, Stack, TableCell, TableRow } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-import { PackType } from '../../../../api/packsAPI';
 import noImage from '../../../../assets/no-image.jpg';
 import { modalType } from '../../../../enums/modalType';
 import { useAppSelector } from '../../../../hooks/hooks';
 import { useActions } from '../../../../hooks/useActions';
 import { DeleteModalType, ShowUserModalType } from '../../../../store/Modal/modalSlice';
+import { PackType } from '../../../../types';
 
 export const CustomPackRow: FC<{ pack: PackType }> = ({ pack }) => {
   const navigate = useNavigate();

@@ -1,4 +1,4 @@
-import { CardType } from '../api/cardsAPI';
+import { CardType } from '../types';
 
 const VALUE = 6;
 

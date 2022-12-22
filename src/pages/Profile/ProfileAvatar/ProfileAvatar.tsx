@@ -3,8 +3,8 @@ import React, { ChangeEvent, FC, useState } from 'react';
 import { PhotoCamera } from '@mui/icons-material';
 import { Avatar, IconButton, Stack } from '@mui/material';
 
-import { ProfileType } from '../../../api/authAPI';
 import { useActions } from '../../../hooks/useActions';
+import { ProfileType } from '../../../types';
 import { convertFileToBase64 } from '../../../utils/convertFile';
 
 const MAX_FILE_SIZE = 4000000;

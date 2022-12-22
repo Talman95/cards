@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { UserType } from '../../api/usersAPI';
+import { UserType } from '../../types';
 
 import { usersAsyncThunk } from './asyncThunk';
 

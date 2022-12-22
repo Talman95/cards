@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 
 import { Avatar, ListItem, ListItemAvatar, ListItemText } from '@mui/material';
 
-import { MessageType } from '../../../../api/chatAPI';
+import { MessageType } from '../../../../types';
 
 export const MessageItem: FC<{ message: MessageType }> = ({ message }) => {
   return (

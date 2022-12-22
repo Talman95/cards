@@ -12,9 +12,9 @@ import {
   List,
 } from '@mui/material';
 
-import { MessageType } from '../../../api/chatAPI';
 import { useAppSelector } from '../../../hooks/hooks';
 import { useActions } from '../../../hooks/useActions';
+import { MessageType } from '../../../types';
 
 import { MessageItem } from './MessageItem/MessageItem';
 

@@ -1,7 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { AddCardType, UpdateCardType } from '../../api/cardsAPI';
-import { AddPackParamsType, UpdatePackType } from '../../api/packsAPI';
+import {
+  AddCardType,
+  AddPackParamsType,
+  UpdateCardType,
+  UpdatePackType,
+} from '../../api';
 
 const slice = createSlice({
   name: 'modal',

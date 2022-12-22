@@ -1,7 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { cardsAPI } from '../../api/cardsAPI';
-import { learnAPI } from '../../api/learnAPI';
+import { cardsAPI, learnAPI } from '../../api';
 import { appStatus } from '../../enums/appStatus';
 import { handleAppError } from '../../utils/errorUtils';
 import { appActions } from '../CommonActions/App';

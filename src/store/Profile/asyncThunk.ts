@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { profileAPI } from '../../api/profileAPI';
+import { profileAPI } from '../../api';
 import { appStatus } from '../../enums/appStatus';
 import { SnackbarStatus } from '../../enums/snackbarStatus';
 import { handleAppError } from '../../utils/errorUtils';

@@ -10,7 +10,7 @@ import {
   TextField,
 } from '@mui/material';
 
-import { UpdatePackType } from '../../../api/packsAPI';
+import { UpdatePackType } from '../../../api';
 import { BottomNavigationButtons } from '../../../components/BottomNavigationButtons/BottomNavigationButtons';
 import { modalType } from '../../../enums/modalType';
 import { useAppSelector } from '../../../hooks/hooks';

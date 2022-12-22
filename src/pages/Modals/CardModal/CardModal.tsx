@@ -9,7 +9,7 @@ import {
   Typography,
 } from '@mui/material';
 
-import { AddCardType, UpdateCardType } from '../../../api/cardsAPI';
+import { AddCardType, UpdateCardType } from '../../../api';
 import { BottomNavigationButtons } from '../../../components/BottomNavigationButtons/BottomNavigationButtons';
 import { PictureBlock } from '../../../components/PictureBlock/PictureBlock';
 import { TextBlock } from '../../../components/TextBlock/TextBlock';

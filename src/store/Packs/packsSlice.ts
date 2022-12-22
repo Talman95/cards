@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { PackType } from '../../api/packsAPI';
+import { PackType } from '../../types';
 
 import { packsAsyncThunks } from './asyncThunk';
 

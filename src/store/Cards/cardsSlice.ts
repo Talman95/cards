@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { CardType } from '../../api/cardsAPI';
+import { CardType } from '../../types';
 
 import { cardsAsyncThunks } from './asyncThunk';
 
