@@ -3,7 +3,7 @@ import { Dispatch } from 'redux';
 
 import { appStatus } from '../enums/appStatus';
 import { SnackbarStatus } from '../enums/snackbarStatus';
-import { appActions } from '../store/CommonActions/App';
+import { appActions } from '../store/actions/appActions';
 
 const { setAppStatus, setAppMessage } = appActions;
 

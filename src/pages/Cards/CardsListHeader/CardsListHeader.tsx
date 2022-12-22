@@ -18,7 +18,7 @@ import { AddCardType, UpdatePackType } from '../../../api';
 import { modalType } from '../../../enums/modalType';
 import { useAppSelector } from '../../../hooks/hooks';
 import { useActions } from '../../../hooks/useActions';
-import { DeleteModalType } from '../../../store/Modal/modalSlice';
+import { DeleteModalType } from '../../../store/slices/modalSlice';
 
 import { ActionMenu } from './ActionMenu/ActionMenu';
 

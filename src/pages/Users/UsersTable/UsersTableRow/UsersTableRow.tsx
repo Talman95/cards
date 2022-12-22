@@ -7,7 +7,7 @@ import { blue } from '@mui/material/colors';
 import { modalType } from '../../../../enums/modalType';
 import { useAppSelector } from '../../../../hooks/hooks';
 import { useActions } from '../../../../hooks/useActions';
-import { ShowUserModalType } from '../../../../store/Modal/modalSlice';
+import { ShowUserModalType } from '../../../../store/slices/modalSlice';
 import { UserType } from '../../../../types';
 
 const BLUE_COLOR = 500;

@@ -1,15 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
 
-import { appSlice } from './App/appSlice';
-import { authSlice } from './Auth/authSlice';
-import { cardsSlice } from './Cards/cardsSlice';
-import { chatSlice } from './Chat/chatSlice';
-import { learnSlice } from './Learn/learnSlice';
-import { modalSlice } from './Modal/modalSlice';
-import { packsSlice } from './Packs/packsSlice';
-import { profileSlice } from './Profile/profileSlice';
-import { usersSlice } from './Users/usersSlice';
+import { appSlice } from './slices/appSlice';
+import { authSlice } from './slices/authSlice';
+import { cardsSlice } from './slices/cardsSlice';
+import { chatSlice } from './slices/chatSlice';
+import { learnSlice } from './slices/learnSlice';
+import { modalSlice } from './slices/modalSlice';
+import { packsSlice } from './slices/packsSlice';
+import { profileSlice } from './slices/profileSlice';
+import { usersSlice } from './slices/usersSlice';
 
 const rootReducers = combineReducers({
   auth: authSlice,

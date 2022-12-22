@@ -15,7 +15,7 @@ import { UpdateCardType } from '../../../../api';
 import { modalType } from '../../../../enums/modalType';
 import { useAppSelector } from '../../../../hooks/hooks';
 import { useActions } from '../../../../hooks/useActions';
-import { DeleteModalType } from '../../../../store/Modal/modalSlice';
+import { DeleteModalType } from '../../../../store/slices/modalSlice';
 import { CardType } from '../../../../types';
 
 export const CustomCardRow: FC<{ card: CardType }> = ({ card }) => {

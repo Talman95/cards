@@ -1,18 +1,18 @@
-import { authAsyncThunks } from './Auth/asyncThunk';
-import { authActions } from './Auth/authSlice';
-import { cardsAsyncThunks } from './Cards/asyncThunk';
-import { cardsActions } from './Cards/cardsSlice';
-import { chatAsyncThunks } from './Chat/asyncThunk';
-import { appActions as commonActions } from './CommonActions/App';
-import { learnAsyncThunks } from './Learn/asyncThunk';
-import { learnActions } from './Learn/learnSlice';
-import { modalActions } from './Modal/modalSlice';
-import { packsAsyncThunks } from './Packs/asyncThunk';
-import { packsActions } from './Packs/packsSlice';
-import { profileAsyncThunks } from './Profile/asyncThunk';
-import { profileActions } from './Profile/profileSlice';
-import { usersAsyncThunk } from './Users/asyncThunk';
-import { usersActions } from './Users/usersSlice';
+import { appActions as commonActions } from './actions/appActions';
+import { authAsyncThunks } from './middlewares/auth';
+import { cardsAsyncThunks } from './middlewares/cards';
+import { chatAsyncThunks } from './middlewares/chat';
+import { learnAsyncThunks } from './middlewares/learn';
+import { packsAsyncThunks } from './middlewares/packs';
+import { profileAsyncThunks } from './middlewares/profile';
+import { usersAsyncThunk } from './middlewares/users';
+import { authActions } from './slices/authSlice';
+import { cardsActions } from './slices/cardsSlice';
+import { learnActions } from './slices/learnSlice';
+import { modalActions } from './slices/modalSlice';
+import { packsActions } from './slices/packsSlice';
+import { profileActions } from './slices/profileSlice';
+import { usersActions } from './slices/usersSlice';
 
 export const appActions = {
   ...commonActions,

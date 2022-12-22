@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { useAppSelector } from '../../../hooks/hooks';
 import { useActions } from '../../../hooks/useActions';
-import { ShowUserModalType } from '../../../store/Modal/modalSlice';
+import { ShowUserModalType } from '../../../store/slices/modalSlice';
 
 export const ShowUserModal: FC = () => {
   const { getUserData, removeUsersData, setModalClose } = useActions();
