@@ -11,11 +11,12 @@ import {
   IconButton,
   Typography,
 } from '@mui/material';
+import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { path } from '../../enums/path';
-import { useAppSelector } from '../../hooks/hooks';
 import { useActions } from '../../hooks/useActions';
+import { selectors } from '../../store';
 import { CardType } from '../../types';
 import { getCard } from '../../utils/smartRandom';
 
@@ -28,10 +29,10 @@ export const LearnList: FC = () => {
 
   const { cardsPack_id } = useParams<{ cardsPack_id?: string }>();
 
-  const cards = useAppSelector(state => state.learn.learnedPack);
-  const isFetching = useAppSelector(state => state.learn.isFetching);
-  const cardPack = useAppSelector(state =>
-    state.packs.cardPacks.find(p => p._id === cardsPack_id),
+  const cards = useSelector(selectors.learnSelectors.selectLearnedPack);
+  const isFetching = useSelector(selectors.learnSelectors.selectIsFetching);
+  const cardPack = useSelector(selectors.packsSelectors.selectCardPacks).find(
+    pack => pack._id === cardsPack_id,
   );
 
   const [currentCard, setCurrentCard] = useState<null | CardType>(null);

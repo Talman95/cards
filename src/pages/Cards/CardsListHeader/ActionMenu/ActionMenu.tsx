@@ -4,9 +4,10 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import SchoolIcon from '@mui/icons-material/School';
 import { IconButton, Stack } from '@mui/material';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { useAppSelector } from '../../../../hooks/hooks';
+import { selectors } from '../../../../store';
 
 type PropsType = {
   blocked: boolean;
@@ -23,7 +24,7 @@ export const ActionMenu: FC<PropsType> = ({
 }) => {
   const navigate = useNavigate();
 
-  const cardsPack_id = useAppSelector(state => state.cards.cardsPack_id);
+  const cardsPack_id = useSelector(selectors.cardsSelectors.selectCardsPack_id);
 
   const onLearnPackClick = (): void => {
     closeTooltip();

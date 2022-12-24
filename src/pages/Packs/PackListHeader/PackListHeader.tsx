@@ -1,15 +1,16 @@
 import React, { FC } from 'react';
 
 import { Box, Button, Typography } from '@mui/material';
+import { useSelector } from 'react-redux';
 
 import { modalType } from '../../../enums/modalType';
-import { useAppSelector } from '../../../hooks/hooks';
 import { useActions } from '../../../hooks/useActions';
+import { selectors } from '../../../store';
 
 export const PackListHeader: FC = () => {
   const { setModalOpen } = useActions();
 
-  const status = useAppSelector(state => state.app.status);
+  const status = useSelector(selectors.appSelectors.selectStatus);
 
   const onAddPackClick = (): void => {
     setModalOpen({

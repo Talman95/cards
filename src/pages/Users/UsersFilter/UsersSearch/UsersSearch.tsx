@@ -1,15 +1,16 @@
 import React, { FC } from 'react';
 
 import { Box, Typography } from '@mui/material';
+import { useSelector } from 'react-redux';
 
 import { Search } from '../../../../components/Search/Search';
-import { useAppSelector } from '../../../../hooks/hooks';
 import { useActions } from '../../../../hooks/useActions';
+import { selectors } from '../../../../store';
 
 export const UsersSearch: FC = () => {
   const { setSearchUserName } = useActions();
 
-  const userName = useAppSelector(state => state.users.filter.userName);
+  const userName = useSelector(selectors.usersSelectors.selectFilterUserName);
 
   return (
     <Box style={{ height: '62px', width: '300px' }}>

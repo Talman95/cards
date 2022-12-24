@@ -1,16 +1,17 @@
 import React, { FC } from 'react';
 
 import { Box, Stack, Typography } from '@mui/material';
+import { useSelector } from 'react-redux';
 
 import { Search } from '../../../components/Search/Search';
-import { useAppSelector } from '../../../hooks/hooks';
 import { useActions } from '../../../hooks/useActions';
+import { selectors } from '../../../store';
 
 export const SearchBlock: FC = () => {
   const { setCardQuestion, setCardAnswer } = useActions();
 
-  const cardAnswer = useAppSelector(state => state.cards.cardAnswer);
-  const cardQuestion = useAppSelector(state => state.cards.cardQuestion);
+  const cardAnswer = useSelector(selectors.cardsSelectors.selectCardAnswer);
+  const cardQuestion = useSelector(selectors.cardsSelectors.selectCardQuestion);
 
   const setSearchQuestion = (question: string): void => {
     setCardQuestion(question);

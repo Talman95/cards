@@ -4,6 +4,12 @@ import { PackType } from '../../types';
 import { packsAsyncThunks } from '../middlewares/packs';
 
 export type AccessoryType = 'my' | 'all';
+export type PacksFilterType = {
+  packName: string;
+  min: null | number;
+  max: null | number;
+  sortPacks: null | string;
+};
 
 const slice = createSlice({
   name: 'packs',
@@ -17,10 +23,10 @@ const slice = createSlice({
     paramUserId: null as null | string,
     filter: {
       packName: '',
-      min: null as null | number,
-      max: null as null | number,
-      sortPacks: null as null | string,
-    },
+      min: null,
+      max: null,
+      sortPacks: null,
+    } as PacksFilterType,
   },
   reducers: {
     setCurrentPage: (state, action: PayloadAction<number>) => {

@@ -1,17 +1,18 @@
 import React, { FC } from 'react';
 
 import { Button, Stack, Typography } from '@mui/material';
+import { useSelector } from 'react-redux';
 
 import { modalType } from '../../../enums/modalType';
-import { useAppSelector } from '../../../hooks/hooks';
 import { useActions } from '../../../hooks/useActions';
+import { selectors } from '../../../store';
 import { DeleteModalType } from '../../../store/slices/modalSlice';
 
 export const DeleteModal: FC = () => {
   const { setModalClose, deletePack, deleteCard } = useActions();
 
-  const type = useAppSelector(state => state.modal.type);
-  const data = useAppSelector(state => state.modal.data) as DeleteModalType;
+  const type = useSelector(selectors.modalSelectors.selectType);
+  const data = useSelector(selectors.modalSelectors.selectData) as DeleteModalType;
 
   const onDeleteButtonClick = (): void => {
     if (type === modalType.DELETE_PACK) {

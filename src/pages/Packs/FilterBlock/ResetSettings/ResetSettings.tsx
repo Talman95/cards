@@ -2,14 +2,15 @@ import React, { FC, memo } from 'react';
 
 import TuneIcon from '@mui/icons-material/Tune';
 import { Box, IconButton } from '@mui/material';
+import { useSelector } from 'react-redux';
 
-import { useAppSelector } from '../../../../hooks/hooks';
 import { useActions } from '../../../../hooks/useActions';
+import { selectors } from '../../../../store';
 
 export const ResetSettings: FC = memo(() => {
   const { setDefaultValues } = useActions();
 
-  const status = useAppSelector(state => state.app.status);
+  const status = useSelector(selectors.appSelectors.selectStatus);
 
   const setDefaultValuesHandler = (): void => {
     setDefaultValues();

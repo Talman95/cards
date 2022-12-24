@@ -6,6 +6,15 @@ import { learnAsyncThunks } from './middlewares/learn';
 import { packsAsyncThunks } from './middlewares/packs';
 import { profileAsyncThunks } from './middlewares/profile';
 import { usersAsyncThunk } from './middlewares/users';
+import { appSelectors } from './selectors/appSelectors';
+import { authSelectors } from './selectors/authSelectors';
+import { cardsSelectors } from './selectors/cardsSelectors';
+import { chatSelectors } from './selectors/chatSelectors';
+import { learnSelectors } from './selectors/learnSelectors';
+import { modalSelectors } from './selectors/modalSelectors';
+import { packsSelectors } from './selectors/packsSelectors';
+import { profileSelectors } from './selectors/profileSelectors';
+import { usersSelectors } from './selectors/usersSelectors';
 import { authActions } from './slices/authSlice';
 import { cardsActions } from './slices/cardsSlice';
 import { learnActions } from './slices/learnSlice';
@@ -47,4 +56,16 @@ export const allChatActions = {
 };
 export const allModalActions = {
   ...modalActions,
+};
+
+export const selectors = {
+  appSelectors,
+  authSelectors,
+  cardsSelectors,
+  chatSelectors,
+  learnSelectors,
+  modalSelectors,
+  packsSelectors,
+  profileSelectors,
+  usersSelectors,
 };

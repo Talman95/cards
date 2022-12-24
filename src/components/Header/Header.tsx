@@ -12,19 +12,20 @@ import {
   Toolbar,
   Typography,
 } from '@mui/material';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { path } from '../../enums/path';
-import { useAppSelector } from '../../hooks/hooks';
 import { useActions } from '../../hooks/useActions';
+import { selectors } from '../../store';
 
 export const Header: FC = () => {
   const navigate = useNavigate();
   const { logout } = useActions();
 
-  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
-  const profile = useAppSelector(state => state.profile.profile);
-  const status = useAppSelector(state => state.app.status);
+  const isLoggedIn = useSelector(selectors.authSelectors.selectIsLoggedIn);
+  const profile = useSelector(selectors.profileSelectors.selectProfile);
+  const status = useSelector(selectors.appSelectors.selectStatus);
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 

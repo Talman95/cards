@@ -1,10 +1,11 @@
 import React, { FC, useEffect } from 'react';
 
 import { Avatar, Box, Button, CircularProgress, Typography } from '@mui/material';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { useAppSelector } from '../../../hooks/hooks';
 import { useActions } from '../../../hooks/useActions';
+import { selectors } from '../../../store';
 import { ShowUserModalType } from '../../../store/slices/modalSlice';
 
 export const ShowUserModal: FC = () => {
@@ -12,8 +13,8 @@ export const ShowUserModal: FC = () => {
 
   const navigate = useNavigate();
 
-  const user = useAppSelector(state => state.users.viewedUser);
-  const data = useAppSelector(state => state.modal.data) as ShowUserModalType;
+  const user = useSelector(selectors.usersSelectors.selectViewedUser);
+  const data = useSelector(selectors.modalSelectors.selectData) as ShowUserModalType;
 
   useEffect(() => {
     getUserData(data.id);

@@ -11,11 +11,12 @@ import {
   Typography,
 } from '@mui/material';
 import { useFormik } from 'formik';
+import { useSelector } from 'react-redux';
 import { Navigate, useNavigate } from 'react-router-dom';
 
 import { path } from '../../../enums/path';
-import { useAppSelector } from '../../../hooks/hooks';
 import { useActions } from '../../../hooks/useActions';
+import { selectors } from '../../../store';
 
 type FormikErrorType = {
   email?: string;
@@ -27,7 +28,7 @@ export const Login: FC = () => {
   const navigate = useNavigate();
   const { login } = useActions();
 
-  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
+  const isLoggedIn = useSelector(selectors.authSelectors.selectIsLoggedIn);
 
   const navigateToRegister = (): void => navigate(path.REGISTER);
   const navigateToForgot = (): void => navigate(path.FORGOT_PASSWORD);

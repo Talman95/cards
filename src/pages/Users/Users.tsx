@@ -1,9 +1,10 @@
 import React, { FC, useEffect } from 'react';
 
 import { Box } from '@mui/material';
+import { useSelector } from 'react-redux';
 
-import { useAppSelector } from '../../hooks/hooks';
 import { useActions } from '../../hooks/useActions';
+import { selectors } from '../../store';
 
 import { UsersFilter } from './UsersFilter/UsersFilter';
 import { UsersHeader } from './UsersHeader/UsersHeader';
@@ -12,7 +13,7 @@ import { UsersTable } from './UsersTable/UsersTable';
 export const Users: FC = () => {
   const { getUsers } = useActions();
 
-  const filter = useAppSelector(state => state.users.filter);
+  const filter = useSelector(selectors.usersSelectors.selectUsersFilter);
 
   useEffect(() => {
     getUsers();

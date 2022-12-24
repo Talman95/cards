@@ -9,9 +9,10 @@ import {
   TablePagination,
   Typography,
 } from '@mui/material';
+import { useSelector } from 'react-redux';
 
-import { useAppSelector } from '../../../hooks/hooks';
 import { useActions } from '../../../hooks/useActions';
+import { selectors } from '../../../store';
 
 import { CustomCardRow } from './CustomCardRow/CustomCardRow';
 import { TableHeader } from './TableHeader/TableHeader';
@@ -23,11 +24,11 @@ const TWENTY_CARDS_PER_PAGE = 20;
 export const TableBlock: FC<{ length: number }> = ({ length }) => {
   const { setCurrentPageCards, setPageCountCards } = useActions();
 
-  const page = useAppSelector(state => state.cards.page);
-  const pageCount = useAppSelector(state => state.cards.pageCount);
-  const cardsTotalCount = useAppSelector(state => state.cards.cardsTotalCount);
-  const isLoading = useAppSelector(state => state.cards.isLoading);
-  const cards = useAppSelector(state => state.cards.cards);
+  const page = useSelector(selectors.cardsSelectors.selectPage);
+  const pageCount = useSelector(selectors.cardsSelectors.selectPageCount);
+  const cardsTotalCount = useSelector(selectors.cardsSelectors.selectCardsTotalCount);
+  const isLoading = useSelector(selectors.cardsSelectors.selectIsLoading);
+  const cards = useSelector(selectors.cardsSelectors.selectCards);
 
   const handleChangePage = (
     event: MouseEvent<HTMLButtonElement> | null,

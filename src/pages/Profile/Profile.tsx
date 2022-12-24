@@ -13,11 +13,12 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { path } from '../../enums/path';
-import { useAppSelector } from '../../hooks/hooks';
 import { useActions } from '../../hooks/useActions';
+import { selectors } from '../../store';
 
 import { ProfileAvatar } from './ProfileAvatar/ProfileAvatar';
 
@@ -26,7 +27,7 @@ export const Profile: FC = () => {
 
   const { logout, updateProfile } = useActions();
 
-  const profile = useAppSelector(state => state.profile.profile);
+  const profile = useSelector(selectors.profileSelectors.selectProfile);
 
   const [name, setName] = useState<string>(profile?.name || '');
   const [editMode, setEditMode] = useState(false);

@@ -1,9 +1,10 @@
 import React, { ChangeEvent, FC, MouseEvent } from 'react';
 
 import { Paper, Table, TableBody, TableContainer, TablePagination } from '@mui/material';
+import { useSelector } from 'react-redux';
 
-import { useAppSelector } from '../../../hooks/hooks';
 import { useActions } from '../../../hooks/useActions';
+import { selectors } from '../../../store';
 
 import { UsersTableHeader } from './UsersTableHeader/UsersTableHeader';
 import { UsersTableRow } from './UsersTableRow/UsersTableRow';
@@ -15,10 +16,10 @@ const TWENTY_CARDS_PER_PAGE = 20;
 export const UsersTable: FC = () => {
   const { setUsersPage, setUsersPageCount } = useActions();
 
-  const users = useAppSelector(state => state.users.users);
-  const usersTotalCount = useAppSelector(state => state.users.usersTotalCount);
-  const page = useAppSelector(state => state.users.filter.page);
-  const pageCount = useAppSelector(state => state.users.filter.pageCount);
+  const users = useSelector(selectors.usersSelectors.selectUsers);
+  const usersTotalCount = useSelector(selectors.usersSelectors.selectUsersTotalCount);
+  const page = useSelector(selectors.usersSelectors.selectFilterPage);
+  const pageCount = useSelector(selectors.usersSelectors.selectFilterPageCount);
 
   const handleChangePage = (
     e: MouseEvent<HTMLButtonElement> | null,

@@ -2,10 +2,11 @@ import React, { FC } from 'react';
 
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
+import { useSelector } from 'react-redux';
 
 import { SnackbarStatus } from '../../enums/snackbarStatus';
-import { useAppSelector } from '../../hooks/hooks';
 import { useActions } from '../../hooks/useActions';
+import { selectors } from '../../store';
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -14,8 +15,8 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props,
 export const MessageSnackbar: FC = () => {
   const { setAppMessage } = useActions();
 
-  const message = useAppSelector(state => state.app.message);
-  const result: SnackbarStatus = useAppSelector(state => state.app.result);
+  const message = useSelector(selectors.appSelectors.selectMessage);
+  const result: SnackbarStatus = useSelector(selectors.appSelectors.selectResult);
 
   const isOpen = message !== null;
 

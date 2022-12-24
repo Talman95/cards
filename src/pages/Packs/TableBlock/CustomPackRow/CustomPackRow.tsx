@@ -4,12 +4,13 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import SchoolIcon from '@mui/icons-material/School';
 import { IconButton, Stack, TableCell, TableRow } from '@mui/material';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import noImage from '../../../../assets/no-image.jpg';
 import { modalType } from '../../../../enums/modalType';
-import { useAppSelector } from '../../../../hooks/hooks';
 import { useActions } from '../../../../hooks/useActions';
+import { selectors } from '../../../../store';
 import { DeleteModalType, ShowUserModalType } from '../../../../store/slices/modalSlice';
 import { PackType } from '../../../../types';
 
@@ -20,8 +21,8 @@ export const CustomPackRow: FC<{ pack: PackType }> = ({ pack }) => {
 
   const [packCover, setPackCover] = useState(pack.deckCover);
 
-  const user_id = useAppSelector(state => state.profile.profile?._id);
-  const status = useAppSelector(state => state.app.status);
+  const user_id = useSelector(selectors.profileSelectors.selectProfile)?._id;
+  const status = useSelector(selectors.appSelectors.selectStatus);
 
   const navigateToCardsList = (id: string): void => {
     if (status === 'loading') return;

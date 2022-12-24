@@ -12,12 +12,13 @@ import {
   TooltipProps,
   Typography,
 } from '@mui/material';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { AddCardType, UpdatePackType } from '../../../api';
 import { modalType } from '../../../enums/modalType';
-import { useAppSelector } from '../../../hooks/hooks';
 import { useActions } from '../../../hooks/useActions';
+import { selectors } from '../../../store';
 import { DeleteModalType } from '../../../store/slices/modalSlice';
 
 import { ActionMenu } from './ActionMenu/ActionMenu';
@@ -29,17 +30,19 @@ type PropsType = {
 
 export const CardsListHeader: FC<PropsType> = ({ cardsPackId, length }) => {
   const { setModalOpen } = useActions();
+
   const navigate = useNavigate();
 
-  const packUserId = useAppSelector(state => state.cards.packUserId);
-  const userId = useAppSelector(state => state.profile.profile?._id);
-  const packName = useAppSelector(state => state.cards.packName);
-  const status = useAppSelector(state => state.app.status);
-  const packDeckCover = useAppSelector(state => state.cards.packDeckCover);
-  const isLoading = useAppSelector(state => state.cards.isLoading);
-  const pack = useAppSelector(state =>
-    state.packs.cardPacks.find(p => p._id === cardsPackId),
+  const packUserId = useSelector(selectors.cardsSelectors.selectPackUserId);
+  const userId = useSelector(selectors.profileSelectors.selectProfile)?._id;
+  const packName = useSelector(selectors.cardsSelectors.selectPackName);
+  const status = useSelector(selectors.appSelectors.selectStatus);
+  const packDeckCover = useSelector(selectors.cardsSelectors.selectPackDeckCover);
+  const isLoading = useSelector(selectors.cardsSelectors.selectIsLoading);
+  const pack = useSelector(selectors.packsSelectors.selectCardPacks).find(
+    pack => pack._id === cardsPackId,
   );
+
   const packIsPrivate = pack?.private;
   const isUserPack: boolean = packUserId === userId;
 

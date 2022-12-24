@@ -11,9 +11,10 @@ import {
   InputBase,
   List,
 } from '@mui/material';
+import { useSelector } from 'react-redux';
 
-import { useAppSelector } from '../../../hooks/hooks';
 import { useActions } from '../../../hooks/useActions';
+import { selectors } from '../../../store';
 import { MessageType } from '../../../types';
 
 import { MessageItem } from './MessageItem/MessageItem';
@@ -28,7 +29,7 @@ export const ChatModal: FC<PropsType> = ({ onCloseButtonClick, messages }) => {
 
   const { sentMessage } = useActions();
 
-  const profile = useAppSelector(state => state.profile.profile);
+  const profile = useSelector(selectors.profileSelectors.selectProfile);
 
   const onMessageTextChange = (
     e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,

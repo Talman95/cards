@@ -9,12 +9,13 @@ import {
   Stack,
   TextField,
 } from '@mui/material';
+import { useSelector } from 'react-redux';
 
 import { UpdatePackType } from '../../../api';
 import { BottomNavigationButtons } from '../../../components/BottomNavigationButtons/BottomNavigationButtons';
 import { modalType } from '../../../enums/modalType';
-import { useAppSelector } from '../../../hooks/hooks';
 import { useActions } from '../../../hooks/useActions';
+import { selectors } from '../../../store';
 import { convertFileToBase64 } from '../../../utils/convertFile';
 
 const MAX_FILE_SIZE = 4000000;
@@ -22,8 +23,8 @@ const MAX_FILE_SIZE = 4000000;
 export const PackModal: FC = () => {
   const { setModalClose, addPack, updatePack } = useActions();
 
-  const type = useAppSelector(state => state.modal.type);
-  const data = useAppSelector(state => state.modal.data) as UpdatePackType;
+  const type = useSelector(selectors.modalSelectors.selectType);
+  const data = useSelector(selectors.modalSelectors.selectData) as UpdatePackType;
 
   const [name, setName] = useState(data?.name || '');
   const [cover, setCover] = useState(data?.deckCover);

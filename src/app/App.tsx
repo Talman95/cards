@@ -1,20 +1,21 @@
 import React, { FC, useEffect } from 'react';
 
 import { CircularProgress } from '@mui/material';
+import { useSelector } from 'react-redux';
 
 import { Chat } from '../components/Chat/Chat';
 import { Header } from '../components/Header/Header';
 import { MessageSnackbar } from '../components/MessageSnackbar/MessageSnackbar';
-import { useAppSelector } from '../hooks/hooks';
 import { useActions } from '../hooks/useActions';
 import { Modals } from '../pages/Modals/Modals';
 import { RoutesPage } from '../routes/RoutesPage';
+import { selectors } from '../store';
 
 const App: FC = () => {
   const { getAuthData } = useActions();
 
-  const isInitialized = useAppSelector(state => state.app.isInitialized);
-  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
+  const isInitialized = useSelector(selectors.appSelectors.selectIsInitialized);
+  const isLoggedIn = useSelector(selectors.authSelectors.selectIsLoggedIn);
 
   useEffect(() => {
     getAuthData();

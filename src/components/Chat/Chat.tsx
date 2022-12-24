@@ -2,9 +2,10 @@ import React, { FC, useEffect, useState } from 'react';
 
 import MessageIcon from '@mui/icons-material/Message';
 import { Badge, IconButton } from '@mui/material';
+import { useSelector } from 'react-redux';
 
-import { useAppSelector } from '../../hooks/hooks';
 import { useActions } from '../../hooks/useActions';
+import { selectors } from '../../store';
 
 import { ChatModal } from './ChatModal/ChatModal';
 
@@ -13,7 +14,7 @@ export const Chat: FC = () => {
 
   const { createConnection, destroyConnection } = useActions();
 
-  const messages = useAppSelector(state => state.chat.messages);
+  const messages = useSelector(selectors.chatSelectors.selectMessages);
 
   useEffect(() => {
     createConnection();

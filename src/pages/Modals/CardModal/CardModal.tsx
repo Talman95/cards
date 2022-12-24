@@ -8,23 +8,26 @@ import {
   SelectChangeEvent,
   Typography,
 } from '@mui/material';
+import { useSelector } from 'react-redux';
 
 import { AddCardType, UpdateCardType } from '../../../api';
 import { BottomNavigationButtons } from '../../../components/BottomNavigationButtons/BottomNavigationButtons';
 import { PictureBlock } from '../../../components/PictureBlock/PictureBlock';
 import { TextBlock } from '../../../components/TextBlock/TextBlock';
 import { modalType } from '../../../enums/modalType';
-import { useAppSelector } from '../../../hooks/hooks';
 import { useActions } from '../../../hooks/useActions';
+import { selectors } from '../../../store';
 
 type QuestionFormat = 'Text' | 'Picture';
 
 export const CardModal: FC = () => {
   const { setModalClose, addCard, updateCard } = useActions();
 
-  const type = useAppSelector(state => state.modal.type);
-  const addCardData = useAppSelector(state => state.modal.data) as AddCardType;
-  const updateCardData = useAppSelector(state => state.modal.data) as UpdateCardType;
+  const type = useSelector(selectors.modalSelectors.selectType);
+  const addCardData = useSelector(selectors.modalSelectors.selectData) as AddCardType;
+  const updateCardData = useSelector(
+    selectors.modalSelectors.selectData,
+  ) as UpdateCardType;
 
   const [format, setFormat] = useState<QuestionFormat>('Text');
   const [question, setQuestion] = useState(updateCardData.question || '');

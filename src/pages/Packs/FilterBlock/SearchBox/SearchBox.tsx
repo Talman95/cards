@@ -1,15 +1,16 @@
 import React, { FC } from 'react';
 
 import { Box, Typography } from '@mui/material';
+import { useSelector } from 'react-redux';
 
 import { Search } from '../../../../components/Search/Search';
-import { useAppSelector } from '../../../../hooks/hooks';
 import { useActions } from '../../../../hooks/useActions';
+import { selectors } from '../../../../store';
 
 export const SearchBox: FC = () => {
   const { setPackName } = useActions();
 
-  const packName = useAppSelector(state => state.packs.filter.packName);
+  const packName = useSelector(selectors.packsSelectors.selectFilterPackName);
 
   const setSearchName = (searchName: string): void => {
     setPackName(searchName);

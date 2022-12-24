@@ -1,10 +1,11 @@
 import React, { FC, useEffect } from 'react';
 
 import { Box } from '@mui/material';
+import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
-import { useAppSelector } from '../../hooks/hooks';
 import { useActions } from '../../hooks/useActions';
+import { selectors } from '../../store';
 
 import { FilterBlock } from './FilterBlock/FilterBlock';
 import { PackListHeader } from './PackListHeader/PackListHeader';
@@ -15,10 +16,10 @@ export const Packs: FC = () => {
 
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const filter = useAppSelector(state => state.packs.filter);
-  const page = useAppSelector(state => state.packs.page);
-  const pageCount = useAppSelector(state => state.packs.pageCount);
-  const userId = useAppSelector(state => state.profile.profile?._id);
+  const filter = useSelector(selectors.packsSelectors.selectFilter);
+  const page = useSelector(selectors.packsSelectors.selectPage);
+  const pageCount = useSelector(selectors.packsSelectors.selectPageCount);
+  const userId = useSelector(selectors.profileSelectors.selectProfile)?._id;
 
   useEffect(() => {
     const paramId = searchParams.get('id');

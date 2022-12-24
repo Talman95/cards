@@ -3,6 +3,15 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { UserType } from '../../types';
 import { usersAsyncThunk } from '../middlewares/users';
 
+export type UsersFilterType = {
+  userName: string;
+  page: number;
+  pageCount: number;
+  sortUsers: null | string;
+  min: null | number;
+  max: null | number;
+};
+
 const slice = createSlice({
   name: 'users',
   initialState: {
@@ -14,10 +23,10 @@ const slice = createSlice({
       userName: '',
       page: 1,
       pageCount: 5,
-      sortUsers: null as null | string,
-      min: null as null | number,
-      max: null as null | number,
-    },
+      sortUsers: null,
+      min: null,
+      max: null,
+    } as UsersFilterType,
     viewedUser: null as null | UserType,
     userIsLoading: false,
   },

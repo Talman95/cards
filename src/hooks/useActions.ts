@@ -12,7 +12,7 @@ import {
   appActions,
 } from '../store';
 
-import { useAppDispatch } from './hooks';
+import { useAppDispatch } from './useAppDispatch';
 
 const allActions = {
   ...appActions,

@@ -3,9 +3,10 @@ import React, { FC, useState } from 'react';
 import { Box, TableCell, TableHead, TableRow, TableSortLabel } from '@mui/material';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { visuallyHidden } from '@mui/utils';
+import { useSelector } from 'react-redux';
 
-import { useAppSelector } from '../../../../hooks/hooks';
 import { useActions } from '../../../../hooks/useActions';
+import { selectors } from '../../../../store';
 
 type Order = 'asc' | 'desc';
 type Data = 'grade' | 'updated';
@@ -16,8 +17,8 @@ export const TableHeader: FC = () => {
   const [order, setOrder] = useState<Order>('asc');
   const [orderBy, setOrderBy] = useState<Data>('updated');
 
-  const packUserId = useAppSelector(state => state.cards.packUserId);
-  const userId = useAppSelector(state => state.profile.profile?._id);
+  const packUserId = useSelector(selectors.cardsSelectors.selectPackUserId);
+  const userId = useSelector(selectors.profileSelectors.selectProfile)?._id;
 
   const sortHandler = (order: Order, orderBy: Data): void => {
     const direction = order === 'asc' ? 0 : 1;

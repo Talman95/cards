@@ -12,7 +12,7 @@ import { FormikHelpers, useFormik } from 'formik';
 import { Navigate, useParams } from 'react-router-dom';
 
 import { path } from '../../../enums/path';
-import { useAppDispatch } from '../../../hooks/hooks';
+import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { allAuthActions } from '../../../store';
 
 type FormikErrorType = {

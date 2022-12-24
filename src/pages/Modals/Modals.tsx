@@ -1,11 +1,13 @@
 import React, { FC } from 'react';
 
+import { useSelector } from 'react-redux';
+
 import { BasicModal } from '../../components/BasicModal/BasicModal';
-import { useAppSelector } from '../../hooks/hooks';
+import { selectors } from '../../store';
 import { modalWatcher } from '../../utils/modalWatcher';
 
 export const Modals: FC = () => {
-  const type = useAppSelector(state => state.modal.type);
+  const type = useSelector(selectors.modalSelectors.selectType);
 
   return (
     <BasicModal type={type}>

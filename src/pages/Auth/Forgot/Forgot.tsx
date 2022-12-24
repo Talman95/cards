@@ -1,16 +1,17 @@
 import React, { FC, useState } from 'react';
 
 import { Grid } from '@mui/material';
+import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 
 import { path } from '../../../enums/path';
-import { useAppSelector } from '../../../hooks/hooks';
+import { selectors } from '../../../store';
 
 import { CheckEmail } from './CheckEmail/CheckEmail';
 import { RecoveryPassword } from './RecoveryPassword/RecoveryPassword';
 
 export const Forgot: FC = () => {
-  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
+  const isLoggedIn = useSelector(selectors.authSelectors.selectIsLoggedIn);
 
   const [isSend, setIsSend] = useState(false);
   const [email, setEmail] = useState('');

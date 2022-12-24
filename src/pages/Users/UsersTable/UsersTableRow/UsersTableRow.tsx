@@ -3,10 +3,11 @@ import React, { FC } from 'react';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { Avatar, TableCell, TableRow } from '@mui/material';
 import { blue } from '@mui/material/colors';
+import { useSelector } from 'react-redux';
 
 import { modalType } from '../../../../enums/modalType';
-import { useAppSelector } from '../../../../hooks/hooks';
 import { useActions } from '../../../../hooks/useActions';
+import { selectors } from '../../../../store';
 import { ShowUserModalType } from '../../../../store/slices/modalSlice';
 import { UserType } from '../../../../types';
 
@@ -15,7 +16,7 @@ const BLUE_COLOR = 500;
 export const UsersTableRow: FC<{ user: UserType }> = ({ user }) => {
   const { setModalOpen } = useActions();
 
-  const status = useAppSelector(state => state.app.status);
+  const status = useSelector(selectors.appSelectors.selectStatus);
 
   const onShowUserModalClick = (): void => {
     if (status === 'loading') return;

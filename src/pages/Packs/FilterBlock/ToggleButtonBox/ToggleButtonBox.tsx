@@ -1,8 +1,9 @@
 import React, { FC } from 'react';
 
 import { Box, Button, Stack, Typography } from '@mui/material';
+import { useSelector } from 'react-redux';
 
-import { useAppSelector } from '../../../../hooks/hooks';
+import { selectors } from '../../../../store';
 
 type PropsType = {
   onMyPacksClick: () => void;
@@ -10,9 +11,9 @@ type PropsType = {
 };
 
 export const ToggleButtonBox: FC<PropsType> = ({ onMyPacksClick, onAllPacksClick }) => {
-  const status = useAppSelector(state => state.app.status);
-  const id = useAppSelector(state => state.profile.profile?._id);
-  const paramUserId = useAppSelector(state => state.packs.paramUserId);
+  const status = useSelector(selectors.appSelectors.selectStatus);
+  const id = useSelector(selectors.profileSelectors.selectProfile)?._id;
+  const paramUserId = useSelector(selectors.packsSelectors.selectParamUserId);
 
   return (
     <Box style={{ height: '62px', display: 'grid' }}>

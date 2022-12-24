@@ -1,10 +1,11 @@
 import React, { FC, useEffect } from 'react';
 
 import { Box, CircularProgress } from '@mui/material';
+import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-import { useAppSelector } from '../../hooks/hooks';
 import { useActions } from '../../hooks/useActions';
+import { selectors } from '../../store';
 
 import { CardsListHeader } from './CardsListHeader/CardsListHeader';
 import { SearchBlock } from './SearchBlock/SearchBlock';
@@ -13,13 +14,13 @@ import { TableBlock } from './TableBlock/TableBlock';
 export const CardsList: FC = () => {
   const { getCards, removeCardsData, setCardsPackId } = useActions();
 
-  const cards = useAppSelector(state => state.cards.cards);
-  const page = useAppSelector(state => state.cards.page);
-  const pageCount = useAppSelector(state => state.cards.pageCount);
-  const sortCards = useAppSelector(state => state.cards.sortCards);
-  const cardAnswer = useAppSelector(state => state.cards.cardAnswer);
-  const cardQuestion = useAppSelector(state => state.cards.cardQuestion);
-  const cardsPack_id = useAppSelector(state => state.cards.cardsPack_id);
+  const cards = useSelector(selectors.cardsSelectors.selectCards);
+  const page = useSelector(selectors.cardsSelectors.selectPage);
+  const pageCount = useSelector(selectors.cardsSelectors.selectPageCount);
+  const sortCards = useSelector(selectors.cardsSelectors.selectSortCards);
+  const cardAnswer = useSelector(selectors.cardsSelectors.selectCardAnswer);
+  const cardQuestion = useSelector(selectors.cardsSelectors.selectCardQuestion);
+  const cardsPack_id = useSelector(selectors.cardsSelectors.selectCardsPack_id);
 
   const { id } = useParams<{ id: string }>();
 

@@ -9,11 +9,12 @@ import {
   Typography,
 } from '@mui/material';
 import { useFormik } from 'formik';
+import { useSelector } from 'react-redux';
 import { Navigate, useNavigate } from 'react-router-dom';
 
 import { path } from '../../../enums/path';
-import { useAppSelector } from '../../../hooks/hooks';
 import { useActions } from '../../../hooks/useActions';
+import { selectors } from '../../../store';
 
 type FormikErrorType = {
   email?: string;
@@ -25,8 +26,8 @@ export const Register: FC = () => {
   const navigate = useNavigate();
   const { setRegister, register } = useActions();
 
-  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
-  const isRegistered = useAppSelector(state => state.auth.isRegistered);
+  const isLoggedIn = useSelector(selectors.authSelectors.selectIsLoggedIn);
+  const isRegistered = useSelector(selectors.authSelectors.selectIsRegistered);
 
   const navigateToLogin = (): void => navigate(path.LOGIN);
 
