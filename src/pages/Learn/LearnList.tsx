@@ -9,6 +9,7 @@ import {
   CardContent,
   CircularProgress,
   IconButton,
+  styled,
   Typography,
 } from '@mui/material';
 import { useSelector } from 'react-redux';
@@ -83,14 +84,7 @@ export const LearnList: FC = () => {
   }
 
   return (
-    <Box
-      style={{
-        width: 1000,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-      }}
-    >
+    <LearnBox>
       <Box alignSelf="start">
         <IconButton aria-label="delete" size="small" onClick={navigateToPacksList}>
           <KeyboardBackspaceIcon fontSize="small" />
@@ -99,7 +93,7 @@ export const LearnList: FC = () => {
       <Typography variant="h6" component="div" align="center" style={{ margin: 16 }}>
         Learn {cardPack?.name}
       </Typography>
-      <Card style={{ width: 400 }}>
+      <Card style={{ width: '100%' }}>
         <CardContent>
           <Typography style={{ marginBottom: '16px' }}>
             <strong>Question:</strong> {currentCard.question}
@@ -126,13 +120,30 @@ export const LearnList: FC = () => {
             </CardActions>
           </CardContent>
         ) : (
-          <CardActions>
-            <Button size="small" fullWidth onClick={handleShowAnswer} variant="contained">
-              Show answer
-            </Button>
-          </CardActions>
+          <CardContent>
+            <CardActions>
+              <Button
+                size="small"
+                fullWidth
+                onClick={handleShowAnswer}
+                variant="contained"
+              >
+                Show answer
+              </Button>
+            </CardActions>
+          </CardContent>
         )}
       </Card>
-    </Box>
+    </LearnBox>
   );
 };
+
+export const LearnBox = styled(Box)(({ theme }) => ({
+  width: 'calc(100vw - 50px)',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  [theme.breakpoints.up('sm')]: {
+    width: '500px',
+  },
+}));

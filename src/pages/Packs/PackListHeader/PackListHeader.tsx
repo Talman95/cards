@@ -29,7 +29,7 @@ export const PackListHeader: FC = () => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        marginBottom: '10px',
+        marginBottom: '30px',
       }}
     >
       <Typography variant="h6">Packs list</Typography>

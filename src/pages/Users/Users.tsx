@@ -20,7 +20,7 @@ export const Users: FC = () => {
   }, [filter]);
 
   return (
-    <Box>
+    <Box style={{ width: '100%' }}>
       <UsersHeader />
       <UsersFilter />
       <UsersTable />

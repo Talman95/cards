@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 
-import { Container } from '@mui/material';
+import { Box, styled } from '@mui/material';
 import { Navigate, Route, Routes } from 'react-router-dom';
 
 import { path } from '../enums/path';
@@ -30,10 +30,7 @@ export const RoutesPage: FC = () => {
   ];
 
   return (
-    <Container
-      fixed
-      style={{ display: 'flex', justifyContent: 'center', marginTop: '30px' }}
-    >
+    <PagesBox>
       <Routes>
         <Route path="/" element={<Navigate to={path.PROFILE} />} />
 
@@ -47,6 +44,21 @@ export const RoutesPage: FC = () => {
           ))}
         </Route>
       </Routes>
-    </Container>
+    </PagesBox>
   );
 };
+
+export const PagesBox = styled(Box)(({ theme }) => ({
+  width: 'calc(100vw - 30px)',
+  display: 'flex',
+  justifyContent: 'center',
+  margin: '10px auto',
+  [theme.breakpoints.up('sm')]: {
+    width: 'calc(100vw - 50px)',
+    margin: '30px auto',
+  },
+  [theme.breakpoints.up('md')]: {
+    width: 'calc(100vw - 100px)',
+    margin: '30px auto',
+  },
+}));

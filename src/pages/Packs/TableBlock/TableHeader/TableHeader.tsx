@@ -27,13 +27,9 @@ export const TableHeader: FC = () => {
   return (
     <TableHead>
       <TableRow>
-        <TableCell align="left" style={{ minWidth: '70px', maxWidth: '70px' }}>
-          Cover
-        </TableCell>
-        <TableCell align="left" style={{ minWidth: '268px', maxWidth: '268px' }}>
-          Name
-        </TableCell>
-        <TableCell align="left" style={{ minWidth: '50px', maxWidth: '50px' }}>
+        <TableCell align="left">Cover</TableCell>
+        <TableCell align="left">Name</TableCell>
+        <TableCell align="left">
           <TableSortLabel
             active={orderBy === 'cardsCount'}
             direction={orderBy === 'cardsCount' ? order : 'asc'}
@@ -47,7 +43,7 @@ export const TableHeader: FC = () => {
             ) : null}
           </TableSortLabel>
         </TableCell>
-        <TableCell align="left" style={{ minWidth: '220px', maxWidth: '220px' }}>
+        <TableCell align="left">
           <TableSortLabel
             active={orderBy === 'updated'}
             direction={orderBy === 'updated' ? order : 'asc'}
@@ -61,12 +57,8 @@ export const TableHeader: FC = () => {
             ) : null}
           </TableSortLabel>
         </TableCell>
-        <TableCell align="left" style={{ minWidth: '180px', maxWidth: '180px' }}>
-          Created by
-        </TableCell>
-        <TableCell align="left" style={{ minWidth: '150px', maxWidth: '150px' }}>
-          Actions
-        </TableCell>
+        <TableCell align="left">Created by</TableCell>
+        <TableCell align="left">Actions</TableCell>
       </TableRow>
     </TableHead>
   );

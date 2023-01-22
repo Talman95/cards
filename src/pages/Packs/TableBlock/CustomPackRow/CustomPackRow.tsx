@@ -88,7 +88,7 @@ export const CustomPackRow: FC<{ pack: PackType }> = ({ pack }) => {
           onClick={() => navigateToCardsList(pack._id)}
           style={{
             cursor: 'pointer',
-            maxWidth: '268px',
+            width: '240px',
             textOverflow: 'ellipsis',
             whiteSpace: 'nowrap',
             overflow: 'hidden',
@@ -102,7 +102,7 @@ export const CustomPackRow: FC<{ pack: PackType }> = ({ pack }) => {
           scope="row"
           align="left"
           style={{
-            maxWidth: '268px',
+            width: '240px',
             textOverflow: 'ellipsis',
             whiteSpace: 'nowrap',
             overflow: 'hidden',
@@ -120,7 +120,7 @@ export const CustomPackRow: FC<{ pack: PackType }> = ({ pack }) => {
         onClick={onShowUserModalClick}
         style={{
           cursor: 'pointer',
-          maxWidth: '180px',
+          width: '180px',
           textOverflow: 'ellipsis',
           whiteSpace: 'nowrap',
           overflow: 'hidden',

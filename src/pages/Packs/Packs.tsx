@@ -41,7 +41,7 @@ export const Packs: FC = () => {
   };
 
   return (
-    <Box>
+    <Box style={{ width: '100%' }}>
       <PackListHeader />
       <FilterBlock onAllPacksClick={onAllPacksClick} onMyPacksClick={onMyPacksClick} />
       <TableBlock />

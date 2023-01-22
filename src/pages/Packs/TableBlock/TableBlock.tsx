@@ -38,8 +38,8 @@ export const TableBlock: FC = () => {
   };
 
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ width: 1070 }} aria-label="table">
+    <TableContainer component={Paper} style={{ overflowX: 'scroll' }}>
+      <Table style={{ minWidth: '900px' }}>
         <TableHeader />
         <TableBody>
           {cardPacks.map(p => (

@@ -3,7 +3,7 @@ import React, { FC, useEffect } from 'react';
 import { CircularProgress } from '@mui/material';
 import { useSelector } from 'react-redux';
 
-import { Chat } from '../components/Chat/Chat';
+// import { Chat } from '../components/Chat/Chat';
 import { Header } from '../components/Header/Header';
 import { MessageSnackbar } from '../components/MessageSnackbar/MessageSnackbar';
 import { useActions } from '../hooks/useActions';
@@ -15,7 +15,7 @@ const App: FC = () => {
   const { getAuthData } = useActions();
 
   const isInitialized = useSelector(selectors.appSelectors.selectIsInitialized);
-  const isLoggedIn = useSelector(selectors.authSelectors.selectIsLoggedIn);
+  // const isLoggedIn = useSelector(selectors.authSelectors.selectIsLoggedIn);
 
   useEffect(() => {
     getAuthData();
@@ -34,7 +34,7 @@ const App: FC = () => {
       <MessageSnackbar />
       <Header />
       <RoutesPage />
-      {isLoggedIn && <Chat />}
+      {/* {isLoggedIn && <Chat />} */}
       <Modals />
     </div>
   );

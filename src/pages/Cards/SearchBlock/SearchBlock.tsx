@@ -21,7 +21,7 @@ export const SearchBlock: FC = () => {
   };
 
   return (
-    <Stack direction="row" spacing={4}>
+    <Stack direction="row" spacing={4} style={{ marginBottom: '30px' }}>
       <Box>
         <Typography variant="body2">Search by question:</Typography>
         <Search title={cardQuestion} setTitle={setSearchQuestion} />

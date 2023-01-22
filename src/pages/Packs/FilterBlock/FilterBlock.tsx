@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 
-import { Box } from '@mui/material';
+import { Box, styled } from '@mui/material';
 
 import { PacksDoubleSlider } from './PacksDoubleSlider/PacksDoubleSlider';
 import { ResetSettings } from './ResetSettings/ResetSettings';
@@ -14,9 +14,7 @@ type PropsType = {
 
 export const FilterBlock: FC<PropsType> = ({ onMyPacksClick, onAllPacksClick }) => {
   return (
-    <Box
-      style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
-    >
+    <FilterBox>
       <SearchBox />
       <ToggleButtonBox
         onAllPacksClick={onAllPacksClick}
@@ -24,6 +22,18 @@ export const FilterBlock: FC<PropsType> = ({ onMyPacksClick, onAllPacksClick }) 
       />
       <PacksDoubleSlider />
       <ResetSettings />
-    </Box>
+    </FilterBox>
   );
 };
+
+export const FilterBox = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  gap: '7px',
+  marginBottom: '30px',
+  [theme.breakpoints.up('md')]: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+}));

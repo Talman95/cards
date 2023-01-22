@@ -49,7 +49,7 @@ export const CardsList: FC = () => {
   }
 
   return (
-    <Box>
+    <Box style={{ width: '100%' }}>
       <CardsListHeader cardsPackId={id} length={cards.length} />
       <SearchBlock />
       <TableBlock length={cards.length} />

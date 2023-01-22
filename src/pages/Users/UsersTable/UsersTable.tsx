@@ -34,8 +34,8 @@ export const UsersTable: FC = () => {
   };
 
   return (
-    <TableContainer component={Paper}>
-      <Table>
+    <TableContainer component={Paper} style={{ overflowX: 'scroll' }}>
+      <Table style={{ minWidth: '900px' }}>
         <UsersTableHeader />
         <TableBody>
           {users.map(u => (

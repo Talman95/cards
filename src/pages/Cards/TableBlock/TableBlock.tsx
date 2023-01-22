@@ -45,8 +45,8 @@ export const TableBlock: FC<{ length: number }> = ({ length }) => {
   };
 
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ width: 1000 }} aria-label="table">
+    <TableContainer component={Paper} style={{ overflowX: 'scroll' }}>
+      <Table style={{ minWidth: '900px' }}>
         <TableHeader />
         {length !== 0 && (
           <TableBody>
