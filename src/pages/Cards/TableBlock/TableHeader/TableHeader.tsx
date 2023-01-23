@@ -6,19 +6,19 @@ import { visuallyHidden } from '@mui/utils';
 import { useSelector } from 'react-redux';
 
 import { useActions } from '../../../../hooks/useActions';
-import { selectors } from '../../../../store';
+import { allCardsActions, cardsSelectors, profileSelectors } from '../../../../store';
 
 type Order = 'asc' | 'desc';
 type Data = 'grade' | 'updated';
 
 export const TableHeader: FC = () => {
-  const { setSortCards } = useActions();
+  const { setSortCards } = useActions(allCardsActions);
 
   const [order, setOrder] = useState<Order>('asc');
   const [orderBy, setOrderBy] = useState<Data>('updated');
 
-  const packUserId = useSelector(selectors.cardsSelectors.selectPackUserId);
-  const userId = useSelector(selectors.profileSelectors.selectProfile)?._id;
+  const packUserId = useSelector(cardsSelectors.selectPackUserId);
+  const userId = useSelector(profileSelectors.selectProfile)?._id;
 
   const sortHandler = (order: Order, orderBy: Data): void => {
     const direction = order === 'asc' ? 0 : 1;

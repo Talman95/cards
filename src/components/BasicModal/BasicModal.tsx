@@ -5,29 +5,15 @@ import { Box, Grid, IconButton, styled, Typography } from '@mui/material';
 import Modal from '@mui/material/Modal';
 
 import { useActions } from '../../hooks/useActions';
+import { allModalActions } from '../../store';
 
 type PropsType = {
   type: null | string;
   children: ReactElement;
 };
 
-// const style = {
-//   position: 'absolute' as 'absolute',
-//   top: '50%',
-//   left: '50%',
-//   transform: 'translate(-50%, -50%)',
-//   minWidth: '400px',
-//   width: 500,
-//   backgroundColor: '#fff',
-//   border: '2px solid #000',
-//   boxShadow: 24,
-//   p: 4,
-//   display: 'flex',
-//   flexDirection: 'column',
-// };
-
 export const BasicModal: FC<PropsType> = ({ type, children }) => {
-  const { setModalClose } = useActions();
+  const { setModalClose } = useActions(allModalActions);
 
   const onCloseClick = (): void => {
     setModalClose();

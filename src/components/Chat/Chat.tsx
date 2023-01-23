@@ -5,16 +5,16 @@ import { Badge, IconButton } from '@mui/material';
 import { useSelector } from 'react-redux';
 
 import { useActions } from '../../hooks/useActions';
-import { selectors } from '../../store';
+import { allChatActions, chatSelectors } from '../../store';
 
 import { ChatModal } from './ChatModal/ChatModal';
 
 export const Chat: FC = () => {
   const [isVisible, setIsVisible] = useState(false);
 
-  const { createConnection, destroyConnection } = useActions();
+  const { createConnection, destroyConnection } = useActions(allChatActions);
 
-  const messages = useSelector(selectors.chatSelectors.selectMessages);
+  const messages = useSelector(chatSelectors.selectMessages);
 
   useEffect(() => {
     createConnection();

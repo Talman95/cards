@@ -29,8 +29,7 @@ const slice = createSlice({
   },
 });
 
-export const modalSlice = slice.reducer;
-export const modalActions = slice.actions;
+export const { reducer: modalSlice, actions: modalActions } = slice;
 
 export type DeleteModalType = {
   id: string;

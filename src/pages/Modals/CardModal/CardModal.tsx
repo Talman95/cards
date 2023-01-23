@@ -11,23 +11,20 @@ import {
 import { useSelector } from 'react-redux';
 
 import { AddCardType, UpdateCardType } from '../../../api';
-import { BottomNavigationButtons } from '../../../components/BottomNavigationButtons/BottomNavigationButtons';
-import { PictureBlock } from '../../../components/PictureBlock/PictureBlock';
-import { TextBlock } from '../../../components/TextBlock/TextBlock';
+import { BottomNavigationButtons, PictureBlock, TextBlock } from '../../../components';
 import { modalType } from '../../../enums/modalType';
 import { useActions } from '../../../hooks/useActions';
-import { selectors } from '../../../store';
+import { allCardsActions, allModalActions, modalSelectors } from '../../../store';
 
 type QuestionFormat = 'Text' | 'Picture';
 
 export const CardModal: FC = () => {
-  const { setModalClose, addCard, updateCard } = useActions();
+  const { addCard, updateCard } = useActions(allCardsActions);
+  const { setModalClose } = useActions(allModalActions);
 
-  const type = useSelector(selectors.modalSelectors.selectType);
-  const addCardData = useSelector(selectors.modalSelectors.selectData) as AddCardType;
-  const updateCardData = useSelector(
-    selectors.modalSelectors.selectData,
-  ) as UpdateCardType;
+  const type = useSelector(modalSelectors.selectType);
+  const addCardData = useSelector(modalSelectors.selectData) as AddCardType;
+  const updateCardData = useSelector(modalSelectors.selectData) as UpdateCardType;
 
   const [format, setFormat] = useState<QuestionFormat>('Text');
   const [question, setQuestion] = useState(updateCardData.question || '');

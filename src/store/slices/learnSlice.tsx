@@ -32,5 +32,4 @@ const slice = createSlice({
   },
 });
 
-export const learnSlice = slice.reducer;
-export const learnActions = slice.actions;
+export const { reducer: learnSlice, actions: learnActions } = slice;

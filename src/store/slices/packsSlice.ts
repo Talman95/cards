@@ -77,5 +77,4 @@ const slice = createSlice({
   },
 });
 
-export const packsSlice = slice.reducer;
-export const packsActions = slice.actions;
+export const { reducer: packsSlice, actions: packsActions } = slice;

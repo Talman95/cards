@@ -3,18 +3,18 @@ import React, { FC } from 'react';
 import { Box, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 
-import { DoubleSlider } from '../../../../components/DoubleSlider/DoubleSlider';
+import { DoubleSlider } from '../../../../components';
 import { useActions } from '../../../../hooks/useActions';
-import { selectors } from '../../../../store';
+import { allUsersActions, appSelectors, usersSelectors } from '../../../../store';
 
 export const UsersDoubleSlider: FC = () => {
-  const { setMinMaxUsersCount } = useActions();
+  const { setMinMaxUsersCount } = useActions(allUsersActions);
 
-  const min = useSelector(selectors.usersSelectors.selectMinPublicCardPacksCount);
-  const max = useSelector(selectors.usersSelectors.selectMaxPublicCardPacksCount);
-  const minFilter = useSelector(selectors.usersSelectors.selectFilterMin);
-  const maxFilter = useSelector(selectors.usersSelectors.selectFilterMax);
-  const status = useSelector(selectors.appSelectors.selectStatus);
+  const min = useSelector(usersSelectors.selectMinPublicCardPacksCount);
+  const max = useSelector(usersSelectors.selectMaxPublicCardPacksCount);
+  const minFilter = useSelector(usersSelectors.selectFilterMin);
+  const maxFilter = useSelector(usersSelectors.selectFilterMax);
+  const status = useSelector(appSelectors.selectStatus);
 
   return (
     <Box sx={{ height: '62px', width: '300px', display: 'grid' }}>

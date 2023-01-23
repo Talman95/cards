@@ -16,15 +16,21 @@ import { useNavigate } from 'react-router-dom';
 
 import { path } from '../../enums/path';
 import { useActions } from '../../hooks/useActions';
-import { selectors } from '../../store';
+import {
+  authSelectors,
+  profileSelectors,
+  appSelectors,
+  allAuthActions,
+} from '../../store';
 
 export const Header: FC = () => {
   const navigate = useNavigate();
-  const { logout } = useActions();
 
-  const isLoggedIn = useSelector(selectors.authSelectors.selectIsLoggedIn);
-  const profile = useSelector(selectors.profileSelectors.selectProfile);
-  const status = useSelector(selectors.appSelectors.selectStatus);
+  const { logout } = useActions(allAuthActions);
+
+  const isLoggedIn = useSelector(authSelectors.selectIsLoggedIn);
+  const profile = useSelector(profileSelectors.selectProfile);
+  const status = useSelector(appSelectors.selectStatus);
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 

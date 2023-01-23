@@ -14,7 +14,7 @@ import {
 import { useSelector } from 'react-redux';
 
 import { useActions } from '../../../hooks/useActions';
-import { selectors } from '../../../store';
+import { allChatActions, profileSelectors } from '../../../store';
 import { MessageType } from '../../../types';
 
 import { MessageItem } from './MessageItem/MessageItem';
@@ -27,9 +27,9 @@ type PropsType = {
 export const ChatModal: FC<PropsType> = ({ onCloseButtonClick, messages }) => {
   const [message, setMessage] = useState('');
 
-  const { sentMessage } = useActions();
+  const { sentMessage } = useActions(allChatActions);
 
-  const profile = useSelector(selectors.profileSelectors.selectProfile);
+  const profile = useSelector(profileSelectors.selectProfile);
 
   const onMessageTextChange = (
     e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,

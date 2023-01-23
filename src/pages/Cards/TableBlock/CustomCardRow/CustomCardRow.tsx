@@ -15,14 +15,14 @@ import { useSelector } from 'react-redux';
 import { UpdateCardType } from '../../../../api';
 import { modalType } from '../../../../enums/modalType';
 import { useActions } from '../../../../hooks/useActions';
-import { selectors } from '../../../../store';
+import { allModalActions, profileSelectors } from '../../../../store';
 import { DeleteModalType } from '../../../../store/slices/modalSlice';
 import { CardType } from '../../../../types';
 
 export const CustomCardRow: FC<{ card: CardType }> = ({ card }) => {
-  const { setModalOpen } = useActions();
+  const { setModalOpen } = useActions(allModalActions);
 
-  const userId = useSelector(selectors.profileSelectors.selectProfile)?._id;
+  const userId = useSelector(profileSelectors.selectProfile)?._id;
 
   const onUpdateCardClick = (): void => {
     setModalOpen({

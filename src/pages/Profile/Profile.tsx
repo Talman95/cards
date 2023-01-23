@@ -18,16 +18,17 @@ import { useNavigate } from 'react-router-dom';
 
 import { path } from '../../enums/path';
 import { useActions } from '../../hooks/useActions';
-import { selectors } from '../../store';
+import { allAuthActions, allProfileActions, profileSelectors } from '../../store';
 
 import { ProfileAvatar } from './ProfileAvatar/ProfileAvatar';
 
 export const Profile: FC = () => {
   const navigate = useNavigate();
 
-  const { logout, updateProfile } = useActions();
+  const { logout } = useActions(allAuthActions);
+  const { updateProfile } = useActions(allProfileActions);
 
-  const profile = useSelector(selectors.profileSelectors.selectProfile);
+  const profile = useSelector(profileSelectors.selectProfile);
 
   const [name, setName] = useState<string>(profile?.name || '');
   const [editMode, setEditMode] = useState(false);

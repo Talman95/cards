@@ -3,15 +3,15 @@ import React, { FC } from 'react';
 import { Box, Stack, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 
-import { Search } from '../../../components/Search/Search';
+import { Search } from '../../../components';
 import { useActions } from '../../../hooks/useActions';
-import { selectors } from '../../../store';
+import { allCardsActions, cardsSelectors } from '../../../store';
 
 export const SearchBlock: FC = () => {
-  const { setCardQuestion, setCardAnswer } = useActions();
+  const { setCardQuestion, setCardAnswer } = useActions(allCardsActions);
 
-  const cardAnswer = useSelector(selectors.cardsSelectors.selectCardAnswer);
-  const cardQuestion = useSelector(selectors.cardsSelectors.selectCardQuestion);
+  const cardAnswer = useSelector(cardsSelectors.selectCardAnswer);
+  const cardQuestion = useSelector(cardsSelectors.selectCardQuestion);
 
   const setSearchQuestion = (question: string): void => {
     setCardQuestion(question);

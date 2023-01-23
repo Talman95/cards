@@ -20,5 +20,4 @@ const slice = createSlice({
   },
 });
 
-export const profileSlice = slice.reducer;
-export const profileActions = slice.actions;
+export const { reducer: profileSlice, actions: profileActions } = slice;

@@ -3,14 +3,14 @@ import React, { FC } from 'react';
 import { Box, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 
-import { Search } from '../../../../components/Search/Search';
+import { Search } from '../../../../components';
 import { useActions } from '../../../../hooks/useActions';
-import { selectors } from '../../../../store';
+import { allUsersActions, usersSelectors } from '../../../../store';
 
 export const UsersSearch: FC = () => {
-  const { setSearchUserName } = useActions();
+  const { setSearchUserName } = useActions(allUsersActions);
 
-  const userName = useSelector(selectors.usersSelectors.selectFilterUserName);
+  const userName = useSelector(usersSelectors.selectFilterUserName);
 
   return (
     <Box style={{ height: '62px', width: '300px' }}>

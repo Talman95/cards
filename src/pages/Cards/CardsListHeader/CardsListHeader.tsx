@@ -18,7 +18,13 @@ import { useNavigate } from 'react-router-dom';
 import { AddCardType, UpdatePackType } from '../../../api';
 import { modalType } from '../../../enums/modalType';
 import { useActions } from '../../../hooks/useActions';
-import { selectors } from '../../../store';
+import {
+  allModalActions,
+  cardsSelectors,
+  profileSelectors,
+  appSelectors,
+  packsSelectors,
+} from '../../../store';
 import { DeleteModalType } from '../../../store/slices/modalSlice';
 
 import { ActionMenu } from './ActionMenu/ActionMenu';
@@ -29,17 +35,17 @@ type PropsType = {
 };
 
 export const CardsListHeader: FC<PropsType> = ({ cardsPackId, length }) => {
-  const { setModalOpen } = useActions();
+  const { setModalOpen } = useActions(allModalActions);
 
   const navigate = useNavigate();
 
-  const packUserId = useSelector(selectors.cardsSelectors.selectPackUserId);
-  const userId = useSelector(selectors.profileSelectors.selectProfile)?._id;
-  const packName = useSelector(selectors.cardsSelectors.selectPackName);
-  const status = useSelector(selectors.appSelectors.selectStatus);
-  const packDeckCover = useSelector(selectors.cardsSelectors.selectPackDeckCover);
-  const isLoading = useSelector(selectors.cardsSelectors.selectIsLoading);
-  const pack = useSelector(selectors.packsSelectors.selectCardPacks).find(
+  const packUserId = useSelector(cardsSelectors.selectPackUserId);
+  const userId = useSelector(profileSelectors.selectProfile)?._id;
+  const packName = useSelector(cardsSelectors.selectPackName);
+  const status = useSelector(appSelectors.selectStatus);
+  const packDeckCover = useSelector(cardsSelectors.selectPackDeckCover);
+  const isLoading = useSelector(cardsSelectors.selectIsLoading);
+  const pack = useSelector(packsSelectors.selectCardPacks).find(
     pack => pack._id === cardsPackId,
   );
 

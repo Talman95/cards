@@ -7,7 +7,7 @@ import { IconButton, Stack } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { selectors } from '../../../../store';
+import { cardsSelectors } from '../../../../store';
 
 type PropsType = {
   blocked: boolean;
@@ -24,7 +24,7 @@ export const ActionMenu: FC<PropsType> = ({
 }) => {
   const navigate = useNavigate();
 
-  const cardsPack_id = useSelector(selectors.cardsSelectors.selectCardsPack_id);
+  const cardsPack_id = useSelector(cardsSelectors.selectCardsPack_id);
 
   const onLearnPackClick = (): void => {
     closeTooltip();

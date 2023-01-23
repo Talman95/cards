@@ -5,16 +5,22 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { useActions } from '../../../hooks/useActions';
-import { selectors } from '../../../store';
+import {
+  allModalActions,
+  allUsersActions,
+  usersSelectors,
+  modalSelectors,
+} from '../../../store';
 import { ShowUserModalType } from '../../../store/slices/modalSlice';
 
 export const ShowUserModal: FC = () => {
-  const { getUserData, removeUsersData, setModalClose } = useActions();
+  const { setModalClose } = useActions(allModalActions);
+  const { getUserData, removeUsersData } = useActions(allUsersActions);
 
   const navigate = useNavigate();
 
-  const user = useSelector(selectors.usersSelectors.selectViewedUser);
-  const data = useSelector(selectors.modalSelectors.selectData) as ShowUserModalType;
+  const user = useSelector(usersSelectors.selectViewedUser);
+  const data = useSelector(modalSelectors.selectData) as ShowUserModalType;
 
   useEffect(() => {
     getUserData(data.id);

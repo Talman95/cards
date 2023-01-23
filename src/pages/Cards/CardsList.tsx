@@ -5,22 +5,22 @@ import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import { useActions } from '../../hooks/useActions';
-import { selectors } from '../../store';
+import { allCardsActions, cardsSelectors } from '../../store';
 
 import { CardsListHeader } from './CardsListHeader/CardsListHeader';
 import { SearchBlock } from './SearchBlock/SearchBlock';
 import { TableBlock } from './TableBlock/TableBlock';
 
 export const CardsList: FC = () => {
-  const { getCards, removeCardsData, setCardsPackId } = useActions();
+  const { getCards, removeCardsData, setCardsPackId } = useActions(allCardsActions);
 
-  const cards = useSelector(selectors.cardsSelectors.selectCards);
-  const page = useSelector(selectors.cardsSelectors.selectPage);
-  const pageCount = useSelector(selectors.cardsSelectors.selectPageCount);
-  const sortCards = useSelector(selectors.cardsSelectors.selectSortCards);
-  const cardAnswer = useSelector(selectors.cardsSelectors.selectCardAnswer);
-  const cardQuestion = useSelector(selectors.cardsSelectors.selectCardQuestion);
-  const cardsPack_id = useSelector(selectors.cardsSelectors.selectCardsPack_id);
+  const cards = useSelector(cardsSelectors.selectCards);
+  const page = useSelector(cardsSelectors.selectPage);
+  const pageCount = useSelector(cardsSelectors.selectPageCount);
+  const sortCards = useSelector(cardsSelectors.selectSortCards);
+  const cardAnswer = useSelector(cardsSelectors.selectCardAnswer);
+  const cardQuestion = useSelector(cardsSelectors.selectCardQuestion);
+  const cardsPack_id = useSelector(cardsSelectors.selectCardsPack_id);
 
   const { id } = useParams<{ id: string }>();
 

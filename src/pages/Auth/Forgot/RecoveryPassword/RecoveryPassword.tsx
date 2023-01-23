@@ -28,6 +28,7 @@ type PropsType = {
 
 export const RecoveryPassword: FC<PropsType> = ({ toSend, setEmail }) => {
   const dispatch = useAppDispatch();
+
   const navigate = useNavigate();
 
   const navigateToLogin = (): void => navigate(path.LOGIN);

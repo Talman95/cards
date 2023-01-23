@@ -5,12 +5,12 @@ import { useSelector } from 'react-redux';
 
 import { modalType } from '../../../enums/modalType';
 import { useActions } from '../../../hooks/useActions';
-import { selectors } from '../../../store';
+import { allModalActions, appSelectors } from '../../../store';
 
 export const PackListHeader: FC = () => {
-  const { setModalOpen } = useActions();
+  const { setModalOpen } = useActions(allModalActions);
 
-  const status = useSelector(selectors.appSelectors.selectStatus);
+  const status = useSelector(appSelectors.selectStatus);
 
   const onAddPackClick = (): void => {
     setModalOpen({

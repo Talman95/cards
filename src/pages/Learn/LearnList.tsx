@@ -17,7 +17,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { path } from '../../enums/path';
 import { useActions } from '../../hooks/useActions';
-import { selectors } from '../../store';
+import { allLearnActions, learnSelectors, packsSelectors } from '../../store';
 import { CardType } from '../../types';
 import { getCard } from '../../utils/smartRandom';
 
@@ -26,13 +26,13 @@ import { CheckboxBlock } from './CheckboxBlock/CheckboxBlock';
 export const LearnList: FC = () => {
   const navigate = useNavigate();
 
-  const { getLearnedCards, updateGradeCard } = useActions();
+  const { getLearnedCards, updateGradeCard } = useActions(allLearnActions);
 
   const { cardsPack_id } = useParams<{ cardsPack_id?: string }>();
 
-  const cards = useSelector(selectors.learnSelectors.selectLearnedPack);
-  const isFetching = useSelector(selectors.learnSelectors.selectIsFetching);
-  const cardPack = useSelector(selectors.packsSelectors.selectCardPacks).find(
+  const cards = useSelector(learnSelectors.selectLearnedPack);
+  const isFetching = useSelector(learnSelectors.selectIsFetching);
+  const cardPack = useSelector(packsSelectors.selectCardPacks).find(
     pack => pack._id === cardsPack_id,
   );
 

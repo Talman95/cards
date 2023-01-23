@@ -68,5 +68,4 @@ const slice = createSlice({
   },
 });
 
-export const usersSlice = slice.reducer;
-export const usersActions = slice.actions;
+export const { reducer: usersSlice, actions: usersActions } = slice;

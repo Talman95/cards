@@ -7,16 +7,16 @@ import { useSelector } from 'react-redux';
 
 import { modalType } from '../../../../enums/modalType';
 import { useActions } from '../../../../hooks/useActions';
-import { selectors } from '../../../../store';
+import { allModalActions, appSelectors } from '../../../../store';
 import { ShowUserModalType } from '../../../../store/slices/modalSlice';
 import { UserType } from '../../../../types';
 
 const BLUE_COLOR = 500;
 
 export const UsersTableRow: FC<{ user: UserType }> = ({ user }) => {
-  const { setModalOpen } = useActions();
+  const { setModalOpen } = useActions(allModalActions);
 
-  const status = useSelector(selectors.appSelectors.selectStatus);
+  const status = useSelector(appSelectors.selectStatus);
 
   const onShowUserModalClick = (): void => {
     if (status === 'loading') return;

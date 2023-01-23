@@ -4,13 +4,14 @@ import { PhotoCamera } from '@mui/icons-material';
 import { Avatar, IconButton, Stack } from '@mui/material';
 
 import { useActions } from '../../../hooks/useActions';
+import { allProfileActions } from '../../../store';
 import { ProfileType } from '../../../types';
 import { convertFileToBase64 } from '../../../utils/convertFile';
 
 const MAX_FILE_SIZE = 4000000;
 
 export const ProfileAvatar: FC<{ profile: ProfileType }> = ({ profile }) => {
-  const { updateProfile } = useActions();
+  const { updateProfile } = useActions(allProfileActions);
 
   const [ava, setAva] = useState(profile.avatar);
 

@@ -16,7 +16,7 @@ import { Navigate, useNavigate } from 'react-router-dom';
 
 import { path } from '../../../enums/path';
 import { useActions } from '../../../hooks/useActions';
-import { selectors } from '../../../store';
+import { allAuthActions, authSelectors } from '../../../store';
 
 type FormikErrorType = {
   email?: string;
@@ -26,9 +26,10 @@ type FormikErrorType = {
 
 export const Login: FC = () => {
   const navigate = useNavigate();
-  const { login } = useActions();
 
-  const isLoggedIn = useSelector(selectors.authSelectors.selectIsLoggedIn);
+  const { login } = useActions(allAuthActions);
+
+  const isLoggedIn = useSelector(authSelectors.selectIsLoggedIn);
 
   const navigateToRegister = (): void => navigate(path.REGISTER);
   const navigateToForgot = (): void => navigate(path.FORGOT_PASSWORD);

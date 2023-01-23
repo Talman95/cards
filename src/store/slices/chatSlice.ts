@@ -17,5 +17,4 @@ const slice = createSlice({
   },
 });
 
-export const chatSlice = slice.reducer;
-export const chatActions = slice.actions;
+export const { reducer: chatSlice, actions: chatActions } = slice;

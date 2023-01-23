@@ -12,7 +12,7 @@ import {
 import { useSelector } from 'react-redux';
 
 import { useActions } from '../../../hooks/useActions';
-import { selectors } from '../../../store';
+import { allCardsActions, cardsSelectors } from '../../../store';
 
 import { CustomCardRow } from './CustomCardRow/CustomCardRow';
 import { TableHeader } from './TableHeader/TableHeader';
@@ -22,13 +22,13 @@ const TEN_CARDS_PER_PAGE = 10;
 const TWENTY_CARDS_PER_PAGE = 20;
 
 export const TableBlock: FC<{ length: number }> = ({ length }) => {
-  const { setCurrentPageCards, setPageCountCards } = useActions();
+  const { setCurrentPageCards, setPageCountCards } = useActions(allCardsActions);
 
-  const page = useSelector(selectors.cardsSelectors.selectPage);
-  const pageCount = useSelector(selectors.cardsSelectors.selectPageCount);
-  const cardsTotalCount = useSelector(selectors.cardsSelectors.selectCardsTotalCount);
-  const isLoading = useSelector(selectors.cardsSelectors.selectIsLoading);
-  const cards = useSelector(selectors.cardsSelectors.selectCards);
+  const page = useSelector(cardsSelectors.selectPage);
+  const pageCount = useSelector(cardsSelectors.selectPageCount);
+  const cardsTotalCount = useSelector(cardsSelectors.selectCardsTotalCount);
+  const isLoading = useSelector(cardsSelectors.selectIsLoading);
+  const cards = useSelector(cardsSelectors.selectCards);
 
   const handleChangePage = (
     event: MouseEvent<HTMLButtonElement> | null,

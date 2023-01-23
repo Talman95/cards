@@ -5,21 +5,21 @@ import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
 import { useActions } from '../../hooks/useActions';
-import { selectors } from '../../store';
+import { allPacksActions, packsSelectors, profileSelectors } from '../../store';
 
 import { FilterBlock } from './FilterBlock/FilterBlock';
 import { PackListHeader } from './PackListHeader/PackListHeader';
 import { TableBlock } from './TableBlock/TableBlock';
 
 export const Packs: FC = () => {
-  const { getPacks, setParamUserId, setCurrentPage } = useActions();
+  const { getPacks, setParamUserId, setCurrentPage } = useActions(allPacksActions);
 
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const filter = useSelector(selectors.packsSelectors.selectFilter);
-  const page = useSelector(selectors.packsSelectors.selectPage);
-  const pageCount = useSelector(selectors.packsSelectors.selectPageCount);
-  const userId = useSelector(selectors.profileSelectors.selectProfile)?._id;
+  const filter = useSelector(packsSelectors.selectFilter);
+  const page = useSelector(packsSelectors.selectPage);
+  const pageCount = useSelector(packsSelectors.selectPageCount);
+  const userId = useSelector(profileSelectors.selectProfile)?._id;
 
   useEffect(() => {
     const paramId = searchParams.get('id');

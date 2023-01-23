@@ -12,19 +12,20 @@ import {
 import { useSelector } from 'react-redux';
 
 import { UpdatePackType } from '../../../api';
-import { BottomNavigationButtons } from '../../../components/BottomNavigationButtons/BottomNavigationButtons';
+import { BottomNavigationButtons } from '../../../components';
 import { modalType } from '../../../enums/modalType';
 import { useActions } from '../../../hooks/useActions';
-import { selectors } from '../../../store';
+import { allModalActions, allPacksActions, modalSelectors } from '../../../store';
 import { convertFileToBase64 } from '../../../utils/convertFile';
 
 const MAX_FILE_SIZE = 4000000;
 
 export const PackModal: FC = () => {
-  const { setModalClose, addPack, updatePack } = useActions();
+  const { setModalClose } = useActions(allModalActions);
+  const { addPack, updatePack } = useActions(allPacksActions);
 
-  const type = useSelector(selectors.modalSelectors.selectType);
-  const data = useSelector(selectors.modalSelectors.selectData) as UpdatePackType;
+  const type = useSelector(modalSelectors.selectType);
+  const data = useSelector(modalSelectors.selectData) as UpdatePackType;
 
   const [name, setName] = useState(data?.name || '');
   const [cover, setCover] = useState(data?.deckCover);

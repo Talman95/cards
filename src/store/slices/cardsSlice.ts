@@ -79,5 +79,4 @@ const slice = createSlice({
   },
 });
 
-export const cardsSlice = slice.reducer;
-export const cardsActions = slice.actions;
+export const { reducer: cardsSlice, actions: cardsActions } = slice;

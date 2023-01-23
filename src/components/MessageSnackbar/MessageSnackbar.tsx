@@ -6,17 +6,17 @@ import { useSelector } from 'react-redux';
 
 import { SnackbarStatus } from '../../enums/snackbarStatus';
 import { useActions } from '../../hooks/useActions';
-import { selectors } from '../../store';
+import { appActions, appSelectors } from '../../store';
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
 export const MessageSnackbar: FC = () => {
-  const { setAppMessage } = useActions();
+  const { setAppMessage } = useActions(appActions);
 
-  const message = useSelector(selectors.appSelectors.selectMessage);
-  const result: SnackbarStatus = useSelector(selectors.appSelectors.selectResult);
+  const message = useSelector(appSelectors.selectMessage);
+  const result: SnackbarStatus = useSelector(appSelectors.selectResult);
 
   const isOpen = message !== null;
 

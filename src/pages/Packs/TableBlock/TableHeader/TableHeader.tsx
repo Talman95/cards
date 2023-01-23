@@ -5,12 +5,13 @@ import { Box, TableCell, TableHead, TableRow, TableSortLabel } from '@mui/materi
 import { visuallyHidden } from '@mui/utils';
 
 import { useActions } from '../../../../hooks/useActions';
+import { allPacksActions } from '../../../../store';
 
 type Order = 'asc' | 'desc';
 type Data = 'cardsCount' | 'updated';
 
 export const TableHeader: FC = () => {
-  const { setSortPacks } = useActions();
+  const { setSortPacks } = useActions(allPacksActions);
 
   const [order, setOrder] = useState<Order>('asc');
   const [orderBy, setOrderBy] = useState<Data>('updated');

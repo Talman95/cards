@@ -10,19 +10,19 @@ import { useNavigate } from 'react-router-dom';
 import noImage from '../../../../assets/no-image.jpg';
 import { modalType } from '../../../../enums/modalType';
 import { useActions } from '../../../../hooks/useActions';
-import { selectors } from '../../../../store';
+import { allModalActions, appSelectors, profileSelectors } from '../../../../store';
 import { DeleteModalType, ShowUserModalType } from '../../../../store/slices/modalSlice';
 import { PackType } from '../../../../types';
 
 export const CustomPackRow: FC<{ pack: PackType }> = ({ pack }) => {
   const navigate = useNavigate();
 
-  const { setModalOpen } = useActions();
+  const { setModalOpen } = useActions(allModalActions);
 
   const [packCover, setPackCover] = useState(pack.deckCover);
 
-  const user_id = useSelector(selectors.profileSelectors.selectProfile)?._id;
-  const status = useSelector(selectors.appSelectors.selectStatus);
+  const user_id = useSelector(profileSelectors.selectProfile)?._id;
+  const status = useSelector(appSelectors.selectStatus);
 
   const navigateToCardsList = (id: string): void => {
     if (status === 'loading') return;

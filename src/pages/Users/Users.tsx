@@ -4,16 +4,16 @@ import { Box } from '@mui/material';
 import { useSelector } from 'react-redux';
 
 import { useActions } from '../../hooks/useActions';
-import { selectors } from '../../store';
+import { allUsersActions, usersSelectors } from '../../store';
 
 import { UsersFilter } from './UsersFilter/UsersFilter';
 import { UsersHeader } from './UsersHeader/UsersHeader';
 import { UsersTable } from './UsersTable/UsersTable';
 
 export const Users: FC = () => {
-  const { getUsers } = useActions();
+  const { getUsers } = useActions(allUsersActions);
 
-  const filter = useSelector(selectors.usersSelectors.selectUsersFilter);
+  const filter = useSelector(usersSelectors.selectUsersFilter);
 
   useEffect(() => {
     getUsers();
