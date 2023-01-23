@@ -22,7 +22,7 @@ import { allAuthActions, allProfileActions, profileSelectors } from '../../store
 
 import { ProfileAvatar } from './ProfileAvatar/ProfileAvatar';
 
-export const Profile: FC = () => {
+const Profile: FC = () => {
   const navigate = useNavigate();
 
   const { logout } = useActions(allAuthActions);
@@ -116,3 +116,5 @@ export const Profile: FC = () => {
     </Card>
   );
 };
+
+export default Profile;

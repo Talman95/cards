@@ -10,7 +10,7 @@ import { authSelectors } from '../../../store';
 import { CheckEmail } from './CheckEmail/CheckEmail';
 import { RecoveryPassword } from './RecoveryPassword/RecoveryPassword';
 
-export const Forgot: FC = () => {
+const Forgot: FC = () => {
   const isLoggedIn = useSelector(authSelectors.selectIsLoggedIn);
 
   const [isSend, setIsSend] = useState(false);
@@ -33,3 +33,5 @@ export const Forgot: FC = () => {
     </Grid>
   );
 };
+
+export default Forgot;

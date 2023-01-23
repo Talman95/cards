@@ -4,29 +4,43 @@ import { Box, styled } from '@mui/material';
 import { Navigate, Route, Routes } from 'react-router-dom';
 
 import { path } from '../enums/path';
-import { Forgot, Login, Register, SetPassword } from '../pages/Auth';
-import { CardsList } from '../pages/Cards/CardsList';
-import { LearnList } from '../pages/Learn/LearnList';
-import { Packs } from '../pages/Packs/Packs';
-import { Profile } from '../pages/Profile/Profile';
-import { Users } from '../pages/Users/Users';
+import { withSuspense } from '../hoc/withSuspense';
+import { Login } from '../pages/Auth/Login/Login';
+import Profile from '../pages/Profile/Profile';
 
 import { PrivateRoutes } from './PrivateRoutes';
+
+const Register = React.lazy(() => import('../pages/Auth/Register/Register'));
+const Forgot = React.lazy(() => import('../pages/Auth/Forgot/Forgot'));
+const SetPassword = React.lazy(() => import('../pages/Auth/SetPassword/SetPassword'));
+const Packs = React.lazy(() => import('../pages/Packs/Packs'));
+const Cards = React.lazy(() => import('../pages/Cards/CardsList'));
+const Learn = React.lazy(() => import('../pages/Learn/LearnList'));
+const Users = React.lazy(() => import('../pages/Users/Users'));
+
+const RegisterSuspense = withSuspense(Register);
+const ForgotSuspense = withSuspense(Forgot);
+const SetPasswordSuspense = withSuspense(SetPassword);
+const PacksSuspense = withSuspense(Packs);
+const CardsSuspense = withSuspense(Cards);
+const LearnSuspense = withSuspense(Learn);
+const UsersSuspense = withSuspense(Users);
 
 export const RoutesPage: FC = () => {
   const routes = [
     { path: path.LOGIN, component: <Login /> },
-    { path: path.REGISTER, component: <Register /> },
-    { path: path.FORGOT_PASSWORD, component: <Forgot /> },
-    { path: path.SET_NEW_PASSWORD, component: <SetPassword /> },
+    { path: path.REGISTER, component: <RegisterSuspense /> },
+    { path: path.FORGOT_PASSWORD, component: <ForgotSuspense /> },
+    { path: path.SET_NEW_PASSWORD, component: <SetPasswordSuspense /> },
     { path: '*', component: <div>ERROR 404</div> },
   ];
+
   const protectedRoutes = [
     { path: path.PROFILE, component: <Profile /> },
-    { path: path.PACKS, component: <Packs /> },
-    { path: path.CARDS, component: <CardsList /> },
-    { path: path.LEARN, component: <LearnList /> },
-    { path: path.USERS, component: <Users /> },
+    { path: path.PACKS, component: <PacksSuspense /> },
+    { path: path.CARDS, component: <CardsSuspense /> },
+    { path: path.LEARN, component: <LearnSuspense /> },
+    { path: path.USERS, component: <UsersSuspense /> },
   ];
 
   return (
@@ -48,7 +62,7 @@ export const RoutesPage: FC = () => {
   );
 };
 
-export const PagesBox = styled(Box)(({ theme }) => ({
+const PagesBox = styled(Box)(({ theme }) => ({
   width: 'calc(100vw - 30px)',
   display: 'flex',
   justifyContent: 'center',

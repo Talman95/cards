@@ -10,7 +10,7 @@ import { UsersFilter } from './UsersFilter/UsersFilter';
 import { UsersHeader } from './UsersHeader/UsersHeader';
 import { UsersTable } from './UsersTable/UsersTable';
 
-export const Users: FC = () => {
+const Users: FC = () => {
   const { getUsers } = useActions(allUsersActions);
 
   const filter = useSelector(usersSelectors.selectUsersFilter);
@@ -27,3 +27,5 @@ export const Users: FC = () => {
     </Box>
   );
 };
+
+export default Users;

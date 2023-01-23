@@ -1,10 +1,10 @@
 import React, { FC, useEffect } from 'react';
 
-import { CircularProgress } from '@mui/material';
 import { useSelector } from 'react-redux';
 
 // import { Chat } from '../components/Chat/Chat';
 import { Header, MessageSnackbar } from '../components';
+import { Loader } from '../components/Loader/Loader';
 import { useActions } from '../hooks/useActions';
 import { Modals } from '../pages/Modals/Modals';
 import { RoutesPage } from '../routes/RoutesPage';
@@ -21,11 +21,7 @@ const App: FC = () => {
   }, []);
 
   if (!isInitialized) {
-    return (
-      <div style={{ position: 'fixed', top: '30%', textAlign: 'center', width: '100%' }}>
-        <CircularProgress />
-      </div>
-    );
+    return <Loader />;
   }
 
   return (

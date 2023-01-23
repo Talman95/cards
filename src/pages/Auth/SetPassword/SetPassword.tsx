@@ -22,7 +22,7 @@ type FormikValuesType = {
   password: string;
 };
 
-export const SetPassword: FC = () => {
+const SetPassword: FC = () => {
   const dispatch = useAppDispatch();
 
   const [isCreated, setIsCreated] = useState(false);
@@ -89,3 +89,5 @@ export const SetPassword: FC = () => {
     </Grid>
   );
 };
+
+export default SetPassword;

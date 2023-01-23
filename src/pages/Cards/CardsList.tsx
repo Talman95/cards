@@ -11,7 +11,7 @@ import { CardsListHeader } from './CardsListHeader/CardsListHeader';
 import { SearchBlock } from './SearchBlock/SearchBlock';
 import { TableBlock } from './TableBlock/TableBlock';
 
-export const CardsList: FC = () => {
+const CardsList: FC = () => {
   const { getCards, removeCardsData, setCardsPackId } = useActions(allCardsActions);
 
   const cards = useSelector(cardsSelectors.selectCards);
@@ -56,3 +56,5 @@ export const CardsList: FC = () => {
     </Box>
   );
 };
+
+export default CardsList;

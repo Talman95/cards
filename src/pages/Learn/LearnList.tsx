@@ -23,7 +23,7 @@ import { getCard } from '../../utils/smartRandom';
 
 import { CheckboxBlock } from './CheckboxBlock/CheckboxBlock';
 
-export const LearnList: FC = () => {
+const LearnList: FC = () => {
   const navigate = useNavigate();
 
   const { getLearnedCards, updateGradeCard } = useActions(allLearnActions);
@@ -138,7 +138,9 @@ export const LearnList: FC = () => {
   );
 };
 
-export const LearnBox = styled(Box)(({ theme }) => ({
+export default LearnList;
+
+const LearnBox = styled(Box)(({ theme }) => ({
   width: 'calc(100vw - 50px)',
   display: 'flex',
   flexDirection: 'column',

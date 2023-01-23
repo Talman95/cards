@@ -11,7 +11,7 @@ import { FilterBlock } from './FilterBlock/FilterBlock';
 import { PackListHeader } from './PackListHeader/PackListHeader';
 import { TableBlock } from './TableBlock/TableBlock';
 
-export const Packs: FC = () => {
+const Packs: FC = () => {
   const { getPacks, setParamUserId, setCurrentPage } = useActions(allPacksActions);
 
   const [searchParams, setSearchParams] = useSearchParams();
@@ -48,3 +48,5 @@ export const Packs: FC = () => {
     </Box>
   );
 };
+
+export default Packs;

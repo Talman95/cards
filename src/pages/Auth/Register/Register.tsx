@@ -22,7 +22,7 @@ type FormikErrorType = {
   confirmedPass?: string;
 };
 
-export const Register: FC = () => {
+const Register: FC = () => {
   const navigate = useNavigate();
 
   const { setRegister, register } = useActions(allAuthActions);
@@ -125,3 +125,5 @@ export const Register: FC = () => {
     </Grid>
   );
 };
+
+export default Register;
