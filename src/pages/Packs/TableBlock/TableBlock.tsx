@@ -3,15 +3,12 @@ import React, { ChangeEvent, FC, MouseEvent } from 'react';
 import { Paper, Table, TableBody, TableContainer, TablePagination } from '@mui/material';
 import { useSelector } from 'react-redux';
 
+import { itemsPerPage } from '../../../enums/itemsPerPage';
 import { useActions } from '../../../hooks/useActions';
 import { allPacksActions, packsSelectors } from '../../../store';
 
 import { CustomPackRow } from './CustomPackRow/CustomPackRow';
 import { TableHeader } from './TableHeader/TableHeader';
-
-const FIVE_CARDS_PER_PAGE = 5;
-const TEN_CARDS_PER_PAGE = 10;
-const TWENTY_CARDS_PER_PAGE = 20;
 
 export const TableBlock: FC = () => {
   const { setCurrentPage, setPageCount } = useActions(allPacksActions);
@@ -47,9 +44,9 @@ export const TableBlock: FC = () => {
       </Table>
       <TablePagination
         rowsPerPageOptions={[
-          FIVE_CARDS_PER_PAGE,
-          TEN_CARDS_PER_PAGE,
-          TWENTY_CARDS_PER_PAGE,
+          itemsPerPage.DEFAULT,
+          itemsPerPage.MIDDLE,
+          itemsPerPage.LARGE,
         ]}
         component="div"
         count={cardPacksTotalCount}

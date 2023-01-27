@@ -2,18 +2,17 @@ import React, { FC, useEffect } from 'react';
 
 import { useSelector } from 'react-redux';
 
-import { Chat, Header, MessageSnackbar } from '../components';
+import { Header, MessageSnackbar } from '../components';
 import { Loader } from '../components/Loader/Loader';
 import { useActions } from '../hooks/useActions';
 import { Modals } from '../pages/Modals/Modals';
 import { RoutesPage } from '../routes/RoutesPage';
-import { allAuthActions, appSelectors, authSelectors } from '../store';
+import { allAuthActions, appSelectors } from '../store';
 
 const App: FC = () => {
   const { getAuthData } = useActions(allAuthActions);
 
   const isInitialized = useSelector(appSelectors.selectIsInitialized);
-  const isLoggedIn = useSelector(authSelectors.selectIsLoggedIn);
 
   useEffect(() => {
     getAuthData();
@@ -28,7 +27,6 @@ const App: FC = () => {
       <MessageSnackbar />
       <Header />
       <RoutesPage />
-      {isLoggedIn && <Chat />}
       <Modals />
     </div>
   );

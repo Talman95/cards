@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+import { itemsPerPage } from '../../enums/itemsPerPage';
 import { UserType } from '../../types';
 import { usersAsyncThunk } from '../middlewares/users';
 
@@ -22,7 +23,7 @@ const slice = createSlice({
     filter: {
       userName: '',
       page: 1,
-      pageCount: 5,
+      pageCount: itemsPerPage.DEFAULT,
       sortUsers: null,
       min: null,
       max: null,

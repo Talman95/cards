@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+import { itemsPerPage } from '../../enums/itemsPerPage';
 import { PackType } from '../../types';
 import { packsAsyncThunks } from '../middlewares/packs';
 
@@ -19,7 +20,7 @@ const slice = createSlice({
     maxCardsCount: 0,
     minCardsCount: 0,
     page: 1,
-    pageCount: 5,
+    pageCount: itemsPerPage.DEFAULT,
     paramUserId: null as null | string,
     filter: {
       packName: '',

@@ -8,14 +8,13 @@ const { initMessagesHandler, newMessageSendHandler } = chatActions;
 
 export const createConnection = createAsyncThunk(
   'chat/createConnection',
-  // eslint-disable-next-line no-shadow-restricted-names
-  (undefined: undefined, { dispatch, getState }) => {
+  (_, { dispatch, getState }) => {
     const state = getState() as RootState;
 
     if (state.profile.profile) {
-      const { _id, name } = state.profile.profile;
+      const { _id, name, avatar } = state.profile.profile;
 
-      chatAPI.createConnection(_id, name, null);
+      chatAPI.createConnection(_id, name, avatar);
       chatAPI.subscribe(
         messages => {
           dispatch(initMessagesHandler(messages));

@@ -11,15 +11,12 @@ import {
 } from '@mui/material';
 import { useSelector } from 'react-redux';
 
+import { itemsPerPage } from '../../../enums/itemsPerPage';
 import { useActions } from '../../../hooks/useActions';
 import { allCardsActions, cardsSelectors } from '../../../store';
 
 import { CustomCardRow } from './CustomCardRow/CustomCardRow';
 import { TableHeader } from './TableHeader/TableHeader';
-
-const FIVE_CARDS_PER_PAGE = 5;
-const TEN_CARDS_PER_PAGE = 10;
-const TWENTY_CARDS_PER_PAGE = 20;
 
 export const TableBlock: FC<{ length: number }> = ({ length }) => {
   const { setCurrentPageCards, setPageCountCards } = useActions(allCardsActions);
@@ -59,9 +56,9 @@ export const TableBlock: FC<{ length: number }> = ({ length }) => {
       {length !== 0 && (
         <TablePagination
           rowsPerPageOptions={[
-            FIVE_CARDS_PER_PAGE,
-            TEN_CARDS_PER_PAGE,
-            TWENTY_CARDS_PER_PAGE,
+            itemsPerPage.DEFAULT,
+            itemsPerPage.MIDDLE,
+            itemsPerPage.LARGE,
           ]}
           component="div"
           count={cardsTotalCount}
