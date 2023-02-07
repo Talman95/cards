@@ -9,18 +9,15 @@ import { profileActions } from '../../slices/profileSlice';
 const { setProfile } = profileActions;
 const { setAppStatus } = appActions;
 
-export const logout = createAsyncThunk(
-  'auth/logout',
-  async (param: undefined, thunkAPI) => {
-    thunkAPI.dispatch(setAppStatus(appStatus.LOADING));
-    try {
-      await authAPI.logout();
-      thunkAPI.dispatch(setProfile({ profile: null }));
-      thunkAPI.dispatch(setAppStatus(appStatus.IDLE));
+export const logout = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
+  thunkAPI.dispatch(setAppStatus(appStatus.LOADING));
+  try {
+    await authAPI.logout();
+    thunkAPI.dispatch(setProfile({ profile: null }));
+    thunkAPI.dispatch(setAppStatus(appStatus.IDLE));
 
-      return { login: false };
-    } catch (e) {
-      return handleAppError(e, thunkAPI);
-    }
-  },
-);
+    return { login: false };
+  } catch (e) {
+    return handleAppError(e, thunkAPI);
+  }
+});

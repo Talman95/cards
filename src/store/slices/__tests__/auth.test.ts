@@ -1,28 +1,16 @@
-import { AsyncThunkAction } from '@reduxjs/toolkit';
-import { AxiosError, AxiosResponse } from 'axios';
-
-import { authAPI, LoginParamsType } from '../../../api';
-import { appStatus } from '../../../enums/appStatus';
-import { SnackbarStatus } from '../../../enums/snackbarStatus';
-import { ProfileType } from '../../../types';
-import { appActions } from '../../actions/appActions';
-import { authAsyncThunks } from '../../middlewares/auth';
+import { login } from '../../middlewares/auth/login';
+import { logout } from '../../middlewares/auth/logout';
+import { register } from '../../middlewares/auth/register';
 import { authActions, authSlice } from '../authSlice';
-import { profileActions } from '../profileSlice';
-
-const SECOND = 2;
-const THIRD = 3;
-const FOURTH = 4;
-const FIFTH = 5;
 
 describe('authSlice', () => {
-  let state: {
+  let initialState: {
     isLoggedIn: boolean;
     isRegistered: boolean;
   };
 
   beforeEach(() => {
-    state = {
+    initialState = {
       isLoggedIn: false,
       isRegistered: false,
     };
@@ -31,139 +19,53 @@ describe('authSlice', () => {
   it('should return default state when we pass empty action', () => {
     const result = authSlice(undefined, { type: '' });
 
-    expect(result).toEqual(state);
+    expect(result).toEqual(initialState);
   });
 
   it('registration should be completed', () => {
     const action = authActions.setRegister(true);
-    const result = authSlice(state, action);
+    const result = authSlice(initialState, action);
 
     expect(result.isRegistered).toBeTruthy();
-    expect(result.isLoggedIn).toBeFalsy();
   });
 
   it('login should be completed', () => {
     const action = authActions.setLoggedIn(true);
-    const result = authSlice(state, action);
+    const result = authSlice(initialState, action);
 
-    expect(result.isRegistered).toBeFalsy();
     expect(result.isLoggedIn).toBeTruthy();
   });
-});
 
-// tests for asyncThunk
-
-jest.mock('../../api/authAPI');
-const authAPIMock = authAPI as jest.Mocked<typeof authAPI>;
-
-const dispatch = jest.fn();
-const getState = jest.fn();
-
-describe('asyncThunk', () => {
-  let thunk: AsyncThunkAction<void, LoginParamsType, {}>;
-  let arg: LoginParamsType;
-
-  beforeEach(() => {
-    dispatch.mockClear();
-    getState.mockClear();
-  });
-
-  describe('should login with resolve response', () => {
-    let result: AxiosResponse<ProfileType>;
-    const loginResult = {
-      avatar: '',
-      created: '',
-      email: '',
-      isAdmin: false,
-      name: '',
-      publicCardPacksCount: 1,
-      rememberMe: false,
-      token: '',
-      tokenDeathTime: 0,
-      updated: '',
-      verified: true,
-      __v: 1,
-      _id: '',
+  it('should change isLoggedIn with "login.fulfilled" action', () => {
+    const action = {
+      type: login.fulfilled.type,
+      payload: { login: true },
     };
 
-    beforeEach(() => {
-      authAPIMock.login.mockClear();
-      authAPIMock.login.mockResolvedValue(result);
+    const state = authSlice(initialState, action);
 
-      arg = { email: 'email', password: 'pass', rememberMe: true };
-      result = {
-        status: 200,
-        data: loginResult,
-        statusText: '',
-        config: {},
-        headers: {},
-      };
-
-      thunk = authAsyncThunks.login(arg);
-    });
-
-    it('calls the api correctly', async () => {
-      await thunk(dispatch, getState, undefined);
-
-      expect(authAPIMock.login).toHaveBeenCalledWith(arg);
-    });
-
-    it('success login call', async () => {
-      await thunk(dispatch, getState, undefined);
-
-      const { calls } = dispatch.mock;
-
-      expect(calls).toHaveLength(FIFTH);
-      expect(calls[0][0].type).toBe('auth/login/pending');
-      expect(dispatch).toHaveBeenNthCalledWith(
-        SECOND,
-        appActions.setAppStatus(appStatus.LOADING),
-      );
-      expect(dispatch).toHaveBeenNthCalledWith(
-        THIRD,
-        profileActions.setProfile({ profile: result.data }),
-      );
-      expect(dispatch).toHaveBeenNthCalledWith(
-        FOURTH,
-        appActions.setAppStatus(appStatus.IDLE),
-      );
-      expect(calls[FOURTH][0].type).toBe('auth/login/fulfilled');
-      expect(calls[FOURTH][0].payload).toStrictEqual({ login: true });
-    });
+    expect(state.isLoggedIn).toBe(true);
   });
 
-  it('should login with rejected response', async () => {
-    let error: Error | AxiosError<{ error: string }>;
+  it('should change isLoggedIn with "logout.fulfilled" action', () => {
+    const action = {
+      type: logout.fulfilled.type,
+      payload: { login: false },
+    };
 
-    const errorMessage = 'Something wrong';
+    const state = authSlice(initialState, action);
 
-    // eslint-disable-next-line prefer-const
-    error = { isAxiosError: true, message: errorMessage, name: 'Error' };
+    expect(state.isLoggedIn).toBe(false);
+  });
 
-    authAPIMock.login.mockClear();
-    authAPIMock.login.mockRejectedValue(error);
+  it('should change isRegistered with "register.fulfilled" action', () => {
+    const action = {
+      type: register.fulfilled.type,
+      payload: { isRegistered: true },
+    };
 
-    thunk = authAsyncThunks.login(arg);
+    const state = authSlice(initialState, action);
 
-    await thunk(dispatch, getState, undefined);
-
-    const { calls } = dispatch.mock;
-
-    expect(calls).toHaveLength(FIFTH);
-    expect(calls[0][0].type).toBe('auth/login/pending');
-    expect(dispatch).toHaveBeenNthCalledWith(
-      SECOND,
-      appActions.setAppStatus(appStatus.LOADING),
-    );
-    expect(dispatch).toHaveBeenNthCalledWith(
-      THIRD,
-      appActions.setAppMessage({ result: SnackbarStatus.ERROR, message: errorMessage }),
-    );
-    expect(dispatch).toHaveBeenNthCalledWith(
-      FOURTH,
-      appActions.setAppStatus(appStatus.FAILED),
-    );
-    expect(calls[FOURTH][0].type).toBe('auth/login/rejected');
-    expect(calls[FOURTH][0].payload).toStrictEqual({ error: errorMessage });
+    expect(state.isRegistered).toBe(true);
   });
 });

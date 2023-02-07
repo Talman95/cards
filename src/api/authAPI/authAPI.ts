@@ -1,7 +1,7 @@
 import { ProfileType } from '../../types';
 import { config } from '../config/config';
 
-import { AddedUserType, LoginParamsType, LogoutType, RegisterParamsType } from './types';
+import { LoginParamsType, LogoutType, RegisterParamsType } from './types';
 
 export const authAPI = {
   login: (params: LoginParamsType) => {
@@ -17,7 +17,7 @@ export const authAPI = {
   },
 
   register: (params: RegisterParamsType) => {
-    return config.post<AddedUserType>('/auth/register', { ...params });
+    return config.post('/auth/register', { ...params });
   },
 
   sendPassword: (email: string) => {
@@ -26,7 +26,7 @@ export const authAPI = {
       from: 'test-front-admin <ai73a@yandex.by>',
       message: `<div style="background-color: chartreuse; padding: 15px">
                       password recovery link: 
-                      <a href='http://localhost:3000/cards/#/set-new-password/$token$'>
+                      <a href='https://Talman95.github.io/cards/#/set-new-password/$token$'>
                       follow the link
                       </a>
                       </div>`,
