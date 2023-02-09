@@ -6,12 +6,13 @@ export function handleTestAppError(
   calls: any[],
   dispatch: jest.Mock,
   errorMessage: string,
+  sliceName: string,
   thunkName: string,
 ): void {
   /* eslint-disable no-magic-numbers */
   expect(calls).toHaveLength(5);
 
-  expect(calls[0][0].type).toBe(`auth/${thunkName}/pending`);
+  expect(calls[0][0].type).toBe(`${sliceName}/${thunkName}/pending`);
 
   expect(dispatch).toHaveBeenNthCalledWith(2, appActions.setAppStatus(appStatus.LOADING));
   expect(dispatch).toHaveBeenNthCalledWith(

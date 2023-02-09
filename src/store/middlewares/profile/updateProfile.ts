@@ -17,7 +17,9 @@ export const updateProfile = createAsyncThunk(
       const state = thunkAPI.getState() as RootState;
       const { profile } = state.profile;
 
-      if (!profile) throw new Error('Profile not found');
+      if (!profile) {
+        return;
+      }
 
       const newName = param.name || profile.name;
       const newAvatar = param.avatar || profile.avatar;

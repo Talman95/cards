@@ -108,7 +108,7 @@ describe('auth asyncThunks', () => {
 
       const { calls } = dispatch.mock;
 
-      handleTestAppError(calls, dispatch, errorMessage, 'login');
+      handleTestAppError(calls, dispatch, errorMessage, 'auth', 'login');
     });
   });
 
@@ -177,7 +177,7 @@ describe('auth asyncThunks', () => {
 
       const { calls } = dispatch.mock;
 
-      handleTestAppError(calls, dispatch, errorMessage, 'logout');
+      handleTestAppError(calls, dispatch, errorMessage, 'auth', 'logout');
     });
   });
 
@@ -348,7 +348,7 @@ describe('auth asyncThunks', () => {
 
       const { calls } = dispatch.mock;
 
-      handleTestAppError(calls, dispatch, errorMessage, 'register');
+      handleTestAppError(calls, dispatch, errorMessage, 'auth', 'register');
     });
   });
 
@@ -416,7 +416,7 @@ describe('auth asyncThunks', () => {
 
       const { calls } = dispatch.mock;
 
-      handleTestAppError(calls, dispatch, errorMessage, 'sendPassword');
+      handleTestAppError(calls, dispatch, errorMessage, 'auth', 'sendPassword');
     });
   });
 
@@ -492,7 +492,7 @@ describe('auth asyncThunks', () => {
 
       const { calls } = dispatch.mock;
 
-      handleTestAppError(calls, dispatch, errorMessage, 'setNewPassword');
+      handleTestAppError(calls, dispatch, errorMessage, 'auth', 'setNewPassword');
     });
   });
 });
